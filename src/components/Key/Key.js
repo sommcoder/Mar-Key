@@ -1,4 +1,5 @@
 export default function Key(props) {
+  console.log(props);
   const letter = props.letter;
-  return <input className="input_block">{letter}</input>;
+  return <input>{letter}</input>;
 }

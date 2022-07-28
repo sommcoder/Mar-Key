@@ -1,6 +1,6 @@
 import Key from "../Key/Key";
 
-export default function Keyboard(props) {
+export default function Keyboard() {
   const letterSet = [
     {
       row: "row-1",
@@ -12,13 +12,15 @@ export default function Keyboard(props) {
 
   return (
     <div>
-      {letterSet.forEach((el) => (
-        <div key={el.row}>
-          {el.letters.map((ltr) => (
-            <Key letter={ltr.letters} row={ltr.row} key={el.row} />
-          ))}
-        </div>
-      ))}
+      {letterSet.map((el) => {
+        return (
+          <div key={el.row}>
+            {el.letters.map((ltr) => {
+              return <Key letter={ltr.letters} row={ltr.row} key={el.row} />;
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 }
