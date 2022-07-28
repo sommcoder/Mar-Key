@@ -1,38 +1,28 @@
+/* ///////////////////////////////////////////////////////////////////////////*/
+/* //////////////////////////// UNIVERSAL RESET ////////////////////////////// */
+/* ///////////////////////////////////////////////////////////////////////////*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 67.5%; /* 16px is now 10px, therefore 1 REM = 10px */
+}
+
 .App {
-  text-align: center;
+  color: orangered;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* code should start below here! */
+
+/* ///////////////////////////////////////////////////////////////////////////*/
+/* //////////////////////////// HELPER CLASSES ////////////////////////////// */
+/* ///////////////////////////////////////////////////////////////////////////*/
+.hidden {
+  visibility: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.remove {
+  display: none;
 }
