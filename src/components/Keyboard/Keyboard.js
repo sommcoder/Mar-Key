@@ -1,4 +1,5 @@
 import Key from "../Key/Key";
+import "./Keyboard.css";
 
 export default function Keyboard() {
   const letterSet = [
@@ -11,12 +12,12 @@ export default function Keyboard() {
   ];
 
   return (
-    <div>
+    <div id="keyboard-container">
       {letterSet.map((el) => {
         return (
-          <div key={el.row}>
+          <div className={`keyboard-row keyboard-${el.row}`} key={el.row}>
             {el.letters.map((ltr) => {
-              return <Key letter={ltr.letters} row={ltr.row} key={el.row} />;
+              return <Key letter={ltr.letters} key={`el.row-${ltr}`} />;
             })}
           </div>
         );

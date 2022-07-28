@@ -6,10 +6,10 @@ import Keyboard from "./components/Keyboard/Keyboard";
 function App() {
   const appTitle = "Mar-Key";
   return (
-    <>
+    <div id="app-container">
       <Header title={appTitle} />
       <Keyboard />
-    </>
+    </div>
   );
 }
 

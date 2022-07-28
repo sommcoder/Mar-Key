@@ -8,10 +8,20 @@
 
 html {
   font-size: 67.5%; /* 16px is now 10px, therefore 1 REM = 10px */
+  font-family: monospace;
+  background-color: white;
+  color: black;
 }
 
-.App {
-  color: orangered;
+#app-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-content: center;
+  justify-self: center;
+  justify-content: center;
+  max-width: 500px;
+  width: 500px;
 }
 
 /* code should start below here! */
