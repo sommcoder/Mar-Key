@@ -25,3 +25,5 @@ export default function Keyboard() {
     </div>
   );
 }
+
+// how can be conditionally add the SPECIAL KEY components to the THIRD keyboard row ONLY and also specify the respective side of the third row each component should be on!
