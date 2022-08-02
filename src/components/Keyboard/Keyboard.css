@@ -1,4 +1,5 @@
 #keyboard-container {
+  margin: 0 auto;
   display: block;
   max-width: 500px;
 }
@@ -7,20 +8,18 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  /* margin: 0 auto; */
+  align-items: center;
+  justify-content: center;
   margin-bottom: 8px;
 }
 
 .keyboard-key {
-  display: inline;
-  font-size: 2rem;
   font-weight: 300;
   border-radius: 0.5rem;
   cursor: pointer;
-  /* justify-self: center; */
   text-transform: uppercase;
   border: none;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: bold;
   margin-right: 3px;
   margin-left: 3px;
@@ -28,4 +27,13 @@
   height: 7rem;
   background-color: rgb(194, 197, 197);
   color: black;
+  text-align: center;
+}
+
+.keyboard-key:hover {
+  background-color: rgb(172, 172, 172);
+}
+
+.keyboard-key-special {
+  width: 8rem;
 }

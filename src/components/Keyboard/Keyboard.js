@@ -4,20 +4,23 @@ import "./Keyboard.css";
 export default function Keyboard() {
   const letterSet = [
     {
-      row: "row-1",
+      rowNum: "row-1",
       letters: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
     },
-    { row: "row-2", letters: ["a", "s", "d", "f", "g", "h", "j", "k", "l"] },
-    { row: "row-3", letters: ["z", "x", "c", "v", "b", "n", "m"] },
+    { rowNum: "row-2", letters: ["a", "s", "d", "f", "g", "h", "j", "k", "l"] },
+    {
+      rowNum: "row-3",
+      letters: ["ENTER", "z", "x", "c", "v", "b", "n", "m", "<=="],
+    },
   ];
 
   return (
     <div id="keyboard-container">
-      {letterSet.map((el) => {
+      {letterSet.map((obj) => {
         return (
-          <div className={`keyboard-row keyboard-${el.row}`} key={el.row}>
-            {el.letters.map((ltr) => {
-              return <Key letter={ltr.letters} key={`el.row-${ltr}`} />;
+          <div className="keyboard-row" key={obj.rowNum}>
+            {obj.letters.map((ltr) => {
+              return <Key letter={ltr} key={`${obj.rowNum}-${ltr}`} />;
             })}
           </div>
         );
@@ -27,3 +30,7 @@ export default function Keyboard() {
 }
 
 // how can be conditionally add the SPECIAL KEY components to the THIRD keyboard row ONLY and also specify the respective side of the third row each component should be on!
+
+// row-3-v
+
+// once done ^^^ add Synthetic Event: onClick="" this will

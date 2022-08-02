@@ -1,5 +1,24 @@
 export default function Key(props) {
-  console.log(props);
-  const letter = props.letter;
-  return <input className="keyboard-key">{letter}</input>;
+  const ltr = props.letter;
+  // console.log(ltr);
+  function submitLetter(ev) {
+    console.log(ev.target);
+  }
+
+  if (ltr !== "ENTER" && ltr !== "<==") {
+    return (
+      <button onClick={submitLetter} className="keyboard-key" value={ltr}>
+        {ltr}
+      </button>
+    );
+  } else
+    return (
+      <button
+        onClick={submitLetter}
+        className="keyboard-key keyboard-key-special"
+        value={ltr}
+      >
+        {ltr}
+      </button>
+    );
 }

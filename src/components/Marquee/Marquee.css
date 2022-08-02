@@ -1,0 +1,19 @@
+.marquee-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.marquee-title {
+  font-size: 1.8rem;
+}
+
+.marquee-row {
+}
+
+.marquee-block {
+  font-size: 3.6rem;
+  text-transform: uppercase;
+  text-align: center;
+  height: 5rem;
+  width: 4rem;
+}
