@@ -1,8 +1,12 @@
 export default function Key(props) {
   const ltr = props.letter;
   // console.log(ltr);
+  let submittedLetter;
+
   function submitLetter(ev) {
-    console.log(ev.target);
+    ev.preventDefault();
+    submittedLetter = ev.target.value;
+    console.log(ev.target.value);
   }
 
   if (ltr !== "ENTER" && ltr !== "<==") {

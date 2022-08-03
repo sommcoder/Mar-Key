@@ -8,7 +8,7 @@ function App() {
   // have a radio input to select the marquee sides the user would like to use
   const EAST_MARQUEE = true;
   const WEST_MARQUEE = true;
-  const SOUTH_MARQUEE = false;
+  const SOUTH_MARQUEE = true;
 
   return (
     <div id="app-container">
