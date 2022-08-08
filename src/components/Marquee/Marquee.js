@@ -1,4 +1,5 @@
 import Block from "../Block/Block";
+import DisplayBtn from "../DisplayBtn/DisplayBtn";
 import "./Marquee.css";
 
 export default function Marquee(props) {
@@ -27,20 +28,15 @@ export default function Marquee(props) {
 
   return (
     <div className="marquee-container" key={props.name}>
-      <h5 className="marquee-title">{props.name}</h5>
-      {/* if South Marquee, render component from the southMarqueeArr*/}
+      <DisplayBtn name={props.name} />
       {(props.name !== "South" ? marqueeArr : southMarqueeArr).map(
-        (row, ind) => {
-          return (
-            <div key={`row-${ind}`} className={`marquee-row row-${ind}`}>
-              {row.map((block) => {
-                return (
-                  <Block key={`row-${ind}-block-${block}`} block={block} />
-                );
-              })}
-            </div>
-          );
-        }
+        (row, ind) => (
+          <div key={`row-${ind}`} className={`marquee-row row-${ind}`}>
+            {row.map((block) => (
+              <Block key={`row-${ind}-block-${block}`} block={block} />
+            ))}
+          </div>
+        )
       )}
     </div>
   );

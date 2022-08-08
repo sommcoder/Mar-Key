@@ -1,30 +1,23 @@
 import Key from "../Key/Key";
 import "./Keyboard.css";
 
-export default function Keyboard() {
-  const letterSet = [
-    {
-      rowNum: "row-1",
-      letters: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-    },
-    { rowNum: "row-2", letters: ["a", "s", "d", "f", "g", "h", "j", "k", "l"] },
-    {
-      rowNum: "row-3",
-      letters: ["ENTER", "z", "x", "c", "v", "b", "n", "m", "<=="],
-    },
-  ];
+export default function Keyboard(props) {
+  // the letters to be rendered:
+  const letterSet = props.letterSet;
 
   return (
     <div id="keyboard-container">
-      {letterSet.map((obj) => {
-        return (
-          <div className="keyboard-row" key={obj.rowNum}>
-            {obj.letters.map((ltr) => {
-              return <Key letter={ltr} key={`${obj.rowNum}-${ltr}`} />;
-            })}
-          </div>
-        );
-      })}
+      {letterSet.map((obj) => (
+        <div className="keyboard-row" key={obj.rowNum}>
+          {obj.letters.map((ltr) => (
+            <Key
+              letter={ltr}
+              key={`${obj.rowNum}-${ltr}`}
+              addKeyToBlock={props.addKeyToBlock}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

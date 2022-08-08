@@ -1,7 +1,6 @@
 import Key from "../Key/Key";
+import { useState } from "react";
 console.log(Key.submittedLetter);
-
-// HOW DO WE CONNECT THE VALUE OF AN ONCLICK EVENT TO
 
 export default function Block(props) {
   return (
