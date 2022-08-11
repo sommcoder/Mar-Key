@@ -4,6 +4,16 @@ import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
 import { useState } from "react";
 
+/*
+IDEA:
+
+what if there were three text input lines within a FORM that corresponds with the Marquee components. 
+
+The user will ADD text to the text input lines and the app will generate a display on the users selected marquee displays based on the established SIZING for each Marquee block
+
+
+*/
+
 function App() {
   const [currLetter, setLetter] = useState("");
   const appTitle = "Mar-Key";
@@ -36,7 +46,11 @@ function App() {
       <Header title={appTitle} />
       {EAST_MARQUEE === true ? <Marquee name="East" /> : ""}
       {WEST_MARQUEE === true ? <Marquee name="West" /> : ""}
-      {SOUTH_MARQUEE === true ? <Marquee name="South" /> : ""}
+      {SOUTH_MARQUEE === true ? (
+        <Marquee classname="marquee-south" name="South" />
+      ) : (
+        ""
+      )}
       <Keyboard letterSet={letterSet} addKeyToBlock />
     </div>
   );

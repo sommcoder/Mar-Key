@@ -1,5 +1,7 @@
 import Block from "../Block/Block";
 import DisplayBtn from "../DisplayBtn/DisplayBtn";
+import ClearBtn from "../ClearBtn/ClearBtn";
+import TextBox from "../TextBox/TextBox";
 import "./Marquee.css";
 
 export default function Marquee(props) {
@@ -29,15 +31,19 @@ export default function Marquee(props) {
   return (
     <div className="marquee-container" key={props.name}>
       <DisplayBtn name={props.name} />
-      {(props.name !== "South" ? marqueeArr : southMarqueeArr).map(
-        (row, ind) => (
-          <div key={`row-${ind}`} className={`marquee-row row-${ind}`}>
-            {row.map((block) => (
-              <Block key={`row-${ind}-block-${block}`} block={block} />
-            ))}
-          </div>
-        )
-      )}
+      <div className="marquee-display-container">
+        {(props.name !== "South" ? marqueeArr : southMarqueeArr).map(
+          (row, ind) => (
+            <div key={`row-${ind}`} className={`marquee-row row-${ind}`}>
+              {row.map((block) => (
+                <Block key={`row-${ind}-block-${block}`} block={block} />
+              ))}
+            </div>
+          )
+        )}
+      </div>
+      <TextBox />
+      <ClearBtn />
     </div>
   );
 }

@@ -1,32 +1,104 @@
+:root {
+  --btn-color: powderblue;
+  --btn-radius: 2.5px;
+  --btn-font-size: 1.6rem;
+  --btn-font-weight: 600;
+}
+
 .marquee-container {
+  /* max-width: 700px; */
+  width: 100%;
+  margin: 0 auto 2rem auto;
   text-align: center;
-  margin-bottom: 2rem;
+  border: 0.05rem solid grey;
+  cursor: pointer;
+}
+
+/* .marquee-container:active {
+  background-color: lightgoldenrodyellow;
+} */
+
+.marquee-display-container {
+  margin: 0 auto 2rem auto;
+  width: 100%;
+  max-width: 850px;
+  align-items: center;
 }
 
 .marquee-title-btn {
+  background-color: var(--btn-color);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  border-radius: var(--btn-radius);
   display: inline;
-  font-size: 1.6rem;
-  font-weight: 600;
-  border-radius: 2.5px;
   height: 3.75rem;
   width: 15rem;
   padding: 0.5rem 0rem;
   border: none;
   margin-bottom: 1rem;
-  background-color: powderblue;
+  margin-top: 1rem;
 }
 
-.marquee-title-btn:hover {
+.marquee-title-btn:hover,
+.text-box-form-clear-btn:hover {
   background-color: rgb(161, 203, 209);
 }
 
-/* .marquee-row {
-} */
+.marquee-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
 .marquee-block {
   font-size: 3.6rem;
   text-transform: uppercase;
   text-align: center;
+  background-color: rgb(253, 243, 229);
+  border: none;
+  border-bottom: 0.25rem solid grey;
   height: 5rem;
   width: 4rem;
+  user-select: none;
+  caret-color: transparent;
+  cursor: pointer;
+}
+
+.marquee-block:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+.text-box-form {
+  margin-bottom: 0.5rem;
+}
+
+.text-box {
+  align-items: center;
+  display: block;
+  text-align: center;
+  width: 350px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.text-box-form-clear-btn {
+  background-color: var(--btn-color);
+  font-weight: var(--btn-font-weight);
+  border-radius: var(--btn-radius);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  height: 3.5rem;
+  width: 10rem;
+  padding: 0.5rem 0rem;
+  text-align: center;
+}
+
+/*
+red border if there's an error:
+*/
+.error {
+  border-color: red;
 }

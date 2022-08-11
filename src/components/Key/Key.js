@@ -27,7 +27,6 @@ export default function Key(props) {
         // onClick={props.submitLetter(ltr)}
         className="keyboard-key keyboard-key-special"
         value={ltr}
-        onClick={}
       >
         {ltr}
       </button>
