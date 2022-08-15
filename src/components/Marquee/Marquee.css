@@ -3,6 +3,7 @@
   --btn-radius: 2.5px;
   --btn-font-size: 1.6rem;
   --btn-font-weight: 600;
+  --block-width: 4rem;
 }
 
 .marquee-container {
@@ -58,7 +59,7 @@
   border: none;
   border-bottom: 0.1rem solid grey;
   height: 5rem;
-  width: 4rem;
+  width: var(--block-width);
   user-select: none;
   caret-color: transparent;
   cursor: pointer;

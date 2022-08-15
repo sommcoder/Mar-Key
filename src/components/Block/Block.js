@@ -1,5 +1,5 @@
-import Key from "../Key/Key";
-import { useState } from "react";
+import Key from '../Key/Key';
+import { useState } from 'react';
 console.log(Key.submittedLetter);
 
 export default function Block(props) {
