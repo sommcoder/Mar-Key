@@ -1,7 +1,8 @@
 export default function DisplayBtn(props) {
-  function toggleView() {
-    return;
-  }
-
-  return <button className="marquee-title-btn">{props.name}</button>;
+  console.log(props.setMarquee);
+  return (
+    <button onClick={props.setMarquee} className="marquee-title-btn">
+      {props.name}
+    </button>
+  );
 }

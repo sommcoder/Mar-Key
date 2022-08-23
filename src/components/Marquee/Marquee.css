@@ -3,7 +3,7 @@
   --btn-radius: 2.5px;
   --btn-font-size: 1.6rem;
   --btn-font-weight: 600;
-  --block-width: 4rem;
+  /* --block-width: 4rem; */
 }
 
 .marquee-container {
@@ -26,6 +26,22 @@
   align-items: center;
 }
 
+.marquee-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: rgb(253, 243, 229);
+  height: 5rem;
+  margin: 0 auto;
+  border-bottom: 0.25rem grey solid;
+  border-right: 0.25rem grey solid;
+  border-left: 0.25rem grey solid;
+}
+
+.marquee-row:first-child {
+  border-top: 0.25rem grey solid;
+}
+
 .marquee-title-btn {
   background-color: var(--btn-color);
   font-size: var(--btn-font-size);
@@ -45,35 +61,27 @@
   background-color: rgb(161, 203, 209);
 }
 
-.marquee-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .marquee-block {
   font-size: 3.6rem;
   text-transform: uppercase;
   text-align: center;
-  background-color: rgb(253, 243, 229);
-  border: none;
-  border-bottom: 0.1rem solid grey;
-  height: 5rem;
-  width: var(--block-width);
+  border: 0.1rem solid grey;
   user-select: none;
+  background-color: white;
   caret-color: transparent;
   cursor: pointer;
+  transition: ease-in-out;
 }
 
 .marquee-block:hover {
   background-color: rgb(220, 220, 220);
 }
 
-.text-box-form {
+.text-box-container {
   margin-bottom: 0.5rem;
 }
 
-.text-box {
+.text-row {
   align-items: center;
   display: block;
   text-align: center;
@@ -89,6 +97,7 @@
   font-weight: var(--btn-font-weight);
   border-radius: var(--btn-radius);
   font-size: 1.5rem;
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
   border: none;
   height: 3.5rem;

@@ -1,16 +1,19 @@
-import Key from '../Key/Key';
-import { useState } from 'react';
-console.log(Key.submittedLetter);
-
 export default function Block(props) {
+  // is the row value carrying over?
+  // console.log("props.rowValue:", props.rowValue);
+  const blockWidth = {
+    width: "4rem",
+  };
+
   return (
     <input
-      className={`marquee-block block-${props.block}`}
+      className="marquee-block"
       // readOnly
       maxLength="1"
       size="1"
       type="text"
-      // name={props} this should be what is clicked on the Key component
+      style={blockWidth}
+      value={props.block}
     />
   );
 }
