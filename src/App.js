@@ -1,26 +1,25 @@
 import "./App.css";
 import Header from "./components/Header/Header";
+import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
 import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
 import { useState } from "react";
 
 /*
-
-We will need to have a state for the marquees once we includ the button functionality. This will replace the MARQUEE objects that we have below
-
+ 
+the display buttons are CONSTANT, always rendered, always available to be clicked, they live insice the marquee container which when the displayBtn is clicked, will update the state object to render the corresponding marquee component
+ 
 */
 
 function App() {
-  const [isVisible, setMarquee] = useState(true);
   const appTitle = "Mar-Key";
+  const initMarqueeState = {
+    East: { isVisible: true, size: "45rem" },
+    West: { isVisible: true, size: "45rem" },
+    South: { isVisible: true, size: "90rem" },
+  };
 
-  // buttons above the display toggle the visibility of the MARQUEE's, when false, MARQUEE fades away, button remains in case the user wants to include it in the rendering!
-
-  const EAST_MARQUEE = { isVisible: isVisible, size: "45rem" };
-  const WEST_MARQUEE = { isVisible: isVisible, size: "45rem" };
-  const SOUTH_MARQUEE = { isVisible: isVisible, size: "90rem" };
-
-  const MARQUEE_ROWS = 3;
+  const [marqueeState, toggleMarquee] = useState(initMarqueeState);
 
   // keyboard letters:
   const letterSet = [
@@ -41,41 +40,25 @@ function App() {
   /*
   what i believe we want is to have serve BlockData.json to our App/js by REQUESTING letter sizes by looking up the letter and ensuring we are able to display the user's input based on each blocks stock.
   */
+  const marqueeNamesArr = Object.keys(initMarqueeState);
 
   return (
     <div id="app-container">
       <Header title={appTitle} />
-      {EAST_MARQUEE.isVisible === true ? (
-        <Marquee
-          size={EAST_MARQUEE.size}
-          rows={MARQUEE_ROWS}
-          name="East"
-          setMarquee={setMarquee}
-        />
-      ) : (
-        ""
-      )}
-      {WEST_MARQUEE.isVisible === true ? (
-        <Marquee
-          size={WEST_MARQUEE.size}
-          rows={MARQUEE_ROWS}
-          name="West"
-          setMarquee={setMarquee}
-        />
-      ) : (
-        ""
-      )}
-      {SOUTH_MARQUEE.isVisible === true ? (
-        <Marquee
-          size={SOUTH_MARQUEE.size}
-          rows={MARQUEE_ROWS}
-          name="South"
-          classname="marquee-south"
-          setMarquee={setMarquee}
-        />
-      ) : (
-        ""
-      )}
+      {marqueeNamesArr.map((el) => (
+        <div className="marquee-container" key={el}>
+          <DisplayBtn
+            name={el}
+            state={marqueeState}
+            toggleMarquee={toggleMarquee}
+          />
+          {marqueeState[el].isVisible === true ? (
+            <Marquee name={marqueeState[el]} size={marqueeState[el].size} />
+          ) : (
+            ""
+          )}
+        </div>
+      ))}
       <Keyboard letterSet={letterSet} addKeyToBlock />
     </div>
   );

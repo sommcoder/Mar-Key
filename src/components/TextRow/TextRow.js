@@ -1,16 +1,26 @@
 export default function TextRow(props) {
-  console.log("props.rowId:", props.rowId);
-
   function submitRow(ev) {
-    // turns string into an array of letters as strings!:
-    console.log("ev:", ev.target.dataset.rowid);
+    console.log("ev target:", ev.target);
+    console.log("ev data:", ev.target.dataset);
     let rowTarget = ev.target.dataset.rowid;
-    let rowValues = [...ev.target.value];
-    console.log("rowValues:", rowValues);
+    // turns string into an array of letters as strings!:
+    console.log("rowTarget:", rowTarget);
+
+    // rowInput is an array of each inputted letter as strings
+    let rowInput = [...ev.target.value];
+    console.log("rowValues:", rowInput);
     console.log("ev:", ev.target.dataset.rowid);
 
-    // pass in the object to setRow
-    props.setRow({ [rowTarget]: [rowValues] });
+    // this is the "new" object to update the curr state object with
+    const updatedValue = {};
+    updatedValue[rowTarget] = rowInput;
+    console.log("updatedValue TextRow:", updatedValue);
+
+    // this is how to update an Object instead of a value with the useState re-render function:
+    props.setRow((rowValuesObj) => ({
+      ...rowValuesObj,
+      ...updatedValue,
+    }));
   }
 
   return (
@@ -18,11 +28,16 @@ export default function TextRow(props) {
       className="text-row"
       data-rowid={props.rowId}
       type="text"
-      onKeyPress={(ev) => {
-        if (ev.key === "Enter") {
-          submitRow(ev);
-        }
+      onKeyDown={(ev) => {
+        if (ev.key === "Enter" || ev.key === "Tab") submitRow(ev);
       }}
+      onBlur={submitRow}
     />
   );
 }
+
+/*
+ 
+make it so that an ENTER moves to the next input field
+ 
+*/

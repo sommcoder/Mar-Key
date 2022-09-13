@@ -24,6 +24,8 @@
   width: 100%;
   max-width: 850px;
   align-items: center;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
 }
 
 .marquee-row {
@@ -71,6 +73,17 @@
   caret-color: transparent;
   cursor: pointer;
   transition: ease-in-out;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .marquee-block:hover {
@@ -111,4 +124,8 @@ red border if there's an error:
 */
 .error {
   border-color: red;
+}
+
+.hidden {
+  display: none;
 }

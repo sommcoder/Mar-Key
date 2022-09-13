@@ -1,46 +1,60 @@
-import { useState, useEffect } from "react";
-import MarqueeRow from "../MarqueeRow/MarqueeRow";
-import DisplayBtn from "../DisplayBtn/DisplayBtn";
+import { useState } from "react";
 import ClearBtn from "../ClearBtn/ClearBtn";
 import TextRow from "../TextRow/TextRow";
+import Block from "../Block/Block";
 import "./Marquee.css";
 
 export default function Marquee(props) {
-  // should i create a separate state object for each row?
-  const [rowValues, setRow] = useState([
-    { "row-0": [] },
-    { "row-1": [] },
-    { "row-2": [] },
-  ]);
-  // const [rowValue1, setRow1] = useState([]);
-  // const [rowValue2, setRow2] = useState([]);
+  const initRowValuesObj = {
+    row0: [],
+    row1: [],
+    row2: [],
+  };
 
-  const rowsArr = [];
-  for (let i = 0; i < props.rows; i++) {
-    rowsArr.push(i);
-  }
+  const [rowValuesObj, setRow] = useState(initRowValuesObj);
+
+  const keysArr = Object.keys(rowValuesObj);
+  console.log("keysArr:", keysArr);
+
+  let rowSize = {
+    width: props.size,
+  };
+
+  console.log("rowSize:", rowSize);
 
   // construct an array based on the number of rows designated in App.js
-  console.log("marquee rowsArr:", rowsArr); //
+
+  // the rows are ALWAYS to be rendered!
+  // the South marquee is to have longer rows
+  // the Blocks are what are rendered based on our state object which is updated based on the userinput in TextRow component
+
   return (
-    <div className="marquee-container" key={props.name}>
-      <DisplayBtn name={props.name} />
-      <div className="marquee-display-container">
-        {rowsArr.map((row, i) => (
-          <MarqueeRow
-            size={props.size}
-            rowId={`row-${row}`}
-            key={`row-${row}`}
-            rowValues={rowValues}
+    <div className="marquee-display-container">
+      {keysArr.map((row) => (
+        <div
+          className="marquee-row"
+          size={rowSize}
+          data-rowid={row}
+          key={row}
+          rowValuesObj={rowValuesObj}
+        >
+          {rowValuesObj[row].map((block, i) => (
+            <Block key={`${row}-block-${i}`} block={block} />
+          ))}
+        </div>
+      ))}
+
+      <div className="text-box-container">
+        {keysArr.map((row) => (
+          <TextRow
+            setRow={setRow}
+            rowId={row}
+            key={row}
+            rowValuesObj={rowValuesObj}
           />
         ))}
       </div>
-      <div className="text-box-container">
-        {rowsArr.map((row, i) => (
-          <TextRow setRow={setRow} rowId={`row-${row}`} key={`row-${row}`} />
-        ))}
-      </div>
-      <ClearBtn />
+      <ClearBtn rowValuesObj={rowValuesObj} setRow={setRow} />
     </div>
   );
 }

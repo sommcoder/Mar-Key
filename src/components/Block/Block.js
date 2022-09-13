@@ -1,6 +1,4 @@
 export default function Block(props) {
-  // is the row value carrying over?
-  // console.log("props.rowValue:", props.rowValue);
   const blockWidth = {
     width: "4rem",
   };
