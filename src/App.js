@@ -46,18 +46,20 @@ function App() {
     <div id="app-container">
       <Header title={appTitle} />
       {marqueeNamesArr.map((el) => (
-        <div className="marquee-container" key={el}>
+        <>
           <DisplayBtn
             name={el}
             state={marqueeState}
             toggleMarquee={toggleMarquee}
           />
-          {marqueeState[el].isVisible === true ? (
-            <Marquee name={marqueeState[el]} size={marqueeState[el].size} />
-          ) : (
-            ""
-          )}
-        </div>
+          <div className="marquee-container" key={el}>
+            {marqueeState[el].isVisible === true ? (
+              <Marquee name={marqueeState[el]} size={marqueeState[el].size} />
+            ) : (
+              ""
+            )}
+          </div>
+        </>
       ))}
       <Keyboard letterSet={letterSet} addKeyToBlock />
     </div>
@@ -65,3 +67,12 @@ function App() {
 }
 
 export default App;
+
+/*
+ 
+Challenge?
+
+
+ultimately, after we click the display button, the marquee rows are rendered WITHOUT the inline style attribute, and therefore I'm assuming they default to the size of their parent container
+ 
+*/

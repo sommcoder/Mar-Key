@@ -1,69 +1,80 @@
 [
   {
-    "blockName": "a",
-    "blockSymbol": "A",
-    "stock": 19,
-    "size": 1
+    "a": {
+      "blockSymbol": "A",
+      "stock": 19,
+      "size": 1
+    }
   },
   {
-    "blockName": "b",
-    "blockSymbol": "B",
-    "stock": 10,
-    "size": 1
+    "b": {
+      "blockSymbol": "B",
+      "stock": 10,
+      "size": 1
+    }
   },
   {
-    "blockName": "c",
-    "blockSymbol": "C",
-    "stock": 7,
-    "size": 1
+    "c": {
+      "blockSymbol": "C",
+      "stock": 7,
+      "size": 1
+    }
   },
   {
-    "blockName": "d",
-    "blockSymbol": "D",
-    "stock": 8,
-    "size": 1
+    "d": {
+      "blockSymbol": "D",
+      "stock": 8,
+      "size": 1
+    }
   },
   {
-    "blockName": "e",
-    "blockSymbol": "E",
-    "stock": 20,
-    "size": 1
+    "e": {
+      "blockSymbol": "E",
+      "stock": 20,
+      "size": 1
+    }
   },
   {
-    "blockName": "f",
-    "blockSymbol": "F",
-    "stock": 7,
-    "size": 1
+    "f": {
+      "blockSymbol": "F",
+      "stock": 7,
+      "size": 1
+    }
   },
   {
-    "blockName": "g",
-    "blockSymbol": "G",
-    "stock": 10,
-    "size": 1
+    "g": {
+      "blockSymbol": "G",
+      "stock": 10,
+      "size": 1
+    }
   },
   {
-    "blockName": "h",
-    "blockSymbol": "H",
-    "stock": 9,
-    "size": 1
+    "h": {
+      "blockSymbol": "H",
+      "stock": 9,
+      "size": 1
+    }
   },
   {
-    "blockName": "i",
-    "blockSymbol": "I",
-    "stock": 21,
-    "size": 1
+    "i": {
+      "blockSymbol": "I",
+      "stock": 21,
+      "size": 1
+    }
   },
   {
-    "blockName": "j",
-    "blockSymbol": "J",
-    "stock": 6,
-    "size": 1
+    "j": {
+      "blockSymbol": "J",
+      "stock": 6,
+      "size": 1
+    }
   },
   {
-    "blockName": "k",
-    "blockSymbol": "K",
-    "stock": 6,
-    "size": 1
+    "k": {
+      "blockSymbol": "K",
+      "stock": 6,
+      "size": 1
+    }
   },
   {
     "blockName": "l",
