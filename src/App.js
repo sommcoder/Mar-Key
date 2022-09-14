@@ -51,15 +51,13 @@ function App() {
             name={el}
             state={marqueeState}
             toggleMarquee={toggleMarquee}
-          />
+          /> 
+          {marqueeState[el].isVisible === true ? (
           <div className="marquee-container" key={el}>
-            {marqueeState[el].isVisible === true ? (
-              <Marquee name={marqueeState[el]} size={marqueeState[el].size} />
-            ) : (
-              ""
-            )}
+            <Marquee name={marqueeState[el]} size={marqueeState[el].size} />
           </div>
-        </>
+           ) : null
+          }
       ))}
       <Keyboard letterSet={letterSet} addKeyToBlock />
     </div>
