@@ -13,6 +13,8 @@
   text-align: center;
   border: 0.02rem solid grey;
   cursor: pointer;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
 }
 
 /* .marquee-container:active {
