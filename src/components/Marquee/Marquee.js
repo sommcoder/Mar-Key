@@ -20,7 +20,7 @@ export default function Marquee(props) {
     width: props.size,
   };
 
-  console.log("rowSize:", rowSize);
+  console.log("rowSize Marquee Component:", rowSize);
 
   // construct an array based on the number of rows designated in App.js
 
@@ -33,7 +33,7 @@ export default function Marquee(props) {
       {keysArr.map((row) => (
         <div
           className="marquee-row"
-          size={rowSize}
+          style={rowSize}
           data-rowid={row}
           key={row}
           rowValuesObj={rowValuesObj}
