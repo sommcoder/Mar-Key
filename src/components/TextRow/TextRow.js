@@ -20,7 +20,10 @@ export default function TextRow(props) {
       data-rowid={props.rowId}
       type="text"
       onKeyDown={(ev) => {
-        if (ev.key === "Enter" || ev.key === "Tab") submitRow(ev);
+        if (ev.key === "Tab") submitRow(ev);
+        if (ev.key === "Enter") {
+          submitRow(ev);
+        }
       }}
       onBlur={submitRow}
     />

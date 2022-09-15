@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ClearBtn from "../ClearBtn/ClearBtn";
+import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import TextRow from "../TextRow/TextRow";
 import Block from "../Block/Block";
 import "./Marquee.css";
@@ -14,19 +15,10 @@ export default function Marquee(props) {
   const [rowValuesObj, setRow] = useState(initRowValuesObj);
 
   const keysArr = Object.keys(rowValuesObj);
-  console.log("keysArr:", keysArr);
 
   let rowSize = {
     width: props.size,
   };
-
-  console.log("rowSize Marquee Component:", rowSize);
-
-  // construct an array based on the number of rows designated in App.js
-
-  // the rows are ALWAYS to be rendered!
-  // the South marquee is to have longer rows
-  // the Blocks are what are rendered based on our state object which is updated based on the userinput in TextRow component
 
   return (
     <div className="marquee-display-container">
@@ -55,6 +47,7 @@ export default function Marquee(props) {
         ))}
       </div>
       <ClearBtn rowValuesObj={rowValuesObj} setRow={setRow} />
+      <SetCurrBtn rowValuesObj={rowValuesObj} setRow={setRow} />
     </div>
   );
 }

@@ -10,11 +10,7 @@ export default function Keyboard(props) {
       {letterSet.map((obj) => (
         <div className="keyboard-row" key={obj.rowNum}>
           {obj.letters.map((ltr) => (
-            <Key
-              letter={ltr}
-              key={`${obj.rowNum}-${ltr}`}
-              addKeyToBlock={props.addKeyToBlock}
-            />
+            <Key letter={ltr} key={`${obj.rowNum}-${ltr}`} />
           ))}
         </div>
       ))}
