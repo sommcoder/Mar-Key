@@ -1,5 +1,6 @@
-export default function ClearBtn(props) {
-  function clearRows(ev) {
+export default function ResetBtn(props) {
+  function resetRows(ev) {
+    ev.preventDefault();
     console.log(ev.target);
     console.log(props.setRow);
 
@@ -14,12 +15,12 @@ export default function ClearBtn(props) {
       ...initState,
     }));
 
-    // we also want to clear the textRow components as well!
+    // we also want to reset the textRow components as well!
     // we may need to use useRef for this!
   }
   return (
-    <button onClick={clearRows} className="text-box-form-clear-btn">
-      clear text
+    <button onClick={resetRows} className="text-box-form-reset-btn">
+      reset
     </button>
   );
 }

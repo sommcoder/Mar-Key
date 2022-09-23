@@ -1,6 +1,6 @@
 export default function Block(props) {
   const blockWidth = {
-    width: "4rem",
+    width: props.style,
   };
 
   return (
@@ -8,7 +8,6 @@ export default function Block(props) {
       className="marquee-block"
       // readOnly
       maxLength="1"
-      size="1"
       type="text"
       style={blockWidth}
       value={props.block}

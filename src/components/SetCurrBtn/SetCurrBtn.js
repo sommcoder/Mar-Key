@@ -21,53 +21,46 @@ export default function SetCurrBtn(props) {
   // }
 
   function setCurrMarquee(ev) {
-    ev.preventDefault(); // prevents the form from submitting to a server
-    // checkMarqueeObj(); // check the current value of the marquee. If each row is blank, proceed, else return with user message!
+    ev.preventDefault();
     const updatedValueObj = {};
+    let atLeastOneValue = 0; // a counter to check if AT LEAST one of the rows contains a string
     console.log("ev:", ev);
-
-    // have this button NOT work if there isn't at LEAST one 3 letter word on at LEAST one row
     // have a red text warning message below the buttons that will inform the user that they need to have at LEAST one 3 letter word on the Marquee BEFORE they can set it!
 
-    let atLeastOneValue = 0; // a counter to check if AT LEAST one of the rows contains a string
-
-    // iterates through each textRow component & Populate the row content to the updatedValueObj
+    // TEXTROW LOOP: Populates the row content to the updatedValueObj state object
     for (let i = 0; i < 3; i++) {
       let targetFormEl = ev.target.form;
-      let targetValue = targetFormEl[i].value; // our input string
-      let targetSizeArr = [];
-      let rowInput;
-      console.log("targetValue:", targetValue);
+      let targetValueStr = targetFormEl[i].value; // our user input as a string
+      if (!targetValueStr) continue; // if there's no value continue to next iteration
+      atLeastOneValue++; // row value check, increment
+      let rowTargetId = targetFormEl[i].dataset.rowid; // the rowId that corresponds to our STATE obj
+      let targetValueArr = [];
+      let rowInputArr = [];
+      // spread string into individual letters in an array, trime edges
+      // form the array FIRST, then push the sizes to each letter array to form a 2D structure
+      targetValueArr = [...targetValueStr.trim()];
+      console.log("rowTargetid:", rowTargetId);
+      console.log("targetValueArr pre loop:", targetValueArr);
 
-      // loop through the string, lookup based on key, if doesn't exist continue to next iteration.
-      // How do we get this value to be associated with the
-      for (let j = 0; j < targetValue.length; j++) {
-        console.log("letters from data:", data[targetValue[i]]);
-
-        // if doesn't exist, create and show() popup to user
-        if (!data[targetValue[i]]) continue;
-
-        targetSizeArr.push(data[targetValue[i]]);
-
-        /*
- 
-We need to add the ["letter", "size"] as a 2d array within the greater array, with the rowTarget still as the key
-
-
-// gotta figure out how to add the targetSize to the row Input's value, ensuring that the 0 index is the "ltr" and the 1 index is the "size"
- 
-*/
+      // JSON DATA EXTRACTION LOOP: pairs the size property value with its corresponding
+      // if the rowTargetId in the state obj HASN'T already been populated, perform the loop
+      // otherwise, it will be assumed that the row is empty, as it will also render empty
+      if (!updatedValueObj[rowTargetId]) {
+        // this check ^^^ may cause issues since a user may be inclined to simply rewrite their input for a particular row!
+        for (let j = 0; j < targetValueStr.length; j++) {
+          if (!data[targetValueStr[j]]) continue;
+          rowInputArr.push([
+            data[targetValueStr[j]].blockSymbol,
+            data[targetValueStr[j]].size,
+          ]);
+        }
       }
-      // we need to ensure that the letter EXISTS in the blockData.json!
-
-      if (targetValue) atLeastOneValue++; // increments when we have a targetVal that isn't an empty string
-      let rowTarget = targetFormEl[i].dataset.rowid; // the rowId that corresponds to our STATE obj
-      rowInput = [...targetValue.trim()]; // spread string into individual letters in arr
-
-      updatedValueObj[rowTarget] = rowInput;
+      console.log("rowInputArr:", rowInputArr);
+      updatedValueObj[rowTargetId] = rowInputArr;
     }
-    console.log("object post loop:", updatedValueObj);
+    console.log("updatedValueObj POST loop:", updatedValueObj);
     console.log("did we get a value?:", atLeastOneValue);
+
     // atleastOneValue MUST be set to true
     if (atLeastOneValue) {
       // this is how to update an Object instead of a value with the useState re-render function:

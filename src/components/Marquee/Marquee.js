@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ClearBtn from "../ClearBtn/ClearBtn";
+import ResetBtn from "../ResetBtn/ResetBtn";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import TextRow from "../TextRow/TextRow";
 import Block from "../Block/Block";
@@ -20,6 +20,12 @@ export default function Marquee(props) {
     width: props.size,
   };
 
+  // row = row0, row1, row2
+  // row[i] the index of the letter
+
+  // block[i][0] the letter symbol
+  // block[i][1] the letter symbols size
+
   return (
     <div className="marquee-display-container">
       {keysArr.map((row) => (
@@ -31,7 +37,11 @@ export default function Marquee(props) {
           rowValuesObj={rowValuesObj}
         >
           {rowValuesObj[row].map((block, i) => (
-            <Block key={`${row[0]}-block-${i}`} block={block} style={row[1]} />
+            <Block
+              key={`${row}-block-${i}`}
+              block={block[0]}
+              style={block[1]}
+            />
           ))}
         </div>
       ))}
@@ -50,7 +60,7 @@ export default function Marquee(props) {
           rowValuesObj={rowValuesObj}
           setRow={setRow}
         />
-        <ClearBtn
+        <ResetBtn
           form="user-input-form"
           rowValuesObj={rowValuesObj}
           setRow={setRow}
