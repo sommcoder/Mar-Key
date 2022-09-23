@@ -31,12 +31,12 @@ export default function Marquee(props) {
           rowValuesObj={rowValuesObj}
         >
           {rowValuesObj[row].map((block, i) => (
-            <Block key={`${row}-block-${i}`} block={block} />
+            <Block key={`${row[0]}-block-${i}`} block={block} style={row[1]} />
           ))}
         </div>
       ))}
 
-      <div className="text-box-container">
+      <form id="user-input-form" className="text-box-container">
         {keysArr.map((row) => (
           <TextRow
             setRow={setRow}
@@ -45,22 +45,27 @@ export default function Marquee(props) {
             rowValuesObj={rowValuesObj}
           />
         ))}
-      </div>
-      <ClearBtn rowValuesObj={rowValuesObj} setRow={setRow} />
-      <SetCurrBtn rowValuesObj={rowValuesObj} setRow={setRow} />
+        <SetCurrBtn
+          data-rowid={props.rowId}
+          rowValuesObj={rowValuesObj}
+          setRow={setRow}
+        />
+        <ClearBtn
+          form="user-input-form"
+          rowValuesObj={rowValuesObj}
+          setRow={setRow}
+        />
+      </form>
     </div>
   );
 }
 
 /*
  
-what are we trying to solve here?
+PROBLEM:
 
-We are trying to have the TextRow component SET the Blocks inside the MarqueeRow Component.
-
-the blocks
-
-
-we want the text rows and marquee rows to be linked so that what is inputted in the text input gets set to the corresponding marquee row once the user clicks enter
+Now that we have the function in the SETCURRBTN
+- Set needs to act like a submit button
+- we have just wrapped the buttons and the text rows in a FORM and we need the button to "PULL" the input from the textRow inputs
  
 */

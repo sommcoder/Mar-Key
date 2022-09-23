@@ -1,421 +1,403 @@
-[
-  {
-    "a": {
-      "blockSymbol": "A",
-      "stock": 19,
-      "size": 1
-    }
+{
+  "a": {
+    "blockSymbol": "A",
+    "stock": 19,
+    "size": "2.2rem"
   },
-  {
-    "b": {
-      "blockSymbol": "B",
-      "stock": 10,
-      "size": 1
-    }
+  "b": {
+    "blockSymbol": "B",
+    "stock": 10,
+    "size": "1.94rem"
   },
-  {
-    "c": {
-      "blockSymbol": "C",
-      "stock": 7,
-      "size": 1
-    }
+  "c": {
+    "blockSymbol": "C",
+    "stock": 7,
+    "size": "1.96rem"
   },
-  {
-    "d": {
-      "blockSymbol": "D",
-      "stock": 8,
-      "size": 1
-    }
+  "d": {
+    "blockSymbol": "D",
+    "stock": 8,
+    "size": "1.96rem"
   },
-  {
-    "e": {
-      "blockSymbol": "E",
-      "stock": 20,
-      "size": 1
-    }
+  "e": {
+    "blockSymbol": "E",
+    "stock": 20,
+    "size": "1.89rem"
   },
-  {
-    "f": {
-      "blockSymbol": "F",
-      "stock": 7,
-      "size": 1
-    }
+  "f": {
+    "blockSymbol": "F",
+    "stock": 7,
+    "size": "1.89rem"
   },
-  {
-    "g": {
-      "blockSymbol": "G",
-      "stock": 10,
-      "size": 1
-    }
+  "g": {
+    "blockSymbol": "G",
+    "stock": 10,
+    "size": "2rem"
   },
-  {
-    "h": {
-      "blockSymbol": "H",
-      "stock": 9,
-      "size": 1
-    }
+
+  "h": {
+    "blockSymbol": "H",
+    "stock": 9,
+    "size": "2rem"
   },
-  {
-    "i": {
-      "blockSymbol": "I",
-      "stock": 21,
-      "size": 1
-    }
+
+  "i": {
+    "blockSymbol": "I",
+    "stock": 21,
+    "size": "1.44rem"
   },
-  {
-    "j": {
-      "blockSymbol": "J",
-      "stock": 6,
-      "size": 1
-    }
+
+  "j": {
+    "blockSymbol": "J",
+    "stock": 6,
+    "size": "1.96rem"
   },
-  {
-    "k": {
-      "blockSymbol": "K",
-      "stock": 6,
-      "size": 1
-    }
+
+  "k": {
+    "blockSymbol": "K",
+    "stock": 6,
+    "size": "2.04rem"
   },
-  {
-    "blockName": "l",
+
+  "l": {
     "blockSymbol": "L",
     "stock": 16,
-    "size": 1
+    "size": "1.96rem"
   },
-  {
-    "blockName": "m",
+
+  "m": {
     "blockSymbol": "M",
     "stock": 10,
-    "size": 1
+    "size": "2.26rem"
   },
-  {
-    "blockName": "n",
+
+  "n": {
     "blockSymbol": "N",
     "stock": 15,
-    "size": 1
+    "size": "2.02rem"
   },
-  {
-    "blockName": "o",
+
+  "o": {
     "blockSymbol": "O",
     "stock": 32,
-    "size": 1
+    "size": "2.02rem"
   },
-  {
-    "blockName": "p",
+
+  "p": {
     "blockSymbol": "P",
     "stock": 13,
-    "size": 1
+    "size": "1.93rem"
   },
-  {
-    "blockName": "q",
+
+  "q": {
     "blockSymbol": "Q",
     "stock": 3,
-    "size": 1
+    "size": "2.04"
   },
-  {
-    "blockName": "r",
+
+  "r": {
     "blockSymbol": "R",
     "stock": 14,
-    "size": 1
+    "size": "2rem"
   },
-  {
-    "blockName": "s",
+
+  "s": {
     "blockSymbol": "S",
     "stock": 14,
-    "size": 1
+    "size": "2rem"
   },
-  {
-    "blockName": "t",
+
+  "t": {
     "blockSymbol": "T",
     "stock": 18,
-    "size": 1
+    "size": "1.96rem"
   },
-  {
-    "blockName": "u",
+
+  "u": {
     "blockSymbol": "U",
     "stock": 22,
-    "size": 1
+    "size": "2rem"
   },
-  {
-    "blockName": "v",
+
+  "v": {
     "blockSymbol": "V",
     "stock": 5,
-    "size": 1
+    "size": "2.13rem"
   },
-  {
-    "blockName": "w",
+
+  "w": {
     "blockSymbol": "W",
     "stock": 6,
-    "size": 1
+    "size": "2.22"
   },
-  {
-    "blockName": "x",
+
+  "x": {
     "blockSymbol": "X",
     "stock": 2,
-    "size": 1
+    "size": "2.04rem"
   },
-  {
-    "blockName": "y",
+
+  "y": {
     "blockSymbol": "Y",
     "stock": 5,
-    "size": 1
+    "size": "2.13rem"
   },
-  {
-    "blockName": "z",
+
+  "z": {
     "blockSymbol": "Z",
     "stock": 4,
-    "size": 1
+    "size": "1.94rem"
   },
-  {
-    "blockName": "1",
+
+  "1": {
     "blockSymbol": "1",
     "stock": 10,
     "size": 0.5
   },
-  {
-    "blockName": "2",
+
+  "2": {
     "blockSymbol": "2",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "3",
+
+  "3": {
     "blockSymbol": "3",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "4",
+
+  "4": {
     "blockSymbol": "4",
     "stock": 9,
     "size": 1
   },
-  {
-    "blockName": "5",
+
+  "5": {
     "blockSymbol": "5",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "6",
+
+  "6": {
     "blockSymbol": "6",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "7",
+
+  "7": {
     "blockSymbol": "7",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "8",
+
+  "8": {
     "blockSymbol": "8",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "9",
+
+  "9": {
     "blockSymbol": "9",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "hyphen",
+
+  "-": {
     "blockSymbol": "-",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "period",
+
+  ".": {
     "blockSymbol": ".",
     "stock": 4,
     "size": 1
   },
-  {
-    "blockName": "semi-colon",
+
+  ";": {
     "blockSymbol": ";",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "comma",
+
+  ",": {
     "blockSymbol": ",",
     "stock": 9,
     "size": 1
   },
-  {
-    "blockName": "esclamation",
+
+  "!": {
     "blockSymbol": "!",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "ampersand",
+
+  "&": {
     "blockSymbol": "&",
     "stock": 6,
     "size": 1
   },
-  {
-    "blockName": "dollar sign",
+
+  "$": {
     "blockSymbol": "$",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "hash",
+
+  "#": {
     "blockSymbol": "#",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "forward slash",
+
+  "/": {
     "blockSymbol": "/",
     "stock": 11,
     "size": 1
   },
-  {
-    "blockName": "question",
+
+  "?": {
     "blockSymbol": "?",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "plus",
+
+  "+": {
     "blockSymbol": "+",
     "stock": 6,
     "size": 1
   },
-  {
-    "blockName": "colon",
+
+  ":": {
     "blockSymbol": ":",
     "stock": 6,
     "size": 1
   },
-  {
-    "blockName": "am",
+
+  "am": {
     "blockSymbol": "AM",
     "stock": 6,
     "size": 1
   },
-  {
-    "blockName": "pm",
+
+  "pm": {
     "blockSymbol": "PM",
     "stock": 8,
     "size": 1
   },
-  {
-    "blockName": "presents",
+
+  "presents": {
     "blockSymbol": "PRESENTS",
     "stock": 3,
     "size": 3
   },
-  {
-    "blockName": "sold out",
+
+  "sold out": {
     "blockSymbol": "SOLD OUT",
     "stock": 4,
     "size": 3
   },
-  {
-    "blockName": "free",
+
+  "free": {
     "blockSymbol": "FREE",
     "stock": 3,
     "size": 2
   },
-  {
-    "blockName": "feat",
+
+  "feat": {
     "blockSymbol": "FEAT",
     "stock": 3,
     "size": 2
   },
-  {
-    "blockName": "live",
+
+  "live": {
     "blockSymbol": "LIVE",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "speech bubble",
+
+  "speech bubble": {
     "blockSymbol": "💬",
     "stock": 29,
     "size": 1
   },
-  {
-    "blockName": "www",
+
+  "www": {
     "blockSymbol": "WWW",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": ".com",
+
+  ".com": {
     "blockSymbol": ".com",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "@",
+
+  "@": {
     "blockSymbol": "@",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "heart",
+
+  "heart": {
     "blockSymbol": "❤️",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "fire",
+
+  "fire": {
     "blockSymbol": "🔥",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "paradise website",
+
+  "paradise website": {
     "blockSymbol": "paradiseonbloor.com",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "rialto website",
+
+  "rialto website": {
     "blockSymbol": "osteriarialto.com",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "wine",
+
+  "wine": {
     "blockSymbol": "🍾",
     "stock": 10,
     "size": 1
   },
-  {
-    "blockName": "camera",
+
+  "camera": {
     "blockSymbol": "📷",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "film",
+
+  "film": {
     "blockSymbol": "🎥",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "popcorn",
+
+  "popcorn": {
     "blockSymbol": "🍿",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "osteria rialto",
+
+  "osteria rialto": {
     "blockSymbol": "Osteria Rialto",
     "stock": 3,
     "size": 1
   },
-  {
-    "blockName": "dine at",
+
+  "dine at": {
     "blockSymbol": "Dine At",
     "stock": 3,
     "size": 1
   }
-]
+}
