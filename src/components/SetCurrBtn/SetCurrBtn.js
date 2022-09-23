@@ -45,16 +45,15 @@ export default function SetCurrBtn(props) {
       // JSON DATA EXTRACTION LOOP: pairs the size property value with its corresponding
       // if the rowTargetId in the state obj HASN'T already been populated, perform the loop
       // otherwise, it will be assumed that the row is empty, as it will also render empty
-      if (!updatedValueObj[rowTargetId]) {
-        // this check ^^^ may cause issues since a user may be inclined to simply rewrite their input for a particular row!
-        for (let j = 0; j < targetValueStr.length; j++) {
-          if (!data[targetValueStr[j]]) continue;
-          rowInputArr.push([
-            data[targetValueStr[j]].blockSymbol,
-            data[targetValueStr[j]].size,
-          ]);
-        }
+
+      for (let j = 0; j < targetValueStr.length; j++) {
+        if (!data[targetValueStr[j]]) continue;
+        rowInputArr.push([
+          data[targetValueStr[j]].blockSymbol,
+          data[targetValueStr[j]].size,
+        ]);
       }
+
       console.log("rowInputArr:", rowInputArr);
       updatedValueObj[rowTargetId] = rowInputArr;
     }

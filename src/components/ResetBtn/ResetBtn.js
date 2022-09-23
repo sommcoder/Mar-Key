@@ -3,7 +3,10 @@ export default function ResetBtn(props) {
     ev.preventDefault();
     console.log(ev.target);
     console.log(props.setRow);
-
+    for (let i = 0; i < 3; i++) {
+      let targetFormEl = ev.target.form;
+      targetFormEl[i].value = ""; // set user input to ''
+    }
     const initState = {
       row0: [],
       row1: [],
