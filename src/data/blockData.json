@@ -223,19 +223,19 @@
   ";": {
     "blockSymbol": ";",
     "stock": 3,
-    "size": "1.5rem"
+    "size": "1.25rem"
   },
 
   ",": {
     "blockSymbol": ",",
     "stock": 9,
-    "size": "1.5rem"
+    "size": "1.25rem"
   },
 
   "!": {
     "blockSymbol": "!",
     "stock": 3,
-    "size": "1.5rem"
+    "size": "1.25rem"
   },
 
   "&": {
@@ -277,7 +277,7 @@
   ":": {
     "blockSymbol": ":",
     "stock": 6,
-    "size": "1.5rem"
+    "size": "1.25rem"
   },
 
   "am": {

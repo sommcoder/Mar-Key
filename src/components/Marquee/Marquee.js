@@ -6,12 +6,16 @@ import Block from "../Block/Block";
 import "./Marquee.css";
 
 export default function Marquee(props) {
+  console.log("marquee component props:", props);
+  console.log("marquee props name:", props.name);
+
   const initRowValuesObj = {
     row0: [],
     row1: [],
     row2: [],
   };
 
+  // marquee ROW state
   const [rowValuesObj, setRow] = useState(initRowValuesObj);
 
   const keysArr = Object.keys(rowValuesObj);
@@ -27,7 +31,7 @@ export default function Marquee(props) {
   // block[i][1] the letter symbols size
 
   return (
-    <div className="marquee-display-container">
+    <div className="marquee-display-container" marqName={props.name}>
       {keysArr.map((row) => (
         <div
           className="marquee-row"
@@ -52,17 +56,22 @@ export default function Marquee(props) {
             setRow={setRow}
             rowId={row}
             key={row}
-            rowValuesObj={rowValuesObj}
+            marqState={props.state}
           />
         ))}
         <SetCurrBtn
-          data-rowid={props.rowId}
-          rowValuesObj={rowValuesObj}
+          marqName={props.name}
+          marqState={props.stateObj}
+          toggleMarquee={props.toggleMarquee}
           setRow={setRow}
+          marqWidth={props.size}
         />
         <ResetBtn
           form="user-input-form"
-          rowValuesObj={rowValuesObj}
+          marqName={props.name}
+          marqState={props.stateObj}
+          toggleMarquee={props.toggleMarquee}
+          rowInitState={initRowValuesObj}
           setRow={setRow}
         />
       </form>

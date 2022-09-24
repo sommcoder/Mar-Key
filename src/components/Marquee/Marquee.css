@@ -3,6 +3,8 @@
   --btn-radius: 2.5px;
   --btn-font-size: 1.7rem;
   --btn-font-weight: 600;
+  --block-remove: red;
+  --block-add: lightgreen;
   /* --block-width: 4rem; */
 }
 
@@ -14,6 +16,12 @@
   border: 0.02rem solid grey;
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
+}
+
+.marquee-container:hover {
+  border: 0.1rem solid black;
+  box-shadow: 0.1rem 0.2rem 0.5rem grey;
+  transform: translateY(-0.1rem);
 }
 
 /* .marquee-container:active {
@@ -29,6 +37,7 @@
   justify-content: center;
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
+  cursor: pointer;
 }
 
 .marquee-row {
@@ -127,6 +136,8 @@
   width: 10rem;
   padding: 0.5rem;
   text-align: center;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
 }
 
 /*

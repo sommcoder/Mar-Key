@@ -3,19 +3,17 @@ export default function ResetBtn(props) {
     ev.preventDefault();
     console.log(ev.target);
     console.log(props.setRow);
+
+    // clear the textRow Components:
     for (let i = 0; i < 3; i++) {
       let targetFormEl = ev.target.form;
-      targetFormEl[i].value = ""; // set user input to ''
+      targetFormEl[i].value = "";
     }
-    const initState = {
-      row0: [],
-      row1: [],
-      row2: [],
-    };
 
+    // reset the rowState to init
     props.setRow((rowValuesObj) => ({
       ...rowValuesObj,
-      ...initState,
+      ...props.rowInitState,
     }));
 
     // we also want to reset the textRow components as well!

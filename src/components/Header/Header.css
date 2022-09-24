@@ -9,4 +9,5 @@
   border-bottom: 0.1rem solid lightgrey;
   width: 100%;
   height: 30px;
+  z-index: 2;
 }

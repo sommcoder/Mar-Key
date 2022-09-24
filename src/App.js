@@ -11,15 +11,14 @@ import { useState } from "react";
 function App() {
   const appTitle = "Mar-Key";
 
-  // when marquee is visible it is INCLUDED in the caluclation when we verify the stock of the proposed marquee
-  // isSet is set AFTER the user clicks the "Set Current"
   const initMarqueeState = {
     East: { isVisible: true, size: "55rem", isSet: false },
     West: { isVisible: true, size: "55rem", isSet: false },
     South: { isVisible: true, size: "110rem", isSet: false },
   };
 
-  const [marqueeState, toggleMarquee] = useState(initMarqueeState);
+  // Marquee container state
+  const [marqueeState, toggleMarquee] = useState(initMarqueeState); //
 
   // keyboard letters for tablet/mobile:
   const letterSet = [
@@ -51,7 +50,12 @@ function App() {
           />
           <div className="marquee-container" key={el}>
             {marqueeState[el].isVisible === true ? (
-              <Marquee name={marqueeState[el]} size={marqueeState[el].size} />
+              <Marquee
+                toggleMarquee={toggleMarquee}
+                stateObj={marqueeState}
+                name={el}
+                size={marqueeState[el].size}
+              />
             ) : null}
           </div>
         </>
