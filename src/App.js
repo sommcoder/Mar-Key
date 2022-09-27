@@ -12,13 +12,13 @@ function App() {
   const appTitle = "Mar-Key";
 
   const initMarqueeState = {
-    East: { isVisible: true, size: "55rem", isSet: false },
-    West: { isVisible: true, size: "55rem", isSet: false },
-    South: { isVisible: true, size: "110rem", isSet: false },
+    East: { isVisible: true, size: "55rem", isSet: false, isError: false },
+    West: { isVisible: false, size: "55rem", isSet: false, isError: false },
+    South: { isVisible: false, size: "110rem", isSet: false, isError: false },
   };
 
   // Marquee container state
-  const [marqueeState, toggleMarquee] = useState(initMarqueeState); //
+  const [marqueeState, setMarquee] = useState(initMarqueeState); //
 
   // keyboard letters for tablet/mobile:
   const letterSet = [
@@ -34,6 +34,19 @@ function App() {
       rowNum: "row2",
       letters: ["ENTER", "z", "x", "c", "v", "b", "n", "m", "<=="],
     },
+    {
+      rowNum: "row3",
+      letters: [
+        "am",
+        "pm",
+        "presents",
+        "www",
+        "live",
+        "feat",
+        "free",
+        "sold out",
+      ],
+    },
   ];
 
   const marqueeNamesArr = Object.keys(initMarqueeState);
@@ -45,14 +58,14 @@ function App() {
         <>
           <DisplayBtn
             name={el}
-            state={marqueeState}
-            toggleMarquee={toggleMarquee}
+            marqueeState={marqueeState}
+            setMarquee={setMarquee}
           />
           <div className="marquee-container" key={el}>
             {marqueeState[el].isVisible === true ? (
               <Marquee
-                toggleMarquee={toggleMarquee}
-                stateObj={marqueeState}
+                setMarquee={setMarquee}
+                marqueeState={marqueeState}
                 name={el}
                 size={marqueeState[el].size}
               />

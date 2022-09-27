@@ -3,26 +3,32 @@ import ResetBtn from "../ResetBtn/ResetBtn";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import TextRow from "../TextRow/TextRow";
 import Block from "../Block/Block";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
 import "./Marquee.css";
 
 export default function Marquee(props) {
-  console.log("marquee component props:", props);
-  console.log("marquee props name:", props.name);
-
-  const initRowValuesObj = {
+  const initRowState = {
     row0: [],
     row1: [],
     row2: [],
   };
 
-  // marquee ROW state
-  const [rowValuesObj, setRow] = useState(initRowValuesObj);
+  // marquee ROW state Objects:
+  const [rowState, setRow] = useState(initRowState); // current state
+  const [newRowState, setNewRow] = useState(initRowState); // new state to compare
 
-  const keysArr = Object.keys(rowValuesObj);
+  const keysArr = Object.keys(initRowState);
+  // gets the keys of the marqueeState
 
   let rowSize = {
     width: props.size,
   };
+
+  let marqName = props.name;
+  let marqState = props.marqueeState;
+
+  const currMarqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
+  console.log(currMarqWidth);
 
   // row = row0, row1, row2
   // row[i] the index of the letter
@@ -31,16 +37,17 @@ export default function Marquee(props) {
   // block[i][1] the letter symbols size
 
   return (
-    <div className="marquee-display-container" marqName={props.name}>
+    <div className="marquee-display-container" marqName={marqName}>
       {keysArr.map((row) => (
         <div
           className="marquee-row"
           style={rowSize}
           data-rowid={row}
-          key={row}
-          rowValuesObj={rowValuesObj}
+          key={`${marqName}${row}`}
+          rowState={rowState}
+          marqWidth={currMarqWidth}
         >
-          {rowValuesObj[row].map((block, i) => (
+          {rowState[row].map((block, i) => (
             <Block
               key={`${row}-block-${i}`}
               block={block[0]}
@@ -57,24 +64,28 @@ export default function Marquee(props) {
             rowId={row}
             key={row}
             marqState={props.state}
+            marqWidth={currMarqWidth}
           />
         ))}
         <SetCurrBtn
-          marqName={props.name}
-          marqState={props.stateObj}
-          toggleMarquee={props.toggleMarquee}
+          marqName={marqName}
+          marqState={marqState}
+          rowState={rowState}
+          setMarquee={props.setMarquee}
           setRow={setRow}
-          marqWidth={props.size}
+          marqWidth={currMarqWidth}
         />
         <ResetBtn
           form="user-input-form"
-          marqName={props.name}
-          marqState={props.stateObj}
-          toggleMarquee={props.toggleMarquee}
-          rowInitState={initRowValuesObj}
+          marqName={marqName}
+          marqState={marqState}
+          marqWidth={currMarqWidth}
+          setMarquee={props.setMarquee}
+          rowInitState={initRowState}
           setRow={setRow}
         />
       </form>
+      {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
     </div>
   );
 }

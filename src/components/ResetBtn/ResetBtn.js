@@ -1,19 +1,22 @@
 export default function ResetBtn(props) {
   function resetRows(ev) {
     ev.preventDefault();
-    console.log(ev.target);
-    console.log(props.setRow);
-
-    // clear the textRow Components:
-    for (let i = 0; i < 3; i++) {
-      let targetFormEl = ev.target.form;
-      targetFormEl[i].value = "";
-    }
-
+    // textRow Loop: assign each value to empty string
+    for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
+    // rowStateObj:
     // reset the rowState to init
     props.setRow((rowValuesObj) => ({
       ...rowValuesObj,
       ...props.rowInitState,
+    }));
+
+    /// marqStateObj:
+    let updatedMarqueeStateObj = props.marqState;
+    updatedMarqueeStateObj[props.marqName].isSet = false;
+    // reset the entire MarStateObj to init
+    props.toggleMarquee((marqueeState) => ({
+      ...marqueeState,
+      ...updatedMarqueeStateObj,
     }));
 
     // we also want to reset the textRow components as well!

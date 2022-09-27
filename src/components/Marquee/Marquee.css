@@ -52,8 +52,8 @@
   border-right: 0.25rem grey solid;
   border-left: 0.25rem grey solid;
 }
-
-.marquee-row:first-child {
+/* first child is the error message component */
+.marquee-row:nth-child(1) {
   border-top: 0.25rem grey solid;
 }
 
@@ -143,8 +143,15 @@
 /*
 red border if there's an error:
 */
-.error {
+.error-message {
+  /* display: none; */
+  border: 0.05rem solid black;
+  margin: 1rem auto;
+  max-width: fit-content;
+  padding: 0.5rem;
+  border-radius: 3px;
   border-color: red;
+  color: red;
 }
 
 .hidden {
