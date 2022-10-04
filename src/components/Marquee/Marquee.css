@@ -20,8 +20,8 @@
 
 .marquee-container:hover {
   border: 0.1rem solid black;
-  box-shadow: 0.1rem 0.2rem 0.5rem grey;
-  transform: translateY(-0.1rem);
+  box-shadow: 0.1rem 0.2rem 0.8rem grey;
+  /* transform: translateY(-0.1rem); */
 }
 
 /* .marquee-container:active {
@@ -51,6 +51,7 @@
   border-bottom: 0.25rem grey solid;
   border-right: 0.25rem grey solid;
   border-left: 0.25rem grey solid;
+  box-shadow: ;
 }
 /* first child is the error message component */
 .marquee-row:nth-child(1) {
@@ -75,8 +76,19 @@
 .marquee-title-btn:hover,
 .text-box-form-reset-btn:hover,
 .set-current-marquee-btn:hover {
-  background-color: rgb(161, 203, 209);
+  background-color: white;
+  background: none;
+  color: var(--btn-color);
+  border: 0.2rem solid var(--btn-color);
   cursor: pointer;
+  transition: ease-in-out;
+}
+
+.marquee-title-btn:active,
+.text-box-form-reset-btn:active,
+.set-current-marquee-btn:active {
+  background-color: var(--btn-color);
+  color: white;
 }
 
 .marquee-block {
