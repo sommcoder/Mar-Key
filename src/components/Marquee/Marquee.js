@@ -89,13 +89,3 @@ export default function Marquee(props) {
     </div>
   );
 }
-
-/*
- 
-PROBLEM:
-
-Now that we have the function in the SETCURRBTN
-- Set needs to act like a submit button
-- we have just wrapped the buttons and the text rows in a FORM and we need the button to "PULL" the input from the textRow inputs
- 
-*/

@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+
+#development
+/newReactComponent.ps1
+
 # testing
 /coverage
 

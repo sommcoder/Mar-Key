@@ -20,14 +20,14 @@ export default function SetCurrBtn(props) {
 
     // TEXTROW LOOP: Populates the targetValueArr
     for (let i = 0; i < 3; i++) {
-      let targetValueStr = targetFormEl[i].value; // user input string
+      let targetValueStr = targetFormEl[i].value.trim(); // user input string
       validEntry++; // valid entry check
       let rowTargetId = targetFormEl[i].dataset.rowid;
       let rowInputArr = []; // a 2d array containing [ltr, size]
       // if the string is blank, skip and simply add to
       if (targetValueStr) {
         // spread string into individual letters in an array, trime edges
-        let targetValueArr = [...targetValueStr.trim()]; // form the array
+        let targetValueArr = [...targetValueStr]; // form the array
         console.log("rowTargetid:", rowTargetId);
         console.log("targetValueArr pre loop:", targetValueArr);
 
@@ -67,7 +67,7 @@ export default function SetCurrBtn(props) {
         ...marqueeState,
         ...updatedMarqueeStateObj,
       }));
-      // reset the textRows after submission
+      // reset the textRows afterSubmit
       for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
     }
     console.log("marqObj POST toggleMarquee():", marqState);
