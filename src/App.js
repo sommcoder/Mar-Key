@@ -5,11 +5,10 @@ import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
 import { useState } from "react";
 
-// const PORT = 5000; // express.js server port
-// the react app is on port 3000
-
 function App() {
   const appTitle = "Mar-Key";
+  // we should probably move anything Marquee state related into the Marquee component
+  // and anything row state related, in the TextRow component??
 
   const initMarqueeState = {
     East: { isVisible: true, size: "55rem", isSet: false, isError: false },
@@ -18,7 +17,7 @@ function App() {
   };
 
   // Marquee container state
-  const [marqueeState, setMarquee] = useState(initMarqueeState); //
+  const [marqueeState, setMarquee] = useState(initMarqueeState);
 
   // keyboard letters for tablet/mobile:
   const letterSet = [
