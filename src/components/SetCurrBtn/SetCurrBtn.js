@@ -1,15 +1,10 @@
 import data from "../../data/blockData.json";
 
 export default function SetCurrBtn(props) {
+  console.log("Set CurrBtn props:", props);
   const marqState = props.marqState;
-  const rowState = props.rowState;
   const marqName = props.marqName;
-  const currMarqWidth = props.marqWidth;
-
-  console.log("marqName:", marqName);
-  console.log("marqWidth:", currMarqWidth);
-  console.log("marqState SetCurrBtn prerender:", marqState);
-  console.log("rowState SetCurrBtn prerender:", rowState);
+  let disabled = true;
 
   function setCurrMarquee(ev) {
     ev.preventDefault();
@@ -75,6 +70,7 @@ export default function SetCurrBtn(props) {
   return (
     <button
       form={props.form}
+      disabled={disabled}
       onClick={setCurrMarquee}
       className="set-current-marquee-btn"
     >

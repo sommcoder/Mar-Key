@@ -1,6 +1,5 @@
 export default function ErrorMsg(props) {
   const err_size = "Your text blocks are too large for this marquee row";
-
   const err_input = "This particular symbol was not found in our database";
 
   /*

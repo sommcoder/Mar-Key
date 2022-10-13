@@ -1,13 +1,11 @@
 import { useState } from "react";
-import ResetBtn from "../ResetBtn/ResetBtn";
-import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
-import TextRowBox from "../TextRowBox/TextRowBox";
+import TextRowForm from "../TextRowForm/TextRowForm";
 import Block from "../Block/Block";
-import ErrorMsg from "../ErrorMsg/ErrorMsg";
 import "./Marquee.css";
 
 export default function Marquee(props) {
-  // row state is in the Marquee because the Marquee component is the common parent shared by TextRow as well as the Block, SetCurrBtn and ResetBtns components
+  console.log("Marquee props:", props);
+  // Marquee is the immediate parent of Block & TextRowForm
   const initRowState = {
     row0: [],
     row1: [],
@@ -17,7 +15,6 @@ export default function Marquee(props) {
   const [rowState, setRow] = useState(initRowState); // currState to initiate
   const [newRowState, setNewRow] = useState(initRowState); // newState to compare
 
-  // this is a reference we need to coordinate with the row of the Marquee so the right input goes to the right marqueeRow:
   const keysArr = Object.keys(initRowState);
 
   let rowSize = {
@@ -28,8 +25,8 @@ export default function Marquee(props) {
   let marqState = props.marqueeState;
 
   // gets the marqueeWidth passed down from the top-level App.js
-  const currMarqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
-  console.log(currMarqWidth);
+  const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
+  console.log(marqWidth);
 
   // row = row0, row1, row2
   // row[i] the index of the letter
@@ -44,48 +41,38 @@ export default function Marquee(props) {
           className="marquee-row"
           style={rowSize}
           data-rowid={row}
-          key={`${marqName}${row}`}
+          key={`${marqName}-${row}`}
           rowState={rowState}
-          marqWidth={currMarqWidth}
+          marqWidth={marqWidth}
         >
           {rowState[row].map((block, i) => (
             <Block
-              key={`${row}-block-${i}`}
+              key={`${marqName}-${row}-block-${i}`}
               block={block[0]}
               style={block[1]}
             />
           ))}
         </div>
       ))}
-      <TextRowBox
+      <TextRowForm
         id="user-input-form"
         className="text-box-container"
         keysArr={keysArr}
-      />
-      <SetCurrBtn
-        form="user-input-form"
-        marqName={marqName}
-        marqState={marqState}
         rowState={rowState}
-        setMarquee={props.setMarquee}
+        newRowState={newRowState}
+        initRowState={initRowState}
         setRow={setRow}
-        marqWidth={currMarqWidth}
-      />
-      <ResetBtn
+        setNewRow={setNewRow}
         marqName={marqName}
         marqState={marqState}
-        marqWidth={currMarqWidth}
-        setMarquee={props.setMarquee}
-        rowInitState={initRowState}
-        setRow={setRow}
+        marqWidth={marqWidth}
       />
-      {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
     </div>
   );
 }
 
 /*
  
-We changed TextRow component to be a TextRowBox component so that we're able to map, key and ref the input elements all within the same component to be able to iterate through the elements using ref
+We changed TextRow component to be a TextRowForm component so that we're able to map, key and ref the input elements all within the same component to be able to iterate through the elements using ref
 
 */
