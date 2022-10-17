@@ -1,4 +1,5 @@
 # command: PowerShell -File newReactComponent.ps1
+# I'm wondering if we can add a further conditional statement to check if the user is using the CSS-in-JS library: styled-components. mayeb script can ask user if they're using it and what the files name is. If the file doesn't exist, make it, If it doesn't, simply add the import template to the Component js file but also add a CSS boilerplate for that component in the Styled.js file.
 
 # assign a variable to a sequence/user prompt?
 $ComponentName = Read-Host -prompt "Enter React Component Name"

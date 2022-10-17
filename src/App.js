@@ -1,8 +1,7 @@
-import "./App.css";
-import Header from "./components/Header/Header";
-import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
-import Marquee from "./components/Marquee/Marquee";
-import Keyboard from "./components/Keyboard/Keyboard";
+import { Header, DisplayBtn, Marquee, Keyboard } from "./components/Styled";
+// import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
+// import Marquee from "./components/Marquee/Marquee";
+// import Keyboard from "./components/Keyboard/Keyboard";
 import { useState } from "react";
 
 function App() {

@@ -35,7 +35,7 @@ export default function Marquee(props) {
   // block[i][1] the letter symbols size
 
   return (
-    <div className="marquee-display-container" marqName={marqName}>
+    <Marquee marqName={marqName}>
       {keysArr.map((row) => (
         <div
           className="marquee-row"
@@ -67,7 +67,7 @@ export default function Marquee(props) {
         marqState={marqState}
         marqWidth={marqWidth}
       />
-    </div>
+    </Marquee>
   );
 }
 

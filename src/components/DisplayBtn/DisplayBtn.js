@@ -1,3 +1,5 @@
+import { DisplayBtn } from "../Styled";
+
 export default function DisplayBtn(props) {
   function toggleDisplay(ev) {
     // console.log("ev id:", ev.target.dataset.id);
@@ -16,12 +18,12 @@ export default function DisplayBtn(props) {
   }
 
   return (
-    <button
+    <DisplayBtn
       onClick={toggleDisplay}
       className="marquee-title-btn"
       data-id={props.name}
     >
       {props.name}
-    </button>
+    </DisplayBtn>
   );
 }
