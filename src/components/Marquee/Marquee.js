@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TextRowForm from "../TextRowForm/TextRowForm";
 import Block from "../Block/Block";
-import "./Marquee.css";
+import styled from "styled-components";
 
 export default function Marquee(props) {
   console.log("Marquee props:", props);
@@ -35,7 +35,7 @@ export default function Marquee(props) {
   // block[i][1] the letter symbols size
 
   return (
-    <Marquee marqName={marqName}>
+    <StyledMarquee marqName={marqName}>
       {keysArr.map((row) => (
         <div
           className="marquee-row"
@@ -67,12 +67,19 @@ export default function Marquee(props) {
         marqState={marqState}
         marqWidth={marqWidth}
       />
-    </Marquee>
+    </StyledMarquee>
   );
 }
 
-/*
- 
-We changed TextRow component to be a TextRowForm component so that we're able to map, key and ref the input elements all within the same component to be able to iterate through the elements using ref
-
-*/
+// styling:
+const StyledMarquee = styled.div`
+  padding-top: 2rem;
+  margin: 0 auto 2rem auto;
+  width: 100%;
+  max-width: 1000px;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
+  cursor: pointer;
+`;

@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import data from "../../data/blockData.json";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import ResetBtn from "../ResetBtn/ResetBtn";
@@ -54,7 +55,7 @@ export default function TextRowForm(props) {
   }
 
   return (
-    <form id="user-input-form" className="text-box-container">
+    <TextRowFormStyle id="user-input-form" className="text-box-container">
       {props.keysArr.map((row) => (
         <input
           key={`${marqName}-${row}`}
@@ -91,6 +92,10 @@ export default function TextRowForm(props) {
         setRow={props.setRow}
       />
       {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
-    </form>
+    </TextRowFormStyle>
   );
 }
+
+const TextRowFormStyle = styled.form`
+  margin-bottom: 0.5rem;
+`;

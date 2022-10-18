@@ -1,10 +1,10 @@
-import { Header, DisplayBtn, Marquee, Keyboard } from "./components/Styled";
-// import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
-// import Marquee from "./components/Marquee/Marquee";
-// import Keyboard from "./components/Keyboard/Keyboard";
+import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
+import Marquee from "./components/Marquee/Marquee";
+import Keyboard from "./components/Keyboard/Keyboard";
+import Header from "./components/Header/Header";
 import { useState } from "react";
 
-function App() {
+export default function App() {
   const appTitle = "Mar-Key";
   // we should probably move anything Marquee state related into the Marquee component
   // and anything row state related, in the TextRow component??
@@ -75,5 +75,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

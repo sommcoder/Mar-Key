@@ -41,7 +41,6 @@
   border-bottom: 0.25rem grey solid;
   border-right: 0.25rem grey solid;
   border-left: 0.25rem grey solid;
-  box-shadow: ;
 }
 /* first child is the error message component */
 .marquee-row:nth-child(1) {
@@ -106,10 +105,6 @@
 
 .marquee-block:hover {
   background-color: rgb(220, 220, 220);
-}
-
-.text-box-container {
-  margin-bottom: 0.5rem;
 }
 
 .text-row {

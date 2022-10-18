@@ -1,4 +1,4 @@
-import { DisplayBtn } from "../Styled";
+import styled from "styled-components";
 
 export default function DisplayBtn(props) {
   function toggleDisplay(ev) {
@@ -18,12 +18,39 @@ export default function DisplayBtn(props) {
   }
 
   return (
-    <DisplayBtn
-      onClick={toggleDisplay}
-      className="marquee-title-btn"
-      data-id={props.name}
-    >
+    <StyledDisplayBtn onClick={toggleDisplay} data-id={props.name}>
       {props.name}
-    </DisplayBtn>
+    </StyledDisplayBtn>
   );
 }
+
+// styled-component:
+const StyledDisplayBtn = styled.button`
+  background-color: "powderblue";
+  font-weight: 600;
+  border-radius: "2.5px";
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem;
+  border: none;
+  height: 3.5rem;
+  width: 10rem;
+  padding: 0.5rem;
+  text-align: center;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
+
+  &:active {
+    background-color: "powderblue";
+    color: white;
+  }
+  &:hover {
+    background-color: white;
+    background: none;
+    color: "powderblue";
+    border: 0.2rem solid "powderblue";
+    transition: ease-in-out;
+    cursor: pointer;
+  }
+`;
