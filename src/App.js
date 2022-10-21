@@ -1,8 +1,11 @@
+import Header from "./components/Header/Header";
 import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
 import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
-import Header from "./components/Header/Header";
+////////////////////////////////////////////////
 import { useState } from "react";
+import styled from "styled-components";
+////////////////////////////////////////////////
 
 export default function App() {
   const appTitle = "Mar-Key";
@@ -59,7 +62,7 @@ export default function App() {
             marqueeState={marqueeState}
             setMarquee={setMarquee}
           />
-          <div className="marquee-container" key={el}>
+          <StyledMarqueeContainer key={el}>
             {marqueeState[el].isVisible === true ? (
               <Marquee
                 setMarquee={setMarquee}
@@ -68,10 +71,26 @@ export default function App() {
                 size={marqueeState[el].size}
               />
             ) : null}
-          </div>
+          </StyledMarqueeContainer>
         </>
       ))}
       <Keyboard letterSet={letterSet} />
     </div>
   );
 }
+
+const StyledMarqueeContainer = styled.div`
+  /* max-width: 700px; */
+  width: 100%;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+  border: 0.02rem solid grey;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
+
+  &:hover {
+    border: 0.1rem solid black;
+    box-shadow: 0.1rem 0.2rem 0.8rem grey;
+    /* transform: translateY(-0.1rem); */
+  }
+`;

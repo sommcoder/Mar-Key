@@ -1,4 +1,5 @@
 import data from "../../data/blockData.json";
+import styled from "styled-components";
 
 export default function SetCurrBtn(props) {
   console.log("Set CurrBtn props:", props);
@@ -68,16 +69,26 @@ export default function SetCurrBtn(props) {
     console.log("marqObj POST toggleMarquee():", marqState);
   }
   return (
-    <button
+    <StyledSetCurrBtn
       form={props.form}
       disabled={disabled}
       onClick={setCurrMarquee}
-      className="set-current-marquee-btn"
     >
       {marqState[marqName].isSet ? "set new" : "set current"}
-    </button>
+    </StyledSetCurrBtn>
   );
 }
+
+const StyledSetCurrBtn = styled.button`
+  &:hover {
+    background-color: white;
+    background: none;
+    color: "powderblue";
+    border: 0.2rem solid "powderblue";
+    cursor: pointer;
+    transition: ease-in-out;
+  }
+`;
 
 /*
  

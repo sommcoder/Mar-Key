@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 export default function ResetBtn(props) {
   function resetRows(ev) {
     ev.preventDefault();
@@ -22,12 +24,38 @@ export default function ResetBtn(props) {
     // we also want to reset the textRow components as well!
     // we may need to use useRef for this!
   }
-  return (
-    <button onClick={resetRows} className="text-box-form-reset-btn">
-      reset
-    </button>
-  );
+  return <StyledResetBtn onClick={resetRows}>reset</StyledResetBtn>;
 }
+
+const StyledResetBtn = styled.button`
+  background-color: "powderblue";
+  font-weight: 600;
+  border-radius: "2.5px";
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem;
+  border: none;
+  height: 3.5rem;
+  width: 10rem;
+  padding: 0.5rem;
+  text-align: center;
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
+
+  &:active {
+    background-color: "powderblue";
+    color: white;
+  }
+  &:hover {
+    background-color: white;
+    background: none;
+    color: "powderblue";
+    border: 0.2rem solid "powderblue";
+    transition: ease-in-out;
+    cursor: pointer;
+  }
+`;
 
 /*
  

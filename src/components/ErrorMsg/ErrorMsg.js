@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 export default function ErrorMsg(props) {
   const err_size = "Your text blocks are too large for this marquee row";
   const err_input = "This particular symbol was not found in our database";
@@ -14,8 +16,18 @@ export default function ErrorMsg(props) {
 
   //   function showMsg() {}
   return (
-    <div className="error-message">
+    <StyledErrorMsg>
       Your text blocks are too large for this marquee row
-    </div>
+    </StyledErrorMsg>
   );
 }
+
+const StyledErrorMsg = styled.div`
+  border: 0.05rem solid black;
+  margin: 1rem auto;
+  max-width: fit-content;
+  padding: 0.5rem;
+  border-radius: 3px;
+  border-color: red;
+  color: red;
+`;

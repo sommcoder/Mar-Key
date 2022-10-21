@@ -37,8 +37,7 @@ export default function Marquee(props) {
   return (
     <StyledMarquee marqName={marqName}>
       {keysArr.map((row) => (
-        <div
-          className="marquee-row"
+        <StyledMarqueeRow
           style={rowSize}
           data-rowid={row}
           key={`${marqName}-${row}`}
@@ -52,11 +51,9 @@ export default function Marquee(props) {
               style={block[1]}
             />
           ))}
-        </div>
+        </StyledMarqueeRow>
       ))}
       <TextRowForm
-        id="user-input-form"
-        className="text-box-container"
         keysArr={keysArr}
         rowState={rowState}
         newRowState={newRowState}
@@ -82,4 +79,22 @@ const StyledMarquee = styled.div`
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
   cursor: pointer;
+`;
+
+const StyledMarqueeRow = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  background-color: rgb(253, 243, 229);
+  height: 5rem;
+  margin: 0 auto;
+  border-bottom: 0.25rem grey solid;
+  border-right: 0.25rem grey solid;
+  border-left: 0.25rem grey solid;
+
+  /* first child is the error message component */
+  &:nth-child(1) {
+    border-top: 0.25rem grey solid;
+  }
 `;

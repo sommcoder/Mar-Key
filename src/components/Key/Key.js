@@ -1,22 +1,33 @@
-import { useState } from "react";
+import styled from "styled-components";
 
 export default function Key(props) {
   const ltr = props.letter;
 
   if (ltr !== "ENTER" && ltr !== "<==") {
-    return (
-      <button className="keyboard-key" value={ltr}>
-        {ltr}
-      </button>
-    );
-  } else
-    return (
-      <button
-        // onClick={props.submitLetter(ltr)}
-        className="keyboard-key keyboard-key-special"
-        value={ltr}
-      >
-        {ltr}
-      </button>
-    );
+    return <StyledKey value={ltr}>{ltr}</StyledKey>;
+  } else return <StyledKeySpecial value={ltr}>{ltr}</StyledKeySpecial>;
 }
+
+const StyledKey = styled.button`
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-right: 3px;
+  margin-left: 3px;
+  width: 5rem;
+  height: 7rem;
+  background-color: rgb(194, 197, 197);
+  color: black;
+  text-align: center;
+  &:hover {
+    background-color: rgb(172, 172, 172);
+  }
+`;
+
+const StyledKeySpecial = styled.button`
+  width: 8rem;
+  &:hover {
+    background-color: rgb(172, 172, 172);
+  }
+`;

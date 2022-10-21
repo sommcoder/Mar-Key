@@ -55,9 +55,9 @@ export default function TextRowForm(props) {
   }
 
   return (
-    <TextRowFormStyle id="user-input-form" className="text-box-container">
+    <StyledTextRowForm>
       {props.keysArr.map((row) => (
-        <input
+        <StyledTextRow
           key={`${marqName}-${row}`}
           // ref={(node) => {
           //   const map = getMap();
@@ -67,7 +67,6 @@ export default function TextRowForm(props) {
           selected={selected}
           // onFocus={activateTextRow}
           // onBlur={deactivateTextRow}
-          className="text-row"
           data-rowid={props.rowId}
           type="text"
           onKeyDown={validateEntry}
@@ -92,10 +91,22 @@ export default function TextRowForm(props) {
         setRow={props.setRow}
       />
       {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
-    </TextRowFormStyle>
+    </StyledTextRowForm>
   );
 }
 
-const TextRowFormStyle = styled.form`
+const StyledTextRowForm = styled.form`
   margin-bottom: 0.5rem;
+`;
+
+const StyledTextRow = styled.input`
+  align-items: center;
+  display: block;
+  text-align: center;
+  width: 350px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  font-weight: bold;
+  cursor: pointer;
 `;
