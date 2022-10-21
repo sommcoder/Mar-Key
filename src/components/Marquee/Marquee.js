@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export default function Marquee(props) {
   console.log("Marquee props:", props);
-  // Marquee is the immediate parent of Block & TextRowForm
+  // Marquee is the immediate parent of Block & TextRowForm so therefore the row state is here
   const initRowState = {
     row0: [],
     row1: [],
@@ -53,7 +53,7 @@ export default function Marquee(props) {
           ))}
         </StyledMarqueeRow>
       ))}
-      <TextRowForm
+      {/* <TextRowForm
         keysArr={keysArr}
         rowState={rowState}
         newRowState={newRowState}
@@ -63,10 +63,17 @@ export default function Marquee(props) {
         marqName={marqName}
         marqState={marqState}
         marqWidth={marqWidth}
-      />
+      /> */}
     </StyledMarquee>
   );
 }
+
+/*
+ 
+TextRowForm component is the one messing up our rendering causing a blank page.
+Let's try and figure out why this may be next time! Also looks like some of the styling didn't get transferred over from CSS to using styled-components
+ 
+*/
 
 // styling:
 const StyledMarquee = styled.div`
@@ -93,7 +100,7 @@ const StyledMarqueeRow = styled.div`
   border-right: 0.25rem grey solid;
   border-left: 0.25rem grey solid;
 
-  /* first child is the error message component */
+  /* first child is technically the ErrMsg component */
   &:nth-child(1) {
     border-top: 0.25rem grey solid;
   }
