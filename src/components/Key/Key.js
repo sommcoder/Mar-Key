@@ -20,6 +20,8 @@ const StyledKey = styled.button`
   background-color: rgb(194, 197, 197);
   color: black;
   text-align: center;
+  border-radius: 15%;
+
   &:hover {
     background-color: rgb(172, 172, 172);
   }

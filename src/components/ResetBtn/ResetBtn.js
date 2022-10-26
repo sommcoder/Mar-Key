@@ -24,13 +24,14 @@ export default function ResetBtn(props) {
     // we also want to reset the textRow components as well!
     // we may need to use useRef for this!
   }
-  return <StyledResetBtn onClick={resetRows}>reset</StyledResetBtn>;
+  return <StyledResetBtn onClick={resetRows}>Reset</StyledResetBtn>;
 }
 
 const StyledResetBtn = styled.button`
-  background-color: "powderblue";
+  color: black;
+  background-color: powderblue;
   font-weight: 600;
-  border-radius: "2.5px";
+  border-radius: 2.5px;
   font-size: 1.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -40,18 +41,21 @@ const StyledResetBtn = styled.button`
   width: 10rem;
   padding: 0.5rem;
   text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
 
   &:active {
-    background-color: "powderblue";
+    background-color: powderblue;
     color: white;
   }
   &:hover {
     background-color: white;
     background: none;
-    color: "powderblue";
-    border: 0.2rem solid "powderblue";
+    color: black;
+    border: 0.2rem solid powderblue;
     transition: ease-in-out;
     cursor: pointer;
   }

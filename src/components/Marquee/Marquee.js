@@ -15,7 +15,9 @@ export default function Marquee(props) {
   const [rowState, setRow] = useState(initRowState); // currState to initiate
   const [newRowState, setNewRow] = useState(initRowState); // newState to compare
 
-  const keysArr = Object.keys(initRowState);
+  const keysArr = Object.keys(initRowState); // names of the rows
+
+  console.log("keysArr:", keysArr);
 
   let rowSize = {
     width: props.size,
@@ -26,7 +28,7 @@ export default function Marquee(props) {
 
   // gets the marqueeWidth passed down from the top-level App.js
   const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
-  console.log(marqWidth);
+  console.log("marqWidth", marqWidth);
 
   // row = row0, row1, row2
   // row[i] the index of the letter
@@ -53,7 +55,7 @@ export default function Marquee(props) {
           ))}
         </StyledMarqueeRow>
       ))}
-      {/* <TextRowForm
+      <TextRowForm
         keysArr={keysArr}
         rowState={rowState}
         newRowState={newRowState}
@@ -63,7 +65,7 @@ export default function Marquee(props) {
         marqName={marqName}
         marqState={marqState}
         marqWidth={marqWidth}
-      /> */}
+      />
     </StyledMarquee>
   );
 }
@@ -75,9 +77,10 @@ Let's try and figure out why this may be next time! Also looks like some of the 
  
 */
 
-// styling:
+////////////////////////////////////////////////
+
 const StyledMarquee = styled.div`
-  padding-top: 2rem;
+  padding-top: 1rem;
   margin: 0 auto 2rem auto;
   width: 100%;
   max-width: 1000px;
@@ -86,6 +89,15 @@ const StyledMarquee = styled.div`
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
   cursor: pointer;
+
+  @keyframes fadeInAnimation {
+    start {
+      opacity: 0;
+    }
+    end {
+      opacity: 1;
+    }
+  }
 `;
 
 const StyledMarqueeRow = styled.div`
@@ -99,6 +111,8 @@ const StyledMarqueeRow = styled.div`
   border-bottom: 0.25rem grey solid;
   border-right: 0.25rem grey solid;
   border-left: 0.25rem grey solid;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.16), 0 8px 8px rgba(0, 0, 0, 0.2);
 
   /* first child is technically the ErrMsg component */
   &:nth-child(1) {

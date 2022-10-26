@@ -74,19 +74,46 @@ export default function SetCurrBtn(props) {
       disabled={disabled}
       onClick={setCurrMarquee}
     >
-      {marqState[marqName].isSet ? "set new" : "set current"}
+      {marqState[marqName].isSet ? "Compare" : "Set"}
     </StyledSetCurrBtn>
   );
 }
 
 const StyledSetCurrBtn = styled.button`
+  color: black;
+  background-color: powderblue;
+  font-weight: 600;
+  border-radius: 2.5px;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem;
+  border: none;
+  height: 3.5rem;
+  width: 10rem;
+  padding: 0.5rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  animation: fadeInAnimation ease-in-out 1s;
+  animation-iteration-count: 1;
+
+  @keyframes fadeInAnimation {
+    start {
+      opacity: 0;
+    }
+    end {
+      opacity: 1;
+    }
+  }
   &:hover {
     background-color: white;
     background: none;
-    color: "powderblue";
-    border: 0.2rem solid "powderblue";
-    cursor: pointer;
+    color: black;
+    border: 0.2rem solid powderblue;
     transition: ease-in-out;
+    cursor: pointer;
   }
 `;
 

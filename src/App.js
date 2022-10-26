@@ -1,4 +1,5 @@
-import Header from "./components/Header/Header";
+import React from "react";
+import NavBar from "./components/NavBar/NavBar";
 import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
 import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
@@ -14,8 +15,8 @@ export default function App() {
 
   const initMarqueeState = {
     East: { isVisible: true, size: "55rem", isSet: false, isError: false },
-    West: { isVisible: false, size: "55rem", isSet: false, isError: false },
-    South: { isVisible: false, size: "110rem", isSet: false, isError: false },
+    West: { isVisible: true, size: "55rem", isSet: false, isError: false },
+    South: { isVisible: true, size: "110rem", isSet: false, isError: false },
   };
 
   // Marquee container state
@@ -51,20 +52,23 @@ export default function App() {
   ];
 
   const marqueeNamesArr = Object.keys(initMarqueeState);
+  console.log("marqueeNamesArr:", marqueeNamesArr);
 
   return (
-    <div id="app-container">
-      <Header title={appTitle} />
+    <StyledAppContainer>
+      <NavBar title={appTitle} />
       {marqueeNamesArr.map((el) => (
-        <>
+        <React.Fragment key={el}>
           <DisplayBtn
             name={el}
+            key={`btn-${el}`}
             marqueeState={marqueeState}
             setMarquee={setMarquee}
           />
           <StyledMarqueeContainer key={el}>
             {marqueeState[el].isVisible === true ? (
               <Marquee
+                key={`marq-${el}`}
                 setMarquee={setMarquee}
                 marqueeState={marqueeState}
                 name={el}
@@ -72,25 +76,35 @@ export default function App() {
               />
             ) : null}
           </StyledMarqueeContainer>
-        </>
+        </React.Fragment>
       ))}
       <Keyboard letterSet={letterSet} />
-    </div>
+    </StyledAppContainer>
   );
 }
+
+const StyledAppContainer = styled.div`
+  margin: 0 auto;
+  align-content: center;
+  align-items: center;
+  max-width: 100%;
+`;
 
 const StyledMarqueeContainer = styled.div`
   /* max-width: 700px; */
   width: 100%;
   margin: 0 auto 2rem auto;
   text-align: center;
-  border: 0.02rem solid grey;
+  border: 1px solid rgba(0, 0, 0, 0); // transparent
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
 
-  &:hover {
-    border: 0.1rem solid black;
-    box-shadow: 0.1rem 0.2rem 0.8rem grey;
-    /* transform: translateY(-0.1rem); */
+  @keyframes fadeInAnimation {
+    start {
+      opacity: 0;
+    }
+    end {
+      opacity: 1;
+    }
   }
 `;
