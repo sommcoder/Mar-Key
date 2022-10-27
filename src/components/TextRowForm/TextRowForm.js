@@ -3,84 +3,98 @@ import data from "../../data/blockData.json";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import ResetBtn from "../ResetBtn/ResetBtn";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import { useState, useEffect } from "react";
 
 /*
  
 textRowForm's logic handles user validation in the input elements (Text Rows)
+
+
+TODO: I think we may need to incorporate a useState Hook in some way. with useEffect being the thing that triggers the animation
+
+
+todo: what we want is for the particular element with user input that EXCEEDS the marquee width to have a one-time animation occur on it that triggered once the user tries to keyDown a key that would prevent the whole input from being able to fit on the marqueeRow
  
 */
 
+let isError = false;
+
 export default function TextRowForm(props) {
+  // const [isError, toggleError] = useState(false); // a boolean state
+
   console.log("TextRowForm props:", props);
   // global component variables:
   const marqName = props.marqName;
   const marqState = props.marqState;
   const marqWidth = props.marqWidth;
-  let selected = false;
-  let blockSizeTally = 0;
-  let currInputArr = [];
+
+  // this is an object that will store our currInput and its corresponding size. This DOES NOT need to be controlled in state because we do not want to trigger a rerendering each time we add something
+  const inputValidationCache = {
+    row0: { value: [], size: 0 },
+    row1: { value: [], size: 0 },
+    row2: { value: [], size: 0 },
+  };
 
   function validateEntry(ev) {
-    selected = true;
-    if (!selected) return;
     let key = ev.key;
+    let row = ev.target.dataset.rowid;
     console.log("ev:", ev);
     console.log("key:", key);
-
-    // handle enter submit:
+    console.log("row:", row);
+    ////////////////////////////////////////////////
+    if (key === "Tab") return;
+    // prevents scroll jumping on space bar keyDown since we are on a read-only element
+    // user can still scroll jump if they are NOT in an input element
+    if (key === " ") ev.preventDefault();
+    // handle enter/submit:
+    // this should just erase the cache and in the SetCurrBtn component we will clear the entire form
     if (key === "Enter") {
-      blockSizeTally = 0; // reset block tally to zero, form has submitted
-      return true;
+      // do we even need to do this? won't the form submission in setCurrBtn trigger a rerendering?
+      for (const line in inputValidationCache) {
+        if (Object.hasOwn(inputValidationCache, line)) {
+          console.log(inputValidationCache[line]);
+          inputValidationCache[line].value = []; // reset to empty array
+          inputValidationCache[line].size = 0; // reset to 0
+        }
+      }
+      console.log(inputValidationCache);
+      return;
     }
 
-    // tab traverses to the NEXT sibling (textRow input element)
-    if (key === "Tab") {
-      /*
-       
-      we need to figure out how to traverse to the next sibling.
-
-      1) when on last sibling, tab moves back up to the first sibling
-      2) if enter is pressed, form submits based on current input, SetCurrBtn component handles logic and settings state from there!
-       
-      */
-      return true;
-    }
-
-    // prevents special buttons, however we may need to adjust this when we incorporate emoji's which of course take up multiple char indices
-    if (key.length > 1 && key !== " ") return false;
-
-    // the size of the block that corresponds with what the user just inputted:
-    let currBlockInput = +data[key].size.split("rem").splice(0, 1);
-    // on enter, get the data-rowId of the next sibling
-
-    // prevent auto-scrolling of the space bar:
-    if (key === " " || ev.target === document.body) ev.preventDefault();
+    // handle deletions
     if (key === "Backspace" || key === "Delete") {
-      // handle deletions:
-      //reduce the size of the blockSizeTally by the currBlockInput
-      blockSizeTally -= currBlockInput;
+      // lookup the size of the block that's in the last position of our cache Object
+      // subtract and assign result to the cache
+      inputValidationCache[row].size -= +data[
+        inputValidationCache[row].value.at(-1)
+      ].size
+        .split("rem")
+        .splice(0, 1);
 
-      // handle input
-      currInputArr.pop(); // remove most recent letter
-      ev.target.value = currInputArr.join(""); // convert string[] to string and assign
+      inputValidationCache[row].value.pop(); // pop the last input value off the valueArr
+
+      // assign our cache to the input value
+      ev.target.value = inputValidationCache[row].value.join("");
+      return;
     }
 
-    // handle too large of an input (don't allow user to add this input if it's block would be too big for this particular Marquee component)
-    if (blockSizeTally + currBlockInput >= marqWidth) {
-      console.log("input too big");
-      // disabled = true; // prevent further user input until a deletion keyDown occurs
-      // should add a red border and "rumble" animation if possible
-      return false;
-    } else {
-      // if NOT larger than the marquee, add and assign to the blockSizeTally
-      blockSizeTally += currBlockInput;
-      // concat and assign the value of the input to the key being keyDown'ed
-      currInputArr.push(key);
-      console.log("currInputArr.join()", currInputArr.join(""));
-      ev.target.value = currInputArr.join("");
+    // get the size of the block that corresponds with what the user just inputted:
+    let currBlockSize = +data[key].size.split("rem").splice(0, 1);
+
+    // validation max capacity guard:
+    if (inputValidationCache[row].size + currBlockSize > marqWidth) {
+      console.log("cannot add, row capacity has been reached");
+      // toggleError(true);
+      return; // exit execution
     }
 
-    return true;
+    ////////////////////////////////////////////////
+    // if all above is well, add to our cache and assign currKey to our input element
+    inputValidationCache[row].size += currBlockSize; // update size
+    inputValidationCache[row].value.push(key); // update input values
+    ev.target.value = inputValidationCache[row].value.join("");
+
+    return;
   }
 
   return (
@@ -90,9 +104,7 @@ export default function TextRowForm(props) {
         <StyledTextRow
           key={`${marqName}-${row}`}
           readOnly
-          // onFocus={}
-          selected={selected}
-          data-rowid={props.rowId}
+          data-rowid={row}
           type="text"
           onKeyDown={validateEntry}
         />
@@ -150,5 +162,29 @@ const StyledTextRow = styled.input`
   &:focus {
     outline: none;
     background-color: rgba(176, 224, 230, 0.75);
+  }
+
+  animation: errorShake ease-in-out 1s;
+  animation-iteration-count: 1;
+
+  @keyframes errorShake {
+    0% {
+      transform: translateX(-1%);
+    }
+    20% {
+      transform: translateX(1%);
+    }
+    40% {
+      transform: translateX(-2%);
+    }
+    60% {
+      transform: translateX(2%);
+    }
+    80% {
+      transform: translateX(1%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
   }
 `;
