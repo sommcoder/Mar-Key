@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export default function Block(props) {
   const blockWidth = {
@@ -42,6 +42,9 @@ const StyledBlock = styled.input`
   @keyframes fadeInAnimation {
     0% {
       opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
     }
     100% {
       opacity: 1;

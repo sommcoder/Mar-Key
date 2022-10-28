@@ -1,22 +1,22 @@
-import React from 'react';
-import NavBar from './components/NavBar/NavBar';
-import DisplayBtn from './components/DisplayBtn/DisplayBtn';
-import Marquee from './components/Marquee/Marquee';
-import Keyboard from './components/Keyboard/Keyboard';
+import React from "react";
+import NavBar from "./components/NavBar/NavBar";
+import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
+import Marquee from "./components/Marquee/Marquee";
+import Keyboard from "./components/Keyboard/Keyboard";
 ////////////////////////////////////////////////
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 ////////////////////////////////////////////////
 
 export default function App() {
-  const appTitle = 'Mar-Key';
+  const appTitle = "Mar-Key";
   // we should probably move anything Marquee state related into the Marquee component
   // and anything row state related, in the TextRow component??
 
   const initMarqueeState = {
-    East: { isVisible: true, size: '55rem', isSet: false, isError: false },
-    West: { isVisible: false, size: '55rem', isSet: false, isError: false },
-    South: { isVisible: false, size: '110rem', isSet: false, isError: false },
+    East: { isVisible: true, size: "55rem", isSet: false, isError: false },
+    West: { isVisible: true, size: "55rem", isSet: false, isError: false },
+    South: { isVisible: true, size: "110rem", isSet: false, isError: false },
   };
 
   // Marquee container state
@@ -25,39 +25,39 @@ export default function App() {
   // keyboard letters for tablet/mobile:
   const letterSet = [
     {
-      rowNum: 'row0',
-      letters: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      rowNum: "row0",
+      letters: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
     },
     {
-      rowNum: 'row1',
-      letters: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+      rowNum: "row1",
+      letters: ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
     },
     {
-      rowNum: 'row2',
-      letters: ['ENTER', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<=='],
+      rowNum: "row2",
+      letters: ["ENTER", "z", "x", "c", "v", "b", "n", "m", "<=="],
     },
     {
-      rowNum: 'row3',
+      rowNum: "row3",
       letters: [
-        'am',
-        'pm',
-        'presents',
-        'www',
-        'live',
-        'feat',
-        'free',
-        'sold out',
+        "am",
+        "pm",
+        "presents",
+        "www",
+        "live",
+        "feat",
+        "free",
+        "sold out",
       ],
     },
   ];
 
   const marqueeNamesArr = Object.keys(initMarqueeState);
-  console.log('marqueeNamesArr:', marqueeNamesArr);
+  console.log("marqueeNamesArr:", marqueeNamesArr);
 
   return (
     <StyledAppContainer>
       <NavBar title={appTitle} />
-      {marqueeNamesArr.map(el => (
+      {marqueeNamesArr.map((el) => (
         <React.Fragment key={el}>
           <DisplayBtn
             name={el}
@@ -88,6 +88,7 @@ const StyledAppContainer = styled.div`
   align-content: center;
   align-items: center;
   max-width: 100%;
+  /* overflow-x: hidden; */
 `;
 
 const StyledMarqueeContainer = styled.div`

@@ -1,45 +1,45 @@
-import { useState } from 'react';
-import TextRowForm from '../TextRowForm/TextRowForm';
-import Block from '../Block/Block';
-import styled from 'styled-components';
+import { useState } from "react";
+import TextRowForm from "../TextRowForm/TextRowForm";
+import Block from "../Block/Block";
+import styled from "styled-components";
 
 export default function Marquee(props) {
-  console.log('Marquee props:', props);
-  // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is here
+  console.log("Marquee props:", props);
+  // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
   const initRowState = {
     row0: [],
     row1: [],
     row2: [],
   };
 
+  const errorMessages = {
+    err_size: "The size of your letters are too large for this marquee",
+    err_unknown_input: "This particular symbol was not found in our database",
+    err_missing_input: `There are not enough ___ in inventory`,
+  };
+
   const [isDisabled, toggleDisabled] = useState(false);
   const [rowState, setRow] = useState(initRowState); // currState to initiate
   const [newRowState, setNewRow] = useState(initRowState); // newState to compare
 
-  const keysArr = Object.keys(initRowState); // names of the rows
-
-  console.log('keysArr:', keysArr);
-
+  // component properties:
+  const keysArr = Object.keys(initRowState);
   let rowSize = {
     width: props.size,
   };
-
   let marqName = props.name;
   let marqState = props.marqueeState;
+  const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
 
-  // gets the marqueeWidth passed down from the top-level App.js
-  const marqWidth = +marqState[marqName].size.split('rem').splice(0, 1);
-  console.log('marqWidth', marqWidth);
-
+  // LEGEND:
   // row = row0, row1, row2
-  // row[i] the index of the letter
-
-  // block[i][0] the letter symbol
-  // block[i][1] the letter symbols size
+  // row[i] = the index of the letter
+  // block[i][0] = the letter symbol
+  // block[i][1] = the letter symbols size
 
   return (
     <StyledMarquee marqName={marqName}>
-      {keysArr.map(row => (
+      {keysArr.map((row) => (
         <StyledMarqueeRow
           style={rowSize}
           data-rowid={row}
@@ -71,15 +71,6 @@ export default function Marquee(props) {
     </StyledMarquee>
   );
 }
-
-/*
- 
-TextRowForm component is the one messing up our rendering causing a blank page.
-Let's try and figure out why this may be next time! Also looks like some of the styling didn't get transferred over from CSS to using styled-components
- 
-*/
-
-////////////////////////////////////////////////
 
 const StyledMarquee = styled.div`
   padding-top: 1rem;
@@ -120,8 +111,7 @@ const StyledMarqueeRow = styled.div`
   &:hover {
     background-color: rgb(249, 232, 207);
   }
-
-  /* first child is technically the ErrMsg component */
+  /* first child is technically the DisplayBtn component */
   &:nth-child(1) {
     border-top: 0.25rem grey solid;
   }

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default function Key(props) {
   const ltr = props.letter;
@@ -24,6 +24,7 @@ const StyledKey = styled.button`
 
   &:hover {
     background-color: rgb(172, 172, 172);
+    cursor: pointer;
   }
 `;
 
