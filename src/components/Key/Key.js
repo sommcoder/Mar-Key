@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default function Key(props) {
   const ltr = props.letter;
 
-  if (ltr !== "ENTER" && ltr !== "<==") {
+  if (ltr.length <= 1) {
     return <StyledKey value={ltr}>{ltr}</StyledKey>;
   } else return <StyledKeySpecial value={ltr}>{ltr}</StyledKeySpecial>;
 }
@@ -27,7 +27,7 @@ const StyledKey = styled.button`
   }
 `;
 
-const StyledKeySpecial = styled.button`
+const StyledKeySpecial = styled(StyledKey)`
   width: 8rem;
   &:hover {
     background-color: rgb(172, 172, 172);

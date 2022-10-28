@@ -1,23 +1,24 @@
-import { useState } from "react";
-import TextRowForm from "../TextRowForm/TextRowForm";
-import Block from "../Block/Block";
-import styled from "styled-components";
+import { useState } from 'react';
+import TextRowForm from '../TextRowForm/TextRowForm';
+import Block from '../Block/Block';
+import styled from 'styled-components';
 
 export default function Marquee(props) {
-  console.log("Marquee props:", props);
-  // Marquee is the immediate parent of Block & TextRowForm so therefore the row state is here
+  console.log('Marquee props:', props);
+  // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is here
   const initRowState = {
     row0: [],
     row1: [],
     row2: [],
   };
 
+  const [isDisabled, toggleDisabled] = useState(false);
   const [rowState, setRow] = useState(initRowState); // currState to initiate
   const [newRowState, setNewRow] = useState(initRowState); // newState to compare
 
   const keysArr = Object.keys(initRowState); // names of the rows
 
-  console.log("keysArr:", keysArr);
+  console.log('keysArr:', keysArr);
 
   let rowSize = {
     width: props.size,
@@ -27,8 +28,8 @@ export default function Marquee(props) {
   let marqState = props.marqueeState;
 
   // gets the marqueeWidth passed down from the top-level App.js
-  const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
-  console.log("marqWidth", marqWidth);
+  const marqWidth = +marqState[marqName].size.split('rem').splice(0, 1);
+  console.log('marqWidth', marqWidth);
 
   // row = row0, row1, row2
   // row[i] the index of the letter
@@ -38,7 +39,7 @@ export default function Marquee(props) {
 
   return (
     <StyledMarquee marqName={marqName}>
-      {keysArr.map((row) => (
+      {keysArr.map(row => (
         <StyledMarqueeRow
           style={rowSize}
           data-rowid={row}
@@ -64,6 +65,7 @@ export default function Marquee(props) {
         setNewRow={setNewRow}
         marqName={marqName}
         marqState={marqState}
+        isDisabled={isDisabled}
         marqWidth={marqWidth}
       />
     </StyledMarquee>
@@ -89,6 +91,7 @@ const StyledMarquee = styled.div`
   animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
   cursor: pointer;
+  z-index: 1;
 
   @keyframes fadeInAnimation {
     start {
@@ -113,6 +116,10 @@ const StyledMarqueeRow = styled.div`
   border-left: 0.25rem grey solid;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.12),
     0 4px 4px rgba(0, 0, 0, 0.16), 0 8px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: rgb(249, 232, 207);
+  }
 
   /* first child is technically the ErrMsg component */
   &:nth-child(1) {

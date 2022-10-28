@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default function DisplayBtn(props) {
   function toggleDisplay(ev) {
@@ -11,7 +11,7 @@ export default function DisplayBtn(props) {
       updatedMarqueeState[marqueeToUpdate] = { isVisible: false };
     else updatedMarqueeState[marqueeToUpdate] = { isVisible: true };
 
-    props.setMarquee((currState) => ({
+    props.setMarquee(currState => ({
       ...currState,
       ...updatedMarqueeState,
     }));
@@ -19,7 +19,7 @@ export default function DisplayBtn(props) {
 
   return (
     <StyledDisplayBtn onClick={toggleDisplay} data-id={props.name}>
-      {props.name}
+      {`${props.name} Marquee`}
     </StyledDisplayBtn>
   );
 }
@@ -31,10 +31,10 @@ const StyledDisplayBtn = styled.button`
   font-weight: 600;
   font-size: 1.5rem;
   border-radius: 2px;
-  margin: 0 auto 1rem auto;
+  margin: 0 auto;
   border: none;
   height: 3.5rem;
-  width: 10rem;
+  width: 30rem;
   padding: 0.5rem;
   text-align: center;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),

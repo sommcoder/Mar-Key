@@ -1,9 +1,7 @@
-import styled from "styled-components";
-import data from "../../data/blockData.json";
-import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
-import ResetBtn from "../ResetBtn/ResetBtn";
-import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import { useState, useEffect } from "react";
+import styled from 'styled-components';
+import data from '../../data/blockData.json';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
+import { useRef } from 'react';
 
 /*
  
@@ -12,123 +10,273 @@ textRowForm's logic handles user validation in the input elements (Text Rows)
 
 TODO: I think we may need to incorporate a useState Hook in some way. with useEffect being the thing that triggers the animation
 
+we set the useState to "remember" the previous inputs, this causes a rerendering of the component
+
 
 todo: what we want is for the particular element with user input that EXCEEDS the marquee width to have a one-time animation occur on it that triggered once the user tries to keyDown a key that would prevent the whole input from being able to fit on the marqueeRow
+
+
+TODO: We've gotten rid of the SetCurrBtn and ResetBtn components and have grouped them in the current component. This should hopefully allow us to 
  
 */
 
-let isError = false;
-
 export default function TextRowForm(props) {
-  // const [isError, toggleError] = useState(false); // a boolean state
-
-  console.log("TextRowForm props:", props);
+  console.log('TextRowForm props:', props);
   // global component variables:
   const marqName = props.marqName;
   const marqState = props.marqState;
   const marqWidth = props.marqWidth;
 
   // this is an object that will store our currInput and its corresponding size. This DOES NOT need to be controlled in state because we do not want to trigger a rerendering each time we add something
-  const inputValidationCache = {
+  const inputRefsArr = useRef([]);
+  // on render of each TextRow, React will populate the refArr with refs from EACH of the TextRows as they are mapped in the return statement
+  const addToRefsArr = el => {
+    if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
+  };
+  /*
+   
+  should we use useRef for the cache object below? We DO need this data to persist between renders
+   
+  */
+  const inputValidationObj = {
     row0: { value: [], size: 0 },
     row1: { value: [], size: 0 },
     row2: { value: [], size: 0 },
   };
 
+  ////////////////////////////////////////////////
+  // INPUT VALIDATION FUNCTION
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    console.log("ev:", ev);
-    console.log("key:", key);
-    console.log("row:", row);
+    console.log('ev:', ev);
+    console.log('key:', key);
+    console.log('row:', row);
     ////////////////////////////////////////////////
-    if (key === "Tab") return;
+    if (key === 'Tab') return;
     // prevents scroll jumping on space bar keyDown since we are on a read-only element
     // user can still scroll jump if they are NOT in an input element
-    if (key === " ") ev.preventDefault();
+    if (key === ' ') ev.preventDefault();
     // handle enter/submit:
     // this should just erase the cache and in the SetCurrBtn component we will clear the entire form
-    if (key === "Enter") {
+    if (key === 'Enter') {
       // do we even need to do this? won't the form submission in setCurrBtn trigger a rerendering?
-      for (const line in inputValidationCache) {
-        if (Object.hasOwn(inputValidationCache, line)) {
-          console.log(inputValidationCache[line]);
-          inputValidationCache[line].value = []; // reset to empty array
-          inputValidationCache[line].size = 0; // reset to 0
+      for (const line in inputValidationObj) {
+        // reset our validationObj
+        if (Object.hasOwn(inputValidationObj, line)) {
+          inputValidationObj[line].value = []; // reset to empty array
+          inputValidationObj[line].size = 0; // reset to 0
         }
       }
-      console.log(inputValidationCache);
+
+      // adjust focus to NEXT sibling
+      // if last sibling, reset to first child
+      if (props.keysArr.indexOf(row) + 1 < props.keysArr.length)
+        inputRefsArr.current[props.keysArr.indexOf(row) + 1].focus();
+      else inputRefsArr.current[0].focus();
       return;
     }
 
     // handle deletions
-    if (key === "Backspace" || key === "Delete") {
+    if (key === 'Backspace' || key === 'Delete') {
       // lookup the size of the block that's in the last position of our cache Object
       // subtract and assign result to the cache
-      inputValidationCache[row].size -= +data[
-        inputValidationCache[row].value.at(-1)
+      inputValidationObj[row].size -= +data[
+        inputValidationObj[row].value.at(-1)
       ].size
-        .split("rem")
+        .split('rem')
         .splice(0, 1);
 
-      inputValidationCache[row].value.pop(); // pop the last input value off the valueArr
+      inputValidationObj[row].value.pop(); // pop the last input value off the valueArr
 
       // assign our cache to the input value
-      ev.target.value = inputValidationCache[row].value.join("");
+      ev.target.value = inputValidationObj[row].value.join('');
       return;
     }
 
     // get the size of the block that corresponds with what the user just inputted:
-    let currBlockSize = +data[key].size.split("rem").splice(0, 1);
+    let currBlockSize = +data[key].size.split('rem').splice(0, 1);
 
     // validation max capacity guard:
-    if (inputValidationCache[row].size + currBlockSize > marqWidth) {
-      console.log("cannot add, row capacity has been reached");
-      // toggleError(true);
+    if (inputValidationObj[row].size + currBlockSize > marqWidth) {
+      inputRefsArr.current[props.keysArr.indexOf(row)].animate(
+        [
+          {
+            transform: 'translateX(-0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(-0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(-0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(-0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+          {
+            transform: 'translateX(0%)',
+            borderColor: 'rgb(255, 0, 0)',
+          },
+        ],
+        650
+      );
+      // ref of marqState prop for updating
+      let updatedMarqueeStateObj = marqState;
+      updatedMarqueeStateObj[marqName].isError = true;
       return; // exit execution
     }
 
     ////////////////////////////////////////////////
     // if all above is well, add to our cache and assign currKey to our input element
-    inputValidationCache[row].size += currBlockSize; // update size
-    inputValidationCache[row].value.push(key); // update input values
-    ev.target.value = inputValidationCache[row].value.join("");
+    inputValidationObj[row].size += currBlockSize; // update size
+    inputValidationObj[row].value.push(key); // update input values
+    ev.target.value = inputValidationObj[row].value.join('');
 
     return;
   }
 
+  let isDisabled = props.isDisabled;
+
+  /*
+   
+  all size validation is done in the textRowForm component
+
+TODO: -remove all size validations
+TODO: -take the data from our stateObj and populate the Marquee with blocks
+   
+  */
+
+  ////////////////////////////////////////////////
+  // SET MARQUEE FUNCTION
+  // function setCurrMarquee(ev) {
+  //   ev.preventDefault();
+  //   console.log('ev:', ev);
+  //   const updatedRowValuesObj = {};
+  //   let targetFormEl = ev.target.form; // form Element
+  //   let sizeError = false;
+  //   let validEntry = 0;
+
+  //   // TEXTROW LOOP: Populates the targetValueArr
+  //   for (let i = 0; i < props.keysArr.length; i++) {
+  //     let targetValueStr = targetFormEl[i].value.trim(); // user input string
+  //     validEntry++; // valid entry check
+  //     let rowTargetId = targetFormEl[i].dataset.rowid;
+  //     let rowInputArr = []; // a 2d array containing [ltr, size]
+  //     // if the string is blank, skip and simply add to
+  //     if (targetValueStr) {
+  //       // spread string into individual letters in an array, trime edges
+  //       let targetValueArr = [...targetValueStr]; // form the array
+  //       console.log('rowTargetid:', rowTargetId);
+  //       console.log('targetValueArr pre loop:', targetValueArr);
+
+  //       // DATA EXTRACTION LOOP:
+  //       // goes left to right across the strings indices
+  //       for (let j = 0; j < targetValueStr.length; j++) {
+  //         if (!data[targetValueStr[j]]) continue; // !exist clause
+  //         // form our 2d array PER user character entry, push to inputArr
+  //         rowInputArr.push([
+  //           data[targetValueStr[j]].blockSymbol,
+  //           data[targetValueStr[j]].size,
+  //         ]);
+  //       }
+  //     }
+  //     // every row gets committed to the rowState
+  //     updatedRowValuesObj[rowTargetId] = rowInputArr;
+  //   }
+  //   console.log('updatedRowValuesObj POST loop:', updatedRowValuesObj);
+  //   console.log('did we get a value?:', validEntry);
+
+  //   ///////// conditional Marquee RowStateObj updates: /////////////
+  //   // needs to be at least ONE valid row:
+  //   if (validEntry) {
+  //     props.setRow(rowValuesObj => ({
+  //       ...rowValuesObj,
+  //       ...updatedRowValuesObj,
+  //     }));
+
+  //     ////////// condition MarqueeStateObj updates: ///////////
+  //     // ref of marqState prop for updating
+  //     let updatedMarqueeStateObj = marqState;
+  //     updatedMarqueeStateObj[marqName].isSet = true;
+  //     if (sizeError) updatedRowValuesObj[marqName].isError = true;
+
+  //     console.log('updatedMarqueeStateObj', updatedMarqueeStateObj);
+  //     props.setMarquee(marqueeState => ({
+  //       ...marqueeState,
+  //       ...updatedMarqueeStateObj,
+  //     }));
+  //     // reset the textRows afterSubmit
+  //     for (let i = 0; i < 3; i++) ev.target.form[i].value = '';
+  //   }
+  //   console.log('marqObj POST toggleMarquee():', marqState);
+  // }
+
+  ////////////////////////////////////////////////
+  // RESET FORM FUNCTION
+  // function resetRows(ev) {
+  //   ev.preventDefault();
+  //   // textRow Loop: assign each value to empty string
+  //   for (let i = 0; i < 3; i++) ev.target.form[i].value = '';
+  //   // rowStateObj:
+  //   // reset the rowState to init
+  //   props.setRow(rowValuesObj => ({
+  //     ...rowValuesObj,
+  //     ...props.rowInitState,
+  //   }));
+
+  //   /// marqStateObj:
+  //   let updatedMarqueeStateObj = props.marqState;
+  //   updatedMarqueeStateObj[props.marqName].isSet = false;
+  //   // reset the entire MarStateObj to init
+  //   props.toggleMarquee(marqueeState => ({
+  //     ...marqueeState,
+  //     ...updatedMarqueeStateObj,
+  //   }));
+  // }
+
   return (
     // only id that is necessary. Needed to link the setCurrBtn to the form
     <StyledTextRowForm id="user-input-form">
-      {props.keysArr.map((row) => (
+      {props.keysArr.map(row => (
         <StyledTextRow
           key={`${marqName}-${row}`}
           readOnly
+          ref={addToRefsArr}
           data-rowid={row}
           type="text"
+          name={row}
           onKeyDown={validateEntry}
         />
       ))}
-      <SetCurrBtn
-        key={`set-${marqName}`}
+      <StyledSetCurrBtn
         form="user-input-form"
-        marqName={marqName}
-        marqState={marqState}
-        marqWidth={marqWidth}
-        rowState={props.rowState}
-        setMarquee={props.setMarquee}
-        setRow={props.setRow}
-      />
-      <ResetBtn
-        key={`reset-${marqName}`}
-        marqName={marqName}
-        marqState={marqState}
-        marqWidth={marqWidth}
-        setMarquee={props.setMarquee}
-        initRowState={props.initRowState}
-        setRow={props.setRow}
-      />
-      {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
+        type="submit"
+        onClick={setCurrMarquee}
+      >
+        {marqState[marqName].isSet ? 'Compare' : 'Set'}
+      </StyledSetCurrBtn>
+      <StyledResetBtn
+        form="user-input-form"
+        type="reset"
+        onClick={resetRows}
+      ></StyledResetBtn>
+      {marqState[marqName].isError === true ? <ErrorMsg /> : ''}
     </StyledTextRowForm>
   );
 }
@@ -150,6 +298,7 @@ const StyledTextRow = styled.input`
   text-transform: uppercase;
   font-size: 1.6rem;
   font-weight: bold;
+  z-index: 1;
   cursor: pointer;
   border-left: 2px solid rgb(118, 118, 118); // workaround for border-left being too dark
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
@@ -163,28 +312,44 @@ const StyledTextRow = styled.input`
     outline: none;
     background-color: rgba(176, 224, 230, 0.75);
   }
+`;
 
-  animation: errorShake ease-in-out 1s;
+const StyledSetCurrBtn = styled.button`
+  color: black;
+  background-color: powderblue;
+  font-weight: 600;
+  border-radius: 2.5px;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem;
+  border: none;
+  height: 3.5rem;
+  width: 10rem;
+  padding: 0.5rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  animation: fadeInAnimation ease-in-out 1s;
   animation-iteration-count: 1;
 
-  @keyframes errorShake {
-    0% {
-      transform: translateX(-1%);
+  @keyframes fadeInAnimation {
+    start {
+      opacity: 0;
     }
-    20% {
-      transform: translateX(1%);
-    }
-    40% {
-      transform: translateX(-2%);
-    }
-    60% {
-      transform: translateX(2%);
-    }
-    80% {
-      transform: translateX(1%);
-    }
-    100% {
-      transform: translateX(0%);
+    end {
+      opacity: 1;
     }
   }
+  &:hover {
+    background-color: white;
+    background: none;
+    color: black;
+    border: 0.2rem solid powderblue;
+    transition: ease-in-out;
+    cursor: pointer;
+  }
 `;
+
+const StyledResetBtn = styled(StyledSetCurrBtn)``;
