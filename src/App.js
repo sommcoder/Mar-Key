@@ -14,9 +14,9 @@ export default function App() {
   // and anything row state related, in the TextRow component??
 
   const initMarqueeState = {
-    East: { isVisible: true, size: "55rem", isSet: false, isError: false },
-    West: { isVisible: true, size: "55rem", isSet: false, isError: false },
-    South: { isVisible: true, size: "110rem", isSet: false, isError: false },
+    East: { isVisible: true, size: "40rem", isSet: false, isError: false },
+    West: { isVisible: true, size: "40rem", isSet: false, isError: false },
+    South: { isVisible: true, size: "80rem", isSet: false, isError: false },
   };
 
   // Marquee container state

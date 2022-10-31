@@ -13,12 +13,12 @@ const StyledNavBar = styled.nav`
   position: sticky;
   top: 0; /* required */
   right: 0;
-  z-index: 10;
+  z-index: 4;
   width: 100%;
   font-size: 4rem;
   font-weight: 650;
   background-color: white;
-  margin: 0rem auto 2rem auto;
+  margin: 0rem auto 5.25rem auto;
   text-align: center;
   padding-bottom: 3rem;
   border-bottom: 0.1rem solid lightgrey;

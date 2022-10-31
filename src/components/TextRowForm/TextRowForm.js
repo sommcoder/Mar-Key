@@ -10,6 +10,8 @@ export default function TextRowForm(props) {
   const marqState = props.marqState;
   const marqWidth = props.marqWidth;
 
+  console.log("marqWidth:", marqWidth);
+
   // this is an object that will store our currInput and its corresponding size. This DOES NOT need to be controlled in state because we do not want to trigger a rerendering each time we add something
   const inputRefsArr = useRef([]);
   // on render of each TextRow, React will populate the refArr with refs from EACH of the TextRows as they are mapped in the return statement
@@ -52,8 +54,7 @@ export default function TextRowForm(props) {
         }
       }
 
-      // adjust focus to NEXT sibling
-      // if last sibling, reset to first child
+      // Input Focus cycling:
       if (props.keysArr.indexOf(row) + 1 < props.keysArr.length)
         inputRefsArr.current[props.keysArr.indexOf(row) + 1].focus();
       else inputRefsArr.current[0].focus();
@@ -82,6 +83,7 @@ export default function TextRowForm(props) {
 
     // validation max capacity guard:
     if (inputValidationObj[row].size + currBlockSize > marqWidth) {
+      console.log("currBlockSize:", currBlockSize);
       inputRefsArr.current[props.keysArr.indexOf(row)].animate(
         [
           {
@@ -126,12 +128,12 @@ export default function TextRowForm(props) {
     }
 
     ////////////////////////////////////////////////
-    // if all above is well, add to our cache and assign currKey to our input element
+    // if all above is well, add to our cache and assign currKey to our input elements value
     inputValidationObj[row].size += currBlockSize; // update size
     inputValidationObj[row].value.push(key); // update input values
     ev.target.value = inputValidationObj[row].value.join("");
 
-    return;
+    console.log("inputValidationObj:", inputValidationObj);
   }
 
   /*
@@ -249,22 +251,26 @@ TODO: -take the data from our stateObj and populate the Marquee with blocks
         onClick={setCurrMarquee}
       >
         Set
-      </StyledSetCurrBtn>
-      <StyledToolTipContainer>
         <StyledTooltipBox>
-          sets the current marquee to be compared to (or click 'Enter')
+          Sets the current marquee
+          <StyledArrow></StyledArrow>
         </StyledTooltipBox>
-      </StyledToolTipContainer>
-      <StyledCompareBtn>Compare</StyledCompareBtn>
-      <StyledTooltipBox>
-        compares your previous marquee to what you want to change it to
-      </StyledTooltipBox>
+      </StyledSetCurrBtn>
+
+      <StyledCompareBtn>
+        Compare
+        <StyledTooltipBox>
+          Compares to the set marquee<StyledArrow></StyledArrow>
+        </StyledTooltipBox>
+      </StyledCompareBtn>
+
       <StyledResetBtn form="user-input-form" type="reset" onClick={resetRows}>
         Reset
+        <StyledTooltipBox>
+          Resets entire marquee<StyledArrow></StyledArrow>
+        </StyledTooltipBox>
       </StyledResetBtn>
-      <StyledTooltipBox>
-        Resets the text and marquee inputs fields
-      </StyledTooltipBox>
+
       {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
     </StyledTextRowForm>
   );
@@ -281,7 +287,7 @@ const StyledTextRow = styled.input`
   align-items: center;
   display: block;
   text-align: center;
-  width: 350px;
+  width: 300px;
   margin: 0px auto;
   text-transform: uppercase;
   font-size: 1.6rem;
@@ -302,44 +308,30 @@ const StyledTextRow = styled.input`
   }
 `;
 
-/*
- 
-trying to figure out how to create a tooltip for each button.
-
-Looks like we need to have a container that WHEN hovered allows us to turn the tookTipText component visible
- 
-*/
-
-const StyledToolTipContainer = styled.div`
-  position: relative;
-  display: inline;
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-`;
-
 const StyledTooltipBox = styled.span`
-  // appearance:
-  visibility: hidden;
-  color: transparent;
-  background-color: transparent;
+  display: none;
   border-radius: 4px;
-
-  // positional:
   position: absolute;
-  bottom: 100%;
+  color: white;
+  background-color: rgba(44, 43, 43, 1);
+  bottom: 40px;
   left: 50%;
   width: 120px;
-  padding: 5px 5px;
+  padding: 8px 8px;
   margin-left: -60px; // use half the width 120/2
+`;
 
-  // interactivity:
-  transition: visibility 0.5s, color 0.5s, background-color 0.5s, width 0.5s,
-    padding 0.5s ease-in-out;
+const StyledArrow = styled.span`
+  content: "";
+  position: absolute;
+  left: 50%;
+
+  /* vertically center */
+  top: 120%;
+  transform: translateY(-50%);
+  border: 10px solid rgba(44, 43, 43, 1);
+  border-color: rgba(44, 43, 43, 1) transparent transparent transparent;
+  display: none;
 `;
 
 const StyledSetCurrBtn = styled.button`
@@ -356,32 +348,26 @@ const StyledSetCurrBtn = styled.button`
   width: 10rem;
   padding: 0.5rem;
   text-align: center;
-
-  &:hover + ${StyledTooltipBox} {
-    visibility: visible;
+  &:hover {
     cursor: pointer;
+  }
+
+  ////////////////////////
+  position: relative; // relative for tooltip popup
+
+  &:hover ${StyledTooltipBox} {
+    display: block;
+    transition-delay: 1s;
+  }
+
+  &:hover ${StyledArrow} {
+    display: block;
+    transition-delay: 1s;
   }
 
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
     0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
-
-  animation: fadeInAnimation ease-in-out 1s;
-  animation-iteration-count: 1;
-
-  ////////////////////////
-  position: relative; // relative for tooltip popup
-
-  /////////////////////////
-  @keyframes fadeInAnimation {
-    start {
-      opacity: 0;
-    }
-    end {
-      opacity: 1;
-      background-color: white;
-    }
-  }
 `;
 
 const StyledCompareBtn = styled(StyledSetCurrBtn)``;

@@ -24,11 +24,11 @@ export default function Marquee(props) {
 
   // component properties:
   const keysArr = Object.keys(initRowState);
-  let rowSize = {
-    width: props.size,
-  };
+
   let marqName = props.name;
   let marqState = props.marqueeState;
+
+  // dynamically get JUST the number:
   const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
 
   // LEGEND:
@@ -41,11 +41,11 @@ export default function Marquee(props) {
     <StyledMarquee marqName={marqName}>
       {keysArr.map((row) => (
         <StyledMarqueeRow
-          style={rowSize}
+          size={props.size}
           data-rowid={row}
           key={`${marqName}-${row}`}
           rowState={rowState}
-          marqWidth={marqWidth}
+          marqWidth={props.marqWidth}
         >
           {rowState[row].map((block, i) => (
             <Block
@@ -96,7 +96,7 @@ const StyledMarquee = styled.div`
 
 const StyledMarqueeRow = styled.div`
   display: flex;
-  width: 100%;
+  width: ${(props) => (props.size ? props.size : "350px")};
   flex-direction: row;
   justify-content: center;
   background-color: rgb(253, 243, 229);
