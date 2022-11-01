@@ -14,13 +14,20 @@ export default function App() {
   // and anything row state related, in the TextRow component??
 
   const initMarqueeState = {
-    East: { isVisible: true, size: "40rem", isSet: false, isError: false },
-    West: { isVisible: true, size: "40rem", isSet: false, isError: false },
-    South: { isVisible: true, size: "80rem", isSet: false, isError: false },
+    East: { isVisible: true, size: "42rem", isSet: false, isError: false },
+    West: { isVisible: true, size: "42rem", isSet: false, isError: false },
+    South: { isVisible: true, size: "84rem", isSet: false, isError: false },
   };
 
   // Marquee container state
   const [marqueeState, setMarquee] = useState(initMarqueeState);
+  const [stockSummaryState, setStockSummaryState] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  /*
+   
+  stockSummaryState will
+   
+  */
 
   // keyboard letters for tablet/mobile:
   const letterSet = [
@@ -65,6 +72,11 @@ export default function App() {
             marqueeState={marqueeState}
             setMarquee={setMarquee}
           />
+          <StyledInputTallyModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            stockSummaryState={stockSummaryState}
+          ></StyledInputTallyModal>
           <StyledMarqueeContainer key={el}>
             {marqueeState[el].isVisible === true ? (
               <Marquee
@@ -82,6 +94,10 @@ export default function App() {
     </StyledAppContainer>
   );
 }
+
+const StyledInputTallyModal = styled.div`
+  display: none;
+`;
 
 const StyledAppContainer = styled.div`
   margin: 0 auto;
