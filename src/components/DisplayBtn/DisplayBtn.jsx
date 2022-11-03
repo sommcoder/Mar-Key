@@ -48,11 +48,8 @@ const StyledTooltipBox = styled.span`
 const StyledArrow = styled.span`
   content: "";
   z-index: 5;
-
   position: absolute;
   left: 50%;
-
-  /* vertically center */
   top: 120%;
   transform: translateY(-50%);
   border: 10px solid rgba(44, 43, 43, 1);
@@ -62,23 +59,7 @@ const StyledArrow = styled.span`
 
 const StyledDisplayBtn = styled.button`
   display: block;
-  position: relative;
-  background-color: powderblue;
-  font-weight: 600;
-  font-size: 1.5rem;
-  border-radius: 2px;
-  margin: 0 auto;
-  border: none;
-  height: 3.5rem;
-  width: 30rem;
-  padding: 0.5rem;
-  text-align: center;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
-    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
-    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
-  animation: fadeInAnimation ease-in-out 1s;
-  animation-iteration-count: 1;
-
+  width: 25rem;
   &:hover ${StyledTooltipBox} {
     display: block;
     transition-delay: 1s;
@@ -87,15 +68,6 @@ const StyledDisplayBtn = styled.button`
   &:hover ${StyledArrow} {
     display: block;
     transition-delay: 1s;
-  }
-
-  @keyframes fadeInAnimation {
-    start {
-      opacity: 0;
-    }
-    end {
-      opacity: 1;
-    }
   }
 
   &:hover {

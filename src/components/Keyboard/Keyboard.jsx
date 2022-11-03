@@ -2,8 +2,34 @@ import Key from "../Key/Key";
 import styled from "styled-components";
 
 export default function Keyboard(props) {
-  // the letters to be rendered:
-  const letterSet = props.letterSet;
+  // KEYBOARD SETUP:
+  const letterSet = [
+    {
+      rowNum: "row0",
+      letters: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    },
+    {
+      rowNum: "row1",
+      letters: ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    },
+    {
+      rowNum: "row2",
+      letters: ["ENTER", "z", "x", "c", "v", "b", "n", "m", "<=="],
+    },
+    {
+      rowNum: "row3",
+      letters: [
+        "am",
+        "pm",
+        "presents",
+        "www",
+        "live",
+        "feat",
+        "free",
+        "sold out",
+      ],
+    },
+  ];
 
   return (
     <StyledKeyboardContainer>
@@ -38,9 +64,3 @@ const StyledKeyboardRow = styled.div`
   justify-content: center;
   margin-bottom: 8px;
 `;
-
-// how can be conditionally add the SPECIAL KEY components to the THIRD keyboard row ONLY and also specify the respective side of the third row each component should be on!
-
-// row-3-v
-
-// once done ^^^ add Synthetic Event: onClick="" this will

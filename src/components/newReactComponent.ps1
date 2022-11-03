@@ -19,20 +19,20 @@ else
     New-Item -Path ./$ComponentName -itemType directory;
 
     # Create component file:
-    New-Item -Path ./$ComponentName/$ComponentName.js;
+    New-Item -Path ./$ComponentName/$ComponentName.jsx;
 
 
     # in PowerShell if you use double-quotes you can reference the variable directly in the string!
-    # Write component JS file.
-    Write-Output "import styled from 'styled-components';" >> ./$ComponentName/$ComponentName.js
-    Write-Output "" >> ./$ComponentName/$ComponentName.js
-    Write-Output "export default function $ComponentName(props) {" >> ./$ComponentName/$ComponentName.js
-    Write-Output "    return (" >> ./$ComponentName/$ComponentName.js
-    Write-Output "        <Styled$ComponentName>>" >> ./$ComponentName/$ComponentName.js
-    Write-Output "        </Styled$ComponentName>>" >> ./$ComponentName/$ComponentName.js
-    Write-Output "    );" >> ./$ComponentName/$ComponentName.js
-    Write-Output "}" >> ./$ComponentName/$ComponentName.js
-    Write-Output "const Styled$ComponentName = styled.$ComponentType;" >> ./$ComponentName/$ComponentName.js
+    # Write component JSX file.
+    Write-Output "import styled from 'styled-components';" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "export default function $ComponentName(props) {" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "    return (" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "        <Styled$ComponentName>>" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "        </Styled$ComponentName>>" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "    );" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "}" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "const Styled$ComponentName = styled.$ComponentType;" >> ./$ComponentName/$ComponentName.jsx
 }
 
 exit

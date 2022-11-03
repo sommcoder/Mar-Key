@@ -1,19 +1,19 @@
-import styled from 'styled-components';
-import data from '../../data/blockData.json';
-import ErrorMsg from '../ErrorMsg/ErrorMsg';
-import { useRef } from 'react';
-import SetCurrBtn from '../SetCurrBtn/SetCurrBtn';
-import ResetBtn from '../ResetBtn/ResetBtn';
-import CompareBtn from '../CompareBtn/CompareBtn';
+import styled, { ThemeProvider } from "styled-components";
+import data from "../../data/blockData.json";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import { useRef } from "react";
+import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
+import ResetBtn from "../ResetBtn/ResetBtn";
+import CompareBtn from "../CompareBtn/CompareBtn";
 
 export default function TextRowForm(props) {
-  console.log('TextRowForm props:', props);
+  console.log("TextRowForm props:", props);
   const marqName = props.marqName;
   const marqState = props.marqState;
   const marqWidth = props.marqWidth;
 
   const inputRefsArr = useRef([]);
-  const addToRefsArr = el => {
+  const addToRefsArr = (el) => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
@@ -28,17 +28,17 @@ export default function TextRowForm(props) {
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    console.log('ev:', ev);
-    console.log('key:', key);
-    console.log('row:', row);
+    console.log("ev:", ev);
+    console.log("key:", key);
+    console.log("row:", row);
     ////////////////////////////////////////////////
-    if (key === 'Tab') return;
+    if (key === "Tab") return;
     // prevents scroll jumping on space bar keyDown since we are on a read-only element
     // user can still scroll jump if they are NOT in an input element
-    if (key === ' ') ev.preventDefault();
+    if (key === " ") ev.preventDefault();
     // handle enter/submit:
     // this should just erase the cache and in the SetCurrBtn component we will clear the entire form
-    if (key === 'Enter') {
+    if (key === "Enter") {
       // do we even need to do this? won't the form submission in setCurrBtn trigger a rerendering?
       for (const line in inputValidationObj) {
         // reset our validationObj
@@ -57,60 +57,60 @@ export default function TextRowForm(props) {
     }
 
     // handle deletions
-    if (key === 'Backspace' || key === 'Delete') {
+    if (key === "Backspace" || key === "Delete") {
       // lookup the size of the block that's in the last position of our cache Object
       // subtract and assign result to the cache
       inputValidationObj[row].size -= +data[
         inputValidationObj[row].value.at(-1)
       ].size
-        .split('rem')
+        .split("rem")
         .splice(0, 1);
 
       inputValidationObj[row].value.pop(); // pop the last input value off the valueArr
 
       // assign our cache to the input value
-      ev.target.value = inputValidationObj[row].value.join('');
+      ev.target.value = inputValidationObj[row].value.join("");
       return;
     }
 
     // get the size of the block that corresponds with what the user just inputted:
-    let currBlockSize = +data[key].size.split('rem').splice(0, 1);
+    let currBlockSize = +data[key].size.split("rem").splice(0, 1);
 
     // validation max capacity guard / animation:
     if (inputValidationObj[row].size + currBlockSize > marqWidth) {
       inputRefsArr.current[props.keysArr.indexOf(row)].animate(
         [
           {
-            transform: 'translateX(-0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(-0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(-0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(-0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(-0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(-0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(-0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(-0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(0%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(0%)",
+            borderColor: "rgb(255, 0, 0)",
           },
         ],
         650
@@ -125,7 +125,7 @@ export default function TextRowForm(props) {
     // if all above is well, add to our cache and assign currKey to our input element
     inputValidationObj[row].size += currBlockSize; // update size
     inputValidationObj[row].value.push(key); // update input values
-    ev.target.value = inputValidationObj[row].value.join('');
+    ev.target.value = inputValidationObj[row].value.join("");
 
     return;
   }
@@ -133,7 +133,7 @@ export default function TextRowForm(props) {
   return (
     // only id that is necessary. Needed to link the setCurrBtn to the form
     <StyledTextRowForm id="user-input-form">
-      {props.keysArr.map(row => (
+      {props.keysArr.map((row) => (
         <StyledTextRow
           key={`${marqName}-${row}`}
           readOnly
@@ -144,10 +144,26 @@ export default function TextRowForm(props) {
           onKeyDown={validateEntry}
         />
       ))}
-      <SetCurrBtn form="user-input-form" type="submit"></SetCurrBtn>
-      <CompareBtn form="user-input-form" type="submit"></CompareBtn>
-      <ResetBtn form="user-input-form" type="reset"></ResetBtn>
-      {marqState[marqName].isError === true ? <ErrorMsg /> : ''}
+      <SetCurrBtn
+        marqName={marqName}
+        marqState={marqState}
+        form="user-input-form"
+        type="submit"
+      ></SetCurrBtn>
+      <CompareBtn
+        marqName={marqName}
+        marqState={marqState}
+        form="user-input-form"
+        type="submit"
+      ></CompareBtn>
+      <ResetBtn
+        marqName={marqName}
+        marqState={marqState}
+        form="user-input-form"
+        type="reset"
+      ></ResetBtn>
+
+      {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
     </StyledTextRowForm>
   );
 }

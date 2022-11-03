@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import TextRowForm from '../TextRowForm/TextRowForm';
-import Block from '../Block/Block';
-import styled from 'styled-components';
+import { useState } from "react";
+import TextRowForm from "../TextRowForm/TextRowForm";
+import Block from "../Block/Block";
+import styled from "styled-components";
 
 export default function Marquee(props) {
-  console.log('Marquee props:', props);
+  console.log("Marquee props:", props);
   // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
   const initRowState = {
     row0: { values: [], sizes: [] },
@@ -26,7 +26,7 @@ export default function Marquee(props) {
   let marqState = props.marqueeState;
 
   // dynamically get JUST the number:
-  const marqWidth = +marqState[marqName].size.split('rem').splice(0, 1);
+  const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
 
   // LEGEND:
 
@@ -35,13 +35,13 @@ export default function Marquee(props) {
   // row[i] = the index of the letter
   // rowState[row].sizes[i] = size
 
-  console.log('rowState:', rowState);
+  console.log("rowState:", rowState);
 
-  console.log('stockConflictState:', stockConflictState);
+  console.log("stockConflictState:", stockConflictState);
 
   return (
     <StyledMarquee marqName={marqName}>
-      {keysArr.map(row => (
+      {keysArr.map((row) => (
         <StyledMarqueeRow
           size={props.size}
           data-rowid={row}
@@ -103,7 +103,7 @@ const StyledMarquee = styled.div`
 
 const StyledMarqueeRow = styled.div`
   display: flex;
-  width: ${props => (props.size ? props.size : '350px')};
+  width: ${(props) => (props.size ? props.size : "350px")};
   flex-direction: row;
   justify-content: center;
   background-color: rgb(253, 243, 229);
