@@ -4,7 +4,7 @@ import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
 import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
 ////////////////////////////////////////////////
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 ////////////////////////////////////////////////
@@ -12,27 +12,40 @@ import GlobalStyles from "./GlobalStyles";
 export default function App() {
   const appTitle = "Mar-Key";
 
-  const InitAppInputState = {
-    totalInput: [], // [{ ltr: quantity }, { ltr: quantity }]
-  };
-
   const initMarqueeState = {
-    East: { isVisible: true, size: "42rem", isSet: false, isError: false },
-    West: { isVisible: true, size: "42rem", isSet: false, isError: false },
-    South: { isVisible: true, size: "84rem", isSet: false, isError: false },
+    East: {
+      isVisible: true,
+      size: "42rem",
+      isSet: false,
+      isError: false,
+      output: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    },
+    West: {
+      isVisible: true,
+      size: "42rem",
+      isSet: false,
+      isError: false,
+      output: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    },
+    South: {
+      isVisible: true,
+      size: "84rem",
+      isSet: false,
+      isError: false,
+      output: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    },
   };
 
-  // APP STATE:
-  const [totalAppInputState, setAppInputState] = useState(InitAppInputState);
+  const reducer = (state, action) => {};
 
   // INDIVIDUAL MARQUEE STATE:
-  const [marqState, setMarquee] = useState(initMarqueeState);
+  const [marqState, setMarquee] = useReducer(reducer, initMarqueeState);
 
-  // ERROR STATE:
+  // TOTAL STOCK: calculated by adding up the outputs of each of the marquees
   const [stockSummaryState, setStockSummaryState] = useState();
 
   // MODAL POPUP STATE:
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, toggleModal] = useState(false);
 
   // store themes here.
   // GlobalStyles can be nested within and take advantage of our ThemeProvider!
@@ -52,7 +65,7 @@ export default function App() {
       <GlobalStyles />
       <StyledAppContainer>
         <NavBar title={appTitle} />
-        {marqueeNamesArr.map((el) => (
+        {marqueeNamesArr.map((el, i, arr) => (
           <React.Fragment key={el}>
             <DisplayBtn
               marqName={el}
@@ -61,8 +74,8 @@ export default function App() {
               setMarquee={setMarquee}
             />
             <StyledInputTallyModal
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
+              isOpen={modalIsOpen}
+              setIsOpen={toggleModal}
               stockSummaryState={stockSummaryState}
             ></StyledInputTallyModal>
             <StyledMarqueeContainer key={el}>
@@ -70,6 +83,7 @@ export default function App() {
                 <Marquee
                   key={`marq-${el}`}
                   setMarquee={setMarquee}
+                  setStockSummaryState={setStockSummaryState}
                   marqState={marqState}
                   marqName={el}
                   marqSize={marqState[el].size}

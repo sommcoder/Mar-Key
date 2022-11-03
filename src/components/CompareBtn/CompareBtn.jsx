@@ -5,7 +5,7 @@ import {
   StyledArrow,
 } from "../ResetBtn/ResetBtn";
 
-export default function CompareBtn(props) {
+export default function CompareBtn({ setStockSummaryState, keysArr }) {
   function compareMarquee(ev) {
     ev.preventDefault();
 
@@ -13,7 +13,7 @@ export default function CompareBtn(props) {
     let targetFormEl = ev.target.form; // form Element
 
     // FORM ROW INPUT LOOP:
-    for (let i = 0; i < props.keysArr.length; i++) {
+    for (let i = 0; i < keysArr.length; i++) {
       let targetValueStr = targetFormEl[i].value.trim(); // user input string
       let rowTargetId = targetFormEl[i].dataset.rowid;
 
@@ -28,6 +28,9 @@ export default function CompareBtn(props) {
         console.log("targetValueArr pre loop:", targetValueArr);
       }
     }
+
+    // once we've compared the initial marquee to the new marquee we need to update the state of the
+    setStockSummaryState();
   }
   return (
     <StyledCompareBtn

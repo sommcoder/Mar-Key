@@ -11,6 +11,7 @@ export default function TextRowForm({
   marqName,
   marqState,
   marqWidth,
+  setStockSummaryState,
 }) {
   // refs of our input elements for animation and focus interactivity:
   const inputRefsArr = useRef([]);
@@ -134,7 +135,11 @@ export default function TextRowForm({
         />
       ))}
       <SetCurrBtn marqName={marqName} marqState={marqState}></SetCurrBtn>
-      <CompareBtn marqName={marqName} marqState={marqState}></CompareBtn>
+      <CompareBtn
+        setStockSummaryState={setStockSummaryState}
+        marqName={marqName}
+        marqState={marqState}
+      ></CompareBtn>
       <ResetBtn marqName={marqName} marqState={marqState}></ResetBtn>
 
       {marqState[marqName].isError === true ? <ErrorMsg /> : ""}

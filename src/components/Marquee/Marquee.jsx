@@ -3,8 +3,16 @@ import TextRowForm from "../TextRowForm/TextRowForm";
 import Block from "../Block/Block";
 import styled from "styled-components";
 
-export default function Marquee({ marqState, marqName, marqSize, setMarquee }) {
+export default function Marquee({
+  marqState,
+  marqName,
+  marqSize,
+  setMarquee,
+  setStockSummaryState,
+}) {
   // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
+
+  // if user tries to RE-SUBMIT using SetCurrBtn we need to use RowState to initiate this functionality
   const initRowState = {
     row0: { values: [], sizes: [] },
     row1: { values: [], sizes: [] },
@@ -65,6 +73,7 @@ export default function Marquee({ marqState, marqName, marqSize, setMarquee }) {
         setRow={setRow}
         setNewRow={setNewRow}
         setMarquee={setMarquee}
+        setStockSummaryState={setStockSummaryState}
         setStockConflict={setStockConflict}
         // other props:
         marqName={marqName}
