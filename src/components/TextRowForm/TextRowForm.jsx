@@ -1,4 +1,4 @@
-import styled, { ThemeProvider } from "styled-components";
+import styled, { css } from "styled-components";
 import data from "../../data/blockData.json";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
 import { useRef } from "react";
@@ -6,79 +6,65 @@ import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import ResetBtn from "../ResetBtn/ResetBtn";
 import CompareBtn from "../CompareBtn/CompareBtn";
 
-export default function TextRowForm(props) {
-  console.log("TextRowForm props:", props);
-  const marqName = props.marqName;
-  const marqState = props.marqState;
-  const marqWidth = props.marqWidth;
-
+export default function TextRowForm({
+  keysArr,
+  marqName,
+  marqState,
+  marqWidth,
+}) {
+  // refs of our input elements for animation and focus interactivity:
   const inputRefsArr = useRef([]);
   const addToRefsArr = (el) => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
+  // Making this state would require a rerender, which we don't want. We want LIVE functionality
   const inputValidationObj = {
     row0: { value: [], size: 0 },
     row1: { value: [], size: 0 },
     row2: { value: [], size: 0 },
   };
 
-  ////////////////////////////////////////////////
-  // INPUT VALIDATION FUNCTION
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
     console.log("ev:", ev);
     console.log("key:", key);
     console.log("row:", row);
-    ////////////////////////////////////////////////
-    if (key === "Tab") return;
-    // prevents scroll jumping on space bar keyDown since we are on a read-only element
-    // user can still scroll jump if they are NOT in an input element
-    if (key === " ") ev.preventDefault();
-    // handle enter/submit:
-    // this should just erase the cache and in the SetCurrBtn component we will clear the entire form
-    if (key === "Enter") {
-      // do we even need to do this? won't the form submission in setCurrBtn trigger a rerendering?
-      for (const line in inputValidationObj) {
-        // reset our validationObj
-        if (Object.hasOwn(inputValidationObj, line)) {
-          inputValidationObj[line].value = []; // reset to empty array
-          inputValidationObj[line].size = 0; // reset to 0
-        }
-      }
+    console.log("inputValidationObj START", inputValidationObj);
 
-      // adjust focus to NEXT sibling
-      // if last sibling, reset to first child
-      if (props.keysArr.indexOf(row) + 1 < props.keysArr.length)
-        inputRefsArr.current[props.keysArr.indexOf(row) + 1].focus();
+    if (key === "Tab") return;
+    if (key === " ") ev.preventDefault();
+    if (key === "Enter") {
+      // cycle focus:
+      if (keysArr.indexOf(row) + 1 < keysArr.length)
+        inputRefsArr.current[keysArr.indexOf(row) + 1].focus();
       else inputRefsArr.current[0].focus();
       return;
     }
 
-    // handle deletions
     if (key === "Backspace" || key === "Delete") {
+      // every letter is larger than 1:
+      if (inputValidationObj[row].size <= 1) {
+        inputValidationObj[row].size = 0;
+        return false;
+      }
       // lookup the size of the block that's in the last position of our cache Object
-      // subtract and assign result to the cache
       inputValidationObj[row].size -= +data[
         inputValidationObj[row].value.at(-1)
       ].size
         .split("rem")
         .splice(0, 1);
-
       inputValidationObj[row].value.pop(); // pop the last input value off the valueArr
-
-      // assign our cache to the input value
       ev.target.value = inputValidationObj[row].value.join("");
       return;
     }
-
-    // get the size of the block that corresponds with what the user just inputted:
+    // get the size of the block the user inputted:
     let currBlockSize = +data[key].size.split("rem").splice(0, 1);
 
     // validation max capacity guard / animation:
     if (inputValidationObj[row].size + currBlockSize > marqWidth) {
-      inputRefsArr.current[props.keysArr.indexOf(row)].animate(
+      inputRefsArr.current[keysArr.indexOf(row)].animate(
         [
           {
             transform: "translateX(-0.33%)",
@@ -126,14 +112,17 @@ export default function TextRowForm(props) {
     inputValidationObj[row].size += currBlockSize; // update size
     inputValidationObj[row].value.push(key); // update input values
     ev.target.value = inputValidationObj[row].value.join("");
-
     return;
   }
 
   return (
-    // only id that is necessary. Needed to link the setCurrBtn to the form
-    <StyledTextRowForm id="user-input-form">
-      {props.keysArr.map((row) => (
+    <div
+      id="user-input-form"
+      css={`
+        margin-bottom: 0.5rem;
+      `}
+    >
+      {keysArr.map((row) => (
         <StyledTextRow
           key={`${marqName}-${row}`}
           readOnly
@@ -144,35 +133,14 @@ export default function TextRowForm(props) {
           onKeyDown={validateEntry}
         />
       ))}
-      <SetCurrBtn
-        marqName={marqName}
-        marqState={marqState}
-        form="user-input-form"
-        type="submit"
-      ></SetCurrBtn>
-      <CompareBtn
-        marqName={marqName}
-        marqState={marqState}
-        form="user-input-form"
-        type="submit"
-      ></CompareBtn>
-      <ResetBtn
-        marqName={marqName}
-        marqState={marqState}
-        form="user-input-form"
-        type="reset"
-      ></ResetBtn>
+      <SetCurrBtn marqName={marqName} marqState={marqState}></SetCurrBtn>
+      <CompareBtn marqName={marqName} marqState={marqState}></CompareBtn>
+      <ResetBtn marqName={marqName} marqState={marqState}></ResetBtn>
 
       {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
-    </StyledTextRowForm>
+    </div>
   );
 }
-
-////////////////////////////////////////////////
-
-const StyledTextRowForm = styled.div`
-  margin-bottom: 0.5rem;
-`;
 
 const StyledTextRow = styled.input`
   height: 3rem;
@@ -200,3 +168,13 @@ const StyledTextRow = styled.input`
     background-color: rgba(176, 224, 230, 0.75);
   }
 `;
+
+// ENTER FUNCTIONALITY:
+// do we even need to do this? won't the form submission in setCurrBtn trigger a rerendering?
+// for (const line in inputValidationObj) {
+//   // reset our validationObj
+//   if (Object.hasOwn(inputValidationObj, line)) {
+//     inputValidationObj[line].value = []; // reset to empty array
+//     inputValidationObj[line].size = 0; // reset to 0
+//   }
+// }

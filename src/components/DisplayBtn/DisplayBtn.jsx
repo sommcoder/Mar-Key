@@ -1,25 +1,30 @@
 import styled from "styled-components";
+import {
+  StyledResetBtn,
+  StyledTooltipBox,
+  StyledArrow,
+} from "../ResetBtn/ResetBtn";
 
-export default function DisplayBtn(props) {
+export default function DisplayBtn({ marqState, marqName, setMarquee }) {
   function toggleDisplay(ev) {
     // console.log("ev id:", ev.target.dataset.id);
     let marqueeToUpdate = ev.target.dataset.id;
     const updatedMarqueeState = {};
 
     // toggle Marquee visibility:
-    if (props.marqueeState[marqueeToUpdate].isVisible === true)
+    if (marqState[marqueeToUpdate].isVisible === true)
       updatedMarqueeState[marqueeToUpdate] = { isVisible: false };
     else updatedMarqueeState[marqueeToUpdate] = { isVisible: true };
 
-    props.setMarquee((currState) => ({
+    setMarquee((currState) => ({
       ...currState,
       ...updatedMarqueeState,
     }));
   }
 
   return (
-    <StyledDisplayBtn onClick={toggleDisplay} data-id={props.name}>
-      {`${props.name} Marquee`}
+    <StyledDisplayBtn onClick={toggleDisplay} data-id={marqName}>
+      {`${marqName} Marquee`}
       <StyledTooltipBox>
         Select Marquee(s) to work with
         <StyledArrow></StyledArrow>
@@ -28,54 +33,11 @@ export default function DisplayBtn(props) {
   );
 }
 
-////////////////////////////////////////////////
-
-const StyledTooltipBox = styled.span`
-  display: none;
-  z-index: 5;
-  border-radius: 4px;
-  position: absolute;
-  color: white;
-  background-color: rgba(44, 43, 43, 1);
-  bottom: 40px;
-  left: 50%;
-  width: 120px;
-  padding: 8px 8px;
-  /* margin-left: calc(120px / 2); */
-  /* margin-left: 50%; // use half the width 120/2 */
-`;
-
-const StyledArrow = styled.span`
-  content: "";
-  z-index: 5;
-  position: absolute;
-  left: 50%;
-  top: 120%;
-  transform: translateY(-50%);
-  border: 10px solid rgba(44, 43, 43, 1);
-  border-color: rgba(44, 43, 43, 1) transparent transparent transparent;
-  display: none;
-`;
-
-const StyledDisplayBtn = styled.button`
+const StyledDisplayBtn = styled(StyledResetBtn)`
   display: block;
+  position: relative;
+  // now that it's a block, we have to redefine position I suppose?
+  margin: 0 auto;
   width: 25rem;
-  &:hover ${StyledTooltipBox} {
-    display: block;
-    transition-delay: 1s;
-  }
-
-  &:hover ${StyledArrow} {
-    display: block;
-    transition-delay: 1s;
-  }
-
-  &:hover {
-    background-color: white;
-    background: none;
-    color: black;
-    border: 0.2rem solid powderblue;
-    transition: ease-in-out;
-    cursor: pointer;
-  }
+  // now that it's a block, we have to redefine the margin I suppose?
 `;

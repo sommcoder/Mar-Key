@@ -76,6 +76,9 @@ const GlobalStyles = createGlobalStyle`${css`
         opacity: 1;
       }
     }
+
+    &:is {
+    }
   }
 `}`;
 

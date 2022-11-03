@@ -3,8 +3,7 @@ import TextRowForm from "../TextRowForm/TextRowForm";
 import Block from "../Block/Block";
 import styled from "styled-components";
 
-export default function Marquee(props) {
-  console.log("Marquee props:", props);
+export default function Marquee({ marqState, marqName, marqSize, setMarquee }) {
   // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
   const initRowState = {
     row0: { values: [], sizes: [] },
@@ -21,9 +20,6 @@ export default function Marquee(props) {
   const [stockConflictState, setStockConflict] = useState([]);
   // empty array is good. If there any stock conflicts we will update this in our code and this will trigger the error message, the error message will be populated with the strings of inputs from this state array
   //   ['a', 'f', 'w']
-
-  let marqName = props.name;
-  let marqState = props.marqueeState;
 
   // dynamically get JUST the number:
   const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
@@ -43,11 +39,11 @@ export default function Marquee(props) {
     <StyledMarquee marqName={marqName}>
       {keysArr.map((row) => (
         <StyledMarqueeRow
-          size={props.size}
+          marqSize={marqSize}
           data-rowid={row}
           key={`${marqName}-${row}`}
           rowState={rowState}
-          marqWidth={props.marqWidth}
+          marqWidth={marqWidth}
         >
           {rowState[row].values.map((block, i) => (
             <Block
@@ -68,7 +64,7 @@ export default function Marquee(props) {
         // state functions:
         setRow={setRow}
         setNewRow={setNewRow}
-        setMarquee={props.setMarquee}
+        setMarquee={setMarquee}
         setStockConflict={setStockConflict}
         // other props:
         marqName={marqName}
@@ -103,7 +99,7 @@ const StyledMarquee = styled.div`
 
 const StyledMarqueeRow = styled.div`
   display: flex;
-  width: ${(props) => (props.size ? props.size : "350px")};
+  width: ${(props) => (props.marqSize ? props.marqSize : "350px")};
   flex-direction: row;
   justify-content: center;
   background-color: rgb(253, 243, 229);

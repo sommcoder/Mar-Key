@@ -6,9 +6,14 @@ import {
   StyledResetBtn,
 } from "../ResetBtn/ResetBtn";
 
-export default function SetCurrBtn(props, { marqName, marqState }) {
-  console.log("SetCurrBtn props:", props);
-
+export default function SetCurrBtn({
+  setStockConflict,
+  setRow,
+  setMarquee,
+  keysArr,
+  marqName,
+  marqState,
+}) {
   const updatedRowValuesObj = {};
   let conflictsArr = []; // any input that does NOT have enough stock will be populated in this array
 
@@ -17,7 +22,7 @@ export default function SetCurrBtn(props, { marqName, marqState }) {
   // SET MARQUEE FUNCTION
   function populateStateObjects(el) {
     // !TEXTROW LOOP:
-    for (let i = 0; i < props.keysArr.length; i++) {
+    for (let i = 0; i < keysArr.length; i++) {
       let targetValueStr = el[i].value.trim(); // user input string
       let rowTargetId = el[i].dataset.rowid;
       let rowInputObj = { values: [], sizes: [] }; // assign to the right row in State
@@ -69,7 +74,7 @@ export default function SetCurrBtn(props, { marqName, marqState }) {
     // if we had any stock conflicts detected, update State with setStockConflict()
     // Triggers a rerender of the Marquee Component and displays the corresponding errMsg
     if (conflictsArr.length > 0) {
-      props.setStockConflict((initConflictsArr) => ({
+      setStockConflict((initConflictsArr) => ({
         ...initConflictsArr,
         ...conflictsArr,
       }));
@@ -77,7 +82,7 @@ export default function SetCurrBtn(props, { marqName, marqState }) {
 
     // Marquee RowStateObj updates:
     // needs to be at least ONE valid row:
-    props.setRow((rowValuesObj) => ({
+    setRow((rowValuesObj) => ({
       ...rowValuesObj,
       ...updatedRowValuesObj,
     }));
@@ -88,7 +93,7 @@ export default function SetCurrBtn(props, { marqName, marqState }) {
     updatedMarqueeStateObj[marqName].isSet = true;
 
     console.log("updatedMarqueeStateObj", updatedMarqueeStateObj);
-    props.setMarquee((marqueeState) => ({
+    setMarquee((marqueeState) => ({
       ...marqueeState,
       ...updatedMarqueeStateObj,
     }));
@@ -116,5 +121,6 @@ export default function SetCurrBtn(props, { marqName, marqState }) {
   );
 }
 
-// copy of ResetBtn styled Component
-const StyledSetCurrBtn = styled(StyledResetBtn)``;
+const StyledSetCurrBtn = styled(StyledResetBtn)`
+  color: black;
+`;

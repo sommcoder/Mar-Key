@@ -26,7 +26,7 @@ export default function App() {
   const [totalAppInputState, setAppInputState] = useState(InitAppInputState);
 
   // INDIVIDUAL MARQUEE STATE:
-  const [marqueeState, setMarquee] = useState(initMarqueeState);
+  const [marqState, setMarquee] = useState(initMarqueeState);
 
   // ERROR STATE:
   const [stockSummaryState, setStockSummaryState] = useState();
@@ -55,9 +55,9 @@ export default function App() {
         {marqueeNamesArr.map((el) => (
           <React.Fragment key={el}>
             <DisplayBtn
-              name={el}
+              marqName={el}
               key={`btn-${el}`}
-              marqueeState={marqueeState}
+              marqState={marqState}
               setMarquee={setMarquee}
             />
             <StyledInputTallyModal
@@ -66,13 +66,13 @@ export default function App() {
               stockSummaryState={stockSummaryState}
             ></StyledInputTallyModal>
             <StyledMarqueeContainer key={el}>
-              {marqueeState[el].isVisible === true ? (
+              {marqState[el].isVisible === true ? (
                 <Marquee
                   key={`marq-${el}`}
                   setMarquee={setMarquee}
-                  marqueeState={marqueeState}
-                  name={el}
-                  size={marqueeState[el].size}
+                  marqState={marqState}
+                  marqName={el}
+                  marqSize={marqState[el].size}
                 />
               ) : null}
             </StyledMarqueeContainer>
