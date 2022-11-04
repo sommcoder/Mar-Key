@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function ResetBtn(props) {
+export default function ResetBtn({ setRow, marqName, appState, setMarquee }) {
   //////////////////////////////////////////////
   // RESET FORM FUNCTION
   function resetRows(ev) {
@@ -8,13 +8,13 @@ export default function ResetBtn(props) {
 
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
 
-    props.setRow((rowValuesObj) => ({
-      ...rowValuesObj,
-      ...props.initRowState,
-    }));
-    let updatedMarqueeStateObj = props.marqState;
-    updatedMarqueeStateObj[props.marqName].isSet = false;
-    props.setMarquee((marqueeState) => ({
+    // setRow((rowValuesObj) => ({
+    //   ...rowValuesObj,
+    //   ...initRowState, // ????
+    // }));
+    let updatedMarqueeStateObj = appState;
+    updatedMarqueeStateObj[marqName].isSet = false;
+    setMarquee((marqueeState) => ({
       ...marqueeState,
       ...updatedMarqueeStateObj,
     }));
@@ -39,7 +39,7 @@ export const StyledTooltipBox = styled.span`
   position: absolute;
   top: -20%; // allows space for tooltip arrow
   left: 50%;
-  transform: translateX(-50%) translateY(-100%);
+  transform: translateX(-50%) translateY(-110%);
   color: white;
   background-color: rgba(44, 43, 43, 1);
   width: 150px;
@@ -50,7 +50,7 @@ export const StyledArrow = styled.span`
   content: "";
   position: absolute;
   display: none;
-  top: 97%;
+  top: 95%;
   left: 45%; // not sure why 45% works?? cause of the border???
   // creates a triangle from a square:
   border: 10px solid rgba(44, 43, 43, 1);
@@ -64,6 +64,8 @@ export const StyledResetBtn = styled.button`
 
   &:hover {
     cursor: pointer;
+    background-color: white;
+    border: 2px solid powderblue;
   }
 
   &:hover ${StyledTooltipBox}, ${StyledArrow} {

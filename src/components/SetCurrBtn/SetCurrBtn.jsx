@@ -8,12 +8,13 @@ import {
 
 export default function SetCurrBtn({
   setStockConflict,
-  setRow,
-  setMarquee,
+  dispatchRowState,
+  dispatchNewRowState,
   keysArr,
   marqName,
-  marqState,
+  appState,
 }) {
+  let rowTargetId;
   const updatedRowValuesObj = {};
   let conflictsArr = []; // any input that does NOT have enough stock will be populated in this array
 
@@ -24,7 +25,7 @@ export default function SetCurrBtn({
     // !TEXTROW LOOP:
     for (let i = 0; i < keysArr.length; i++) {
       let targetValueStr = el[i].value.trim(); // user input string
-      let rowTargetId = el[i].dataset.rowid;
+      rowTargetId = el[i].dataset.rowid;
       let rowInputObj = { values: [], sizes: [] }; // assign to the right row in State
       if (!targetValueStr) return;
 
@@ -82,18 +83,15 @@ export default function SetCurrBtn({
 
     // Marquee RowStateObj updates:
     // needs to be at least ONE valid row:
-    setRow((rowValuesObj) => ({
-      ...rowValuesObj,
-      ...updatedRowValuesObj,
-    }));
+    dispatchRow({ type: rowTargetId, payload: updatedRowValuesObj });
 
     // condition MarqueeStateObj updates:
-    // reference of marqState prop for updating
-    let updatedMarqueeStateObj = marqState;
+    // reference of appState prop for updating
+    let updatedMarqueeStateObj = appState;
     updatedMarqueeStateObj[marqName].isSet = true;
 
     console.log("updatedMarqueeStateObj", updatedMarqueeStateObj);
-    setMarquee((marqueeState) => ({
+    dispatchRow((marqueeState) => ({
       ...marqueeState,
       ...updatedMarqueeStateObj,
     }));
@@ -101,7 +99,7 @@ export default function SetCurrBtn({
     // reset textRow Components afterSubmit
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
 
-    console.log("marqObj POST toggleMarquee():", marqState);
+    console.log("marqObj POST toggleMarquee():", appState);
 
     // create a function that creates a popup
   }

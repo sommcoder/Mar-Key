@@ -1,36 +1,53 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import TextRowForm from "../TextRowForm/TextRowForm";
 import Block from "../Block/Block";
 import styled from "styled-components";
 
 export default function Marquee({
-  marqState,
+  appState,
   marqName,
   marqSize,
-  setMarquee,
+  dispatchAppState,
   setStockSummaryState,
 }) {
   // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
 
-  // if user tries to RE-SUBMIT using SetCurrBtn we need to use RowState to initiate this functionality
+  // use useReducer for this:
   const initRowState = {
-    row0: { values: [], sizes: [] },
-    row1: { values: [], sizes: [] },
-    row2: { values: [], sizes: [] },
+    row0: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    row1: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    row2: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
   };
+
+  // we don't need a switch statement since our code is the same, only thing that changes is ....
+
+  // but wait... do we EVEN need a useReducer now???
+  // same reducer function for BOTH useReducer Hooks
+  const reducer = (state, action) => {
+    let newState = { ...state, [action.type]: action.payload };
+    console.log("newState", newState);
+    return newState;
+  };
+
+  // the row state will be combined, sorted and added to the corresponding MarqueeState object using the App's useReducer hook
+  const [rowState, dispatchRowState] = useReducer(reducer, initRowState);
+  const [newRowState, dispatchNewRowState] = useReducer(reducer, initRowState);
 
   const keysArr = Object.keys(initRowState);
 
-  // MARQUEE STATE:
-  const [isDisabled, toggleDisabled] = useState(false);
-  const [rowState, setRow] = useState(initRowState); // currState to initiate
-  const [newRowState, setNewRow] = useState(initRowState); // newState to compare
+  // const [isDisabled, toggleDisabled] = useState(false);
+  // // should be moved to the Marquee component:
+  // // separate useState hooks for each:
+  // const [visibility, setVisibility] = useState(true);
+  // // when the marquee's input has at least one valid row entry:
+  // const [active, setActive] = useState(false);
+
   const [stockConflictState, setStockConflict] = useState([]);
   // empty array is good. If there any stock conflicts we will update this in our code and this will trigger the error message, the error message will be populated with the strings of inputs from this state array
   //   ['a', 'f', 'w']
 
   // dynamically get JUST the number:
-  const marqWidth = +marqState[marqName].size.split("rem").splice(0, 1);
+  const marqWidth = +appState[marqName].size.split("rem").splice(0, 1);
 
   // LEGEND:
 
@@ -68,17 +85,17 @@ export default function Marquee({
         newRowState={newRowState}
         initRowState={initRowState}
         stockConflictState={stockConflictState}
-        marqState={marqState}
+        appState={appState}
         // state functions:
-        setRow={setRow}
-        setNewRow={setNewRow}
-        setMarquee={setMarquee}
+        dispatchRowState={dispatchRowState}
+        dispatchNewRowState={dispatchNewRowState}
+        ///
         setStockSummaryState={setStockSummaryState}
         setStockConflict={setStockConflict}
         // other props:
         marqName={marqName}
         keysArr={keysArr}
-        isDisabled={isDisabled}
+        // isDisabled={isDisabled}
         marqWidth={marqWidth}
       />
     </StyledMarquee>
@@ -119,13 +136,25 @@ const StyledMarqueeRow = styled.div`
   border-left: 0.25rem grey solid;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.12),
     0 4px 4px rgba(0, 0, 0, 0.16), 0 8px 8px rgba(0, 0, 0, 0.2);
-
-  /* &:hover {
-    background-color: rgb(249, 232, 207);
-    cursor: pointer;
-  } */
-  /* first child is technically the DisplayBtn component */
+  /* 0th child is technically the DisplayBtn component */
   &:nth-child(1) {
     border-top: 0.25rem grey solid;
   }
 `;
+
+// switch (action.type) {
+//   case "row0":
+//     newState = { ...state, [action.type]: action.payload };
+//     // { row: [[ltr, quantity], [ltr, quantity]] }
+//     break;
+//   case "row1":
+//     newState = { ...state, [action.type]: action.payload };
+//     // { row: [[ltr, quantity], [ltr, quantity]] }
+//     break;
+//   case "row2":
+//     newState = { ...state, [action.type]: action.payload };
+//     // { row: [[ltr, quantity], [ltr, quantity]] }
+//     break;
+//   default:
+//     throw new Error("could not identify action.type");
+// }

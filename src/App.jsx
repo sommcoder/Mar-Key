@@ -12,39 +12,37 @@ import GlobalStyles from "./GlobalStyles";
 export default function App() {
   const appTitle = "Mar-Key";
 
-  const initMarqueeState = {
-    East: {
-      isVisible: true,
-      size: "42rem",
-      isSet: false,
-      isError: false,
-      output: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    },
-    West: {
-      isVisible: true,
-      size: "42rem",
-      isSet: false,
-      isError: false,
-      output: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    },
-    South: {
-      isVisible: true,
-      size: "84rem",
-      isSet: false,
-      isError: false,
-      output: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    },
+  // what we will use to show the user once they've inputted everything:
+  // once each marquee that is SELECTED by the user receives an input and is compared to the previous state, they will then be amalgamated, sorted and used to update the App state by which marquee's were SELECTED/INPUTTED
+  const initAppOutputState = {
+    East: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    West: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    South: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
   };
 
-  const reducer = (state, action) => {};
+  // used to render the marquee Component's size:
+  const marqueeSizing = {
+    East: "42rem",
+    West: "42rem",
+    South: "84rem",
+  };
 
-  // INDIVIDUAL MARQUEE STATE:
-  const [marqState, setMarquee] = useReducer(reducer, initMarqueeState);
+  // action.type = (east, west, south)
+  // action.payload = [{ltr: quantity}, {ltr: quantity}]
+  const reducer = (state, action) => {
+    let newState = { ...state, [action.type]: action.payload };
+    console.log("newState", newState);
+    return newState;
+  };
+
+  // ALL MARQUEE STATES:
+  const [appState, dispatchAppState] = useReducer(reducer, initAppOutputState);
 
   // TOTAL STOCK: calculated by adding up the outputs of each of the marquees
   const [stockSummaryState, setStockSummaryState] = useState();
 
   // MODAL POPUP STATE:
+  // the modal displays the tally of letters needed to the user:
   const [modalIsOpen, toggleModal] = useState(false);
 
   // store themes here.
@@ -54,10 +52,9 @@ export default function App() {
     colors: {
       button: "powderblue",
     },
-    button: {},
   };
 
-  const marqueeNamesArr = Object.keys(initMarqueeState);
+  const marqueeNamesArr = Object.keys(initAppOutputState);
   console.log("marqueeNamesArr:", marqueeNamesArr);
 
   return (
@@ -65,28 +62,30 @@ export default function App() {
       <GlobalStyles />
       <StyledAppContainer>
         <NavBar title={appTitle} />
-        {marqueeNamesArr.map((el, i, arr) => (
+        {marqueeNamesArr.map((el) => (
           <React.Fragment key={el}>
             <DisplayBtn
               marqName={el}
               key={`btn-${el}`}
-              marqState={marqState}
-              setMarquee={setMarquee}
+              appState={appState}
+              dispatchAppState={dispatchAppState}
             />
             <StyledInputTallyModal
               isOpen={modalIsOpen}
               setIsOpen={toggleModal}
+              // state:
+              appState={appState}
               stockSummaryState={stockSummaryState}
             ></StyledInputTallyModal>
             <StyledMarqueeContainer key={el}>
-              {marqState[el].isVisible === true ? (
+              {appState[el].isVisible === true ? (
                 <Marquee
                   key={`marq-${el}`}
-                  setMarquee={setMarquee}
+                  dispatchAppState={dispatchAppState}
                   setStockSummaryState={setStockSummaryState}
-                  marqState={marqState}
+                  appState={appState}
                   marqName={el}
-                  marqSize={marqState[el].size}
+                  marqSize={marqueeSizing[el]}
                 />
               ) : null}
             </StyledMarqueeContainer>

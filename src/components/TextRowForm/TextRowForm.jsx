@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import data from "../../data/blockData.json";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import ResetBtn from "../ResetBtn/ResetBtn";
 import CompareBtn from "../CompareBtn/CompareBtn";
@@ -9,10 +9,13 @@ import CompareBtn from "../CompareBtn/CompareBtn";
 export default function TextRowForm({
   keysArr,
   marqName,
-  marqState,
+  appState,
   marqWidth,
   setStockSummaryState,
 }) {
+  // when the textRowForm is being given an error:
+  const [error, setError] = useState(false);
+
   // refs of our input elements for animation and focus interactivity:
   const inputRefsArr = useRef([]);
   const addToRefsArr = (el) => {
@@ -102,8 +105,8 @@ export default function TextRowForm({
         ],
         650
       );
-      // ref of marqState prop for updating
-      let updatedMarqueeStateObj = marqState;
+      // ref of appState prop for updating
+      let updatedMarqueeStateObj = appState;
       updatedMarqueeStateObj[marqName].isError = true;
       return; // exit execution
     }
@@ -134,15 +137,15 @@ export default function TextRowForm({
           onKeyDown={validateEntry}
         />
       ))}
-      <SetCurrBtn marqName={marqName} marqState={marqState}></SetCurrBtn>
+      <SetCurrBtn marqName={marqName} appState={appState}></SetCurrBtn>
       <CompareBtn
         setStockSummaryState={setStockSummaryState}
         marqName={marqName}
-        marqState={marqState}
+        appState={appState}
       ></CompareBtn>
-      <ResetBtn marqName={marqName} marqState={marqState}></ResetBtn>
+      <ResetBtn marqName={marqName} appState={appState}></ResetBtn>
 
-      {marqState[marqName].isError === true ? <ErrorMsg /> : ""}
+      {appState[marqName].isError === true ? <ErrorMsg /> : ""}
     </div>
   );
 }
@@ -154,13 +157,13 @@ const StyledTextRow = styled.input`
   display: block;
   text-align: center;
   width: 350px;
-  margin: 0px auto;
+  margin: 0 auto;
   text-transform: uppercase;
   font-size: 1.6rem;
   font-weight: bold;
   z-index: 1;
   cursor: pointer;
-  border-left: 2px solid rgb(118, 118, 118); // workaround for border-left being too dark
+  border: 2px solid rgb(118, 118, 118);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
     0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
