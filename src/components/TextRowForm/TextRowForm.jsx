@@ -1,28 +1,28 @@
 import styled from "styled-components";
 import data from "../../data/blockData.json";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import { useState, useRef } from "react";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import ResetBtn from "../ResetBtn/ResetBtn";
 import CompareBtn from "../CompareBtn/CompareBtn";
+import { useRef } from "react";
 
 export default function TextRowForm({
   keysArr,
   marqName,
   appState,
   marqWidth,
+  dispatchRowState,
+  dispatchNewRowState,
   setStockSummaryState,
 }) {
-  // when the textRowForm is being given an error:
-  const [error, setError] = useState(false);
-
   // refs of our input elements for animation and focus interactivity:
   const inputRefsArr = useRef([]);
   const addToRefsArr = (el) => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
-  // Making this state would require a rerender, which we don't want. We want LIVE functionality
+  // Making this state would require a rerendering, which we don't want.
+  // We want LIVE functionality
   const inputValidationObj = {
     row0: { value: [], size: 0 },
     row1: { value: [], size: 0 },
@@ -137,13 +137,18 @@ export default function TextRowForm({
           onKeyDown={validateEntry}
         />
       ))}
-      <SetCurrBtn marqName={marqName} appState={appState}></SetCurrBtn>
+      <SetCurrBtn
+        appState={appState}
+        dispatchRowState={dispatchRowState}
+        marqName={marqName}
+      />
       <CompareBtn
+        appState={appState}
+        dispatchNewRowState={dispatchNewRowState}
         setStockSummaryState={setStockSummaryState}
         marqName={marqName}
-        appState={appState}
-      ></CompareBtn>
-      <ResetBtn marqName={marqName} appState={appState}></ResetBtn>
+      />
+      <ResetBtn marqName={marqName} appState={appState} />
 
       {appState[marqName].isError === true ? <ErrorMsg /> : ""}
     </div>

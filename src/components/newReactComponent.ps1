@@ -7,7 +7,7 @@
 $ComponentName = Read-Host -prompt "Enter React Component Name"
 $ComponentType = Read-Host -prompt "what HTML element will it return?"
 
-$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8' # >> defaults to UTF-16 so we need to change this
+$PSDefaultParameterValues = @{ '*:Encoding' = 'utf8' } # >> defaults to UTF-16 so we need to change this
 
 # the expression -z string is TRUE IF the lenght of string is zero
 if ($ComponentName.length -eq 0) {
@@ -28,8 +28,8 @@ else
     Write-Output "" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "export default function $ComponentName(props) {" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "    return (" >> ./$ComponentName/$ComponentName.jsx
-    Write-Output "        <Styled$ComponentName>>" >> ./$ComponentName/$ComponentName.jsx
-    Write-Output "        </Styled$ComponentName>>" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "        <Styled$ComponentName>" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "        </Styled$ComponentName>" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "    );" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "}" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "const Styled$ComponentName = styled.$ComponentType;" >> ./$ComponentName/$ComponentName.jsx

@@ -5,7 +5,11 @@ import {
   StyledArrow,
 } from "../ResetBtn/ResetBtn";
 
-export default function CompareBtn({ setStockSummaryState, keysArr }) {
+export default function CompareBtn({
+  setStockSummaryState,
+  keysArr,
+  dispatchNewRowState,
+}) {
   function compareMarquee(ev) {
     ev.preventDefault();
 
@@ -40,7 +44,8 @@ export default function CompareBtn({ setStockSummaryState, keysArr }) {
     >
       Compare
       <StyledTooltipBox>
-        Compares to set marquee<StyledArrow></StyledArrow>
+        Compares to set marquee
+        <StyledArrow />
       </StyledTooltipBox>
     </StyledCompareBtn>
   );

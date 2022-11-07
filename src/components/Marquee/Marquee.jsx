@@ -6,19 +6,45 @@ import styled from "styled-components";
 export default function Marquee({
   appState,
   marqName,
-  marqSize,
+  marqWidths,
   dispatchAppState,
   setStockSummaryState,
 }) {
   // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
+  /*
+   
+1) set row state
+2) set NEW row state
+3) upon NEW row state update, dispatch app state sends a payload of the amalgamated and sorted letters and their quantities to the app reducer
+4) app reducer will update App state
 
-  // use useReducer for this:
+  */
+  // array conents determine the block components that are rendered as children in the MarqueeRow components:
   const initRowState = {
     row0: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
     row1: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
     row2: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
   };
+  ///////////////////////////////////////////////
+  // adjusting the booleans of genMarqState
+  const appReducer = (state, action) => {
+    // switch (action.type) {
+    //   case "visible": {
+    //   }
+    // }
+  };
+  // default marquee state:
+  const initMarqState = {
+    visible: true,
+    selected: false,
+    error: false,
+  };
 
+  const [marqState, dispatchGenMarqState] = useReducer(
+    appReducer,
+    initMarqState
+  );
+  ////////////////////////////////////////////////////
   // we don't need a switch statement since our code is the same, only thing that changes is ....
 
   // but wait... do we EVEN need a useReducer now???
@@ -45,10 +71,9 @@ export default function Marquee({
   const [stockConflictState, setStockConflict] = useState([]);
   // empty array is good. If there any stock conflicts we will update this in our code and this will trigger the error message, the error message will be populated with the strings of inputs from this state array
   //   ['a', 'f', 'w']
-
   // dynamically get JUST the number:
-  const marqWidth = +appState[marqName].size.split("rem").splice(0, 1);
-
+  const marqWidth = marqWidths + "rem";
+  console.log("marqWidth:", marqWidth);
   // LEGEND:
 
   //TODO: We will need to FIX this! since we've changed out stateObj and then we will need to fix the way that we are mapping the Block component as well
@@ -64,13 +89,12 @@ export default function Marquee({
     <StyledMarquee marqName={marqName}>
       {keysArr.map((row) => (
         <StyledMarqueeRow
-          marqSize={marqSize}
           data-rowid={row}
           key={`${marqName}-${row}`}
           rowState={rowState}
           marqWidth={marqWidth}
         >
-          {rowState[row].values.map((block, i) => (
+          {rowState[row].map((block, i) => (
             <Block
               key={`${marqName}-${row}-block-${i}`}
               block={block}
@@ -89,13 +113,11 @@ export default function Marquee({
         // state functions:
         dispatchRowState={dispatchRowState}
         dispatchNewRowState={dispatchNewRowState}
-        ///
         setStockSummaryState={setStockSummaryState}
         setStockConflict={setStockConflict}
         // other props:
         marqName={marqName}
         keysArr={keysArr}
-        // isDisabled={isDisabled}
         marqWidth={marqWidth}
       />
     </StyledMarquee>
@@ -125,7 +147,7 @@ const StyledMarquee = styled.div`
 
 const StyledMarqueeRow = styled.div`
   display: flex;
-  width: ${(props) => (props.marqSize ? props.marqSize : "350px")};
+  width: ${(props) => (props.marqWidth ? props.marqWidth : "350px")};
   flex-direction: row;
   justify-content: center;
   background-color: rgb(253, 243, 229);
@@ -141,20 +163,3 @@ const StyledMarqueeRow = styled.div`
     border-top: 0.25rem grey solid;
   }
 `;
-
-// switch (action.type) {
-//   case "row0":
-//     newState = { ...state, [action.type]: action.payload };
-//     // { row: [[ltr, quantity], [ltr, quantity]] }
-//     break;
-//   case "row1":
-//     newState = { ...state, [action.type]: action.payload };
-//     // { row: [[ltr, quantity], [ltr, quantity]] }
-//     break;
-//   case "row2":
-//     newState = { ...state, [action.type]: action.payload };
-//     // { row: [[ltr, quantity], [ltr, quantity]] }
-//     break;
-//   default:
-//     throw new Error("could not identify action.type");
-// }

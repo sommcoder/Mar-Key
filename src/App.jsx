@@ -3,8 +3,9 @@ import NavBar from "./components/NavBar/NavBar";
 import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
 import Marquee from "./components/Marquee/Marquee";
 import Keyboard from "./components/Keyboard/Keyboard";
+import ModalWindow from "./components/ModalWindow/ModalWindow";
 ////////////////////////////////////////////////
-import { useState, useReducer } from "react";
+import { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 ////////////////////////////////////////////////
@@ -12,31 +13,14 @@ import GlobalStyles from "./GlobalStyles";
 export default function App() {
   const appTitle = "Mar-Key";
 
-  // what we will use to show the user once they've inputted everything:
-  // once each marquee that is SELECTED by the user receives an input and is compared to the previous state, they will then be amalgamated, sorted and used to update the App state by which marquee's were SELECTED/INPUTTED
-  const initAppOutputState = {
-    East: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    West: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    South: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-  };
+  // grand total output:
+  const initAppOutputState = []; // [{ ltr: quantity }, { ltr: quantity }, etc..]
 
-  // used to render the marquee Component's size:
-  const marqueeSizing = {
-    East: "42rem",
-    West: "42rem",
-    South: "84rem",
-  };
+  // ALL MARQUEE STATES:
+  const [appState, dispatchAppState] = useState(initAppOutputState);
 
   // action.type = (east, west, south)
   // action.payload = [{ltr: quantity}, {ltr: quantity}]
-  const reducer = (state, action) => {
-    let newState = { ...state, [action.type]: action.payload };
-    console.log("newState", newState);
-    return newState;
-  };
-
-  // ALL MARQUEE STATES:
-  const [appState, dispatchAppState] = useReducer(reducer, initAppOutputState);
 
   // TOTAL STOCK: calculated by adding up the outputs of each of the marquees
   const [stockSummaryState, setStockSummaryState] = useState();
@@ -45,8 +29,14 @@ export default function App() {
   // the modal displays the tally of letters needed to the user:
   const [modalIsOpen, toggleModal] = useState(false);
 
-  // store themes here.
-  // GlobalStyles can be nested within and take advantage of our ThemeProvider!
+  // To render the marquee Component's width:
+  // we can add rem and covert to string with concatenation. Easier than the opposite!
+  const marqWidths = {
+    East: 42,
+    West: 42,
+    South: 84,
+  };
+
   // look into creating dark-mode functionality here
   const theme = {
     colors: {
@@ -54,7 +44,7 @@ export default function App() {
     },
   };
 
-  const marqueeNamesArr = Object.keys(initAppOutputState);
+  const marqueeNamesArr = Object.keys(marqWidths);
   console.log("marqueeNamesArr:", marqueeNamesArr);
 
   return (
@@ -70,22 +60,21 @@ export default function App() {
               appState={appState}
               dispatchAppState={dispatchAppState}
             />
-            <StyledInputTallyModal
+            <ModalWindow
               isOpen={modalIsOpen}
               setIsOpen={toggleModal}
-              // state:
               appState={appState}
               stockSummaryState={stockSummaryState}
-            ></StyledInputTallyModal>
+            />
             <StyledMarqueeContainer key={el}>
-              {appState[el].isVisible === true ? (
+              {marqWidths[el].visible === true ? (
                 <Marquee
                   key={`marq-${el}`}
                   dispatchAppState={dispatchAppState}
                   setStockSummaryState={setStockSummaryState}
                   appState={appState}
                   marqName={el}
-                  marqSize={marqueeSizing[el]}
+                  marqWidths={marqWidths[el]}
                 />
               ) : null}
             </StyledMarqueeContainer>
@@ -96,10 +85,6 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
-const StyledInputTallyModal = styled.div`
-  display: none;
-`;
 
 const StyledAppContainer = styled.div`
   margin: 0 auto;

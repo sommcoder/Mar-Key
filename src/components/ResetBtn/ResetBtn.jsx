@@ -23,7 +23,8 @@ export default function ResetBtn({ setRow, marqName, appState, setMarquee }) {
     <StyledResetBtn form="user-input-form" type="reset" onClick={resetRows}>
       Reset
       <StyledTooltipBox>
-        Resets marquee<StyledArrow></StyledArrow>
+        Resets marquee
+        <StyledArrow />
       </StyledTooltipBox>
     </StyledResetBtn>
   );

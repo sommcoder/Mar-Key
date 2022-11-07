@@ -9,7 +9,6 @@ import {
 export default function SetCurrBtn({
   setStockConflict,
   dispatchRowState,
-  dispatchNewRowState,
   keysArr,
   marqName,
   appState,
@@ -83,7 +82,7 @@ export default function SetCurrBtn({
 
     // Marquee RowStateObj updates:
     // needs to be at least ONE valid row:
-    dispatchRow({ type: rowTargetId, payload: updatedRowValuesObj });
+    dispatchRowState({ type: rowTargetId, payload: updatedRowValuesObj });
 
     // condition MarqueeStateObj updates:
     // reference of appState prop for updating
@@ -91,7 +90,7 @@ export default function SetCurrBtn({
     updatedMarqueeStateObj[marqName].isSet = true;
 
     console.log("updatedMarqueeStateObj", updatedMarqueeStateObj);
-    dispatchRow((marqueeState) => ({
+    dispatchRowState((marqueeState) => ({
       ...marqueeState,
       ...updatedMarqueeStateObj,
     }));
@@ -113,7 +112,7 @@ export default function SetCurrBtn({
       Set
       <StyledTooltipBox>
         Sets the current marquee
-        <StyledArrow></StyledArrow>
+        <StyledArrow />
       </StyledTooltipBox>
     </StyledSetCurrBtn>
   );
