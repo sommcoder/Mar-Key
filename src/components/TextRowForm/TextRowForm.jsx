@@ -7,22 +7,22 @@ import CompareBtn from "../CompareBtn/CompareBtn";
 import { useRef } from "react";
 
 export default function TextRowForm({
-  keysArr,
-  marqName,
-  appState,
-  marqWidth,
+  appOutputState,
+  dispatchAppOutput,
   dispatchRowState,
   dispatchNewRowState,
-  setStockSummaryState,
+  keysArr,
+  marqName,
+  marqSize,
 }) {
-  // refs of our input elements for animation and focus interactivity:
+  console.log("marqWidth:", marqSize);
+  // Input elemtns Refs:
   const inputRefsArr = useRef([]);
   const addToRefsArr = (el) => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
-  // Making this state would require a rerendering, which we don't want.
-  // We want LIVE functionality
+  // LIVE validation object:
   const inputValidationObj = {
     row0: { value: [], size: 0 },
     row1: { value: [], size: 0 },
@@ -32,12 +32,10 @@ export default function TextRowForm({
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    console.log("ev:", ev);
     console.log("key:", key);
     console.log("row:", row);
-    console.log("inputValidationObj START", inputValidationObj);
+    // console.log("inputValidationObj START", inputValidationObj);
 
-    if (key === "Tab") return;
     if (key === " ") ev.preventDefault();
     if (key === "Enter") {
       // cycle focus:
@@ -48,26 +46,24 @@ export default function TextRowForm({
     }
 
     if (key === "Backspace" || key === "Delete") {
-      // every letter is larger than 1:
-      if (inputValidationObj[row].size <= 1) {
-        inputValidationObj[row].size = 0;
-        return false;
-      }
-      // lookup the size of the block that's in the last position of our cache Object
-      inputValidationObj[row].size -= +data[
-        inputValidationObj[row].value.at(-1)
-      ].size
-        .split("rem")
-        .splice(0, 1);
-      inputValidationObj[row].value.pop(); // pop the last input value off the valueArr
+      if (inputValidationObj[row].size)
+        // if (inputValidationObj[row].size <= 1) {
+        //   inputValidationObj[row].size = 0;
+        //   return;
+        // }
+        // subtract the LAST letter in our validationObj
+        inputValidationObj[row].size -=
+          +data[inputValidationObj[row].value.at(-1)].size;
+      inputValidationObj[row].value.pop();
       ev.target.value = inputValidationObj[row].value.join("");
       return;
     }
-    // get the size of the block the user inputted:
-    let currBlockSize = +data[key].size.split("rem").splice(0, 1);
 
-    // validation max capacity guard / animation:
-    if (inputValidationObj[row].size + currBlockSize > marqWidth) {
+    if (!data[key]) return;
+    let currBlockSize = +data[key].size;
+
+    // Max capacity check:
+    if (inputValidationObj[row].size + currBlockSize > marqSize) {
       inputRefsArr.current[keysArr.indexOf(row)].animate(
         [
           {
@@ -78,80 +74,56 @@ export default function TextRowForm({
             transform: "translateX(0.33%)",
             borderColor: "rgb(255, 0, 0)",
           },
-          {
-            transform: "translateX(-0.33%)",
-            borderColor: "rgb(255, 0, 0)",
-          },
-          {
-            transform: "translateX(0.33%)",
-            borderColor: "rgb(255, 0, 0)",
-          },
-          {
-            transform: "translateX(-0.33%)",
-            borderColor: "rgb(255, 0, 0)",
-          },
-          {
-            transform: "translateX(0.33%)",
-            borderColor: "rgb(255, 0, 0)",
-          },
-          {
-            transform: "translateX(-0.33%)",
-            borderColor: "rgb(255, 0, 0)",
-          },
-          {
-            transform: "translateX(0%)",
-            borderColor: "rgb(255, 0, 0)",
-          },
         ],
-        650
+        { duration: 150, iterations: 3 }
       );
-      // ref of appState prop for updating
-      let updatedMarqueeStateObj = appState;
-      updatedMarqueeStateObj[marqName].isError = true;
-      return; // exit execution
+      return;
     }
-
-    ////////////////////////////////////////////////
-    // if all above is well, add to our cache and assign currKey to our input element
     inputValidationObj[row].size += currBlockSize; // update size
     inputValidationObj[row].value.push(key); // update input values
+    console.log("inputValidationObj END:", inputValidationObj);
     ev.target.value = inputValidationObj[row].value.join("");
     return;
   }
 
   return (
-    <div
-      id="user-input-form"
-      css={`
-        margin-bottom: 0.5rem;
-      `}
-    >
-      {keysArr.map((row) => (
-        <StyledTextRow
-          key={`${marqName}-${row}`}
-          readOnly
-          ref={addToRefsArr}
-          data-rowid={row}
-          type="text"
-          name={row}
-          onKeyDown={validateEntry}
-        />
-      ))}
+    <>
+      <form
+        id="user-input-form"
+        css={`
+          margin-bottom: 0.5rem;
+        `}
+      >
+        {keysArr.map((row) => (
+          <StyledTextRow
+            key={`${marqName}-${row}`}
+            readOnly
+            ref={addToRefsArr}
+            data-rowid={row}
+            type="text"
+            name={row}
+            onKeyDown={validateEntry}
+          />
+        ))}
+      </form>
       <SetCurrBtn
-        appState={appState}
+        keysArr={keysArr}
         dispatchRowState={dispatchRowState}
         marqName={marqName}
       />
       <CompareBtn
-        appState={appState}
+        appOutputState={appOutputState}
+        dispatchAppOutput={dispatchAppOutput}
         dispatchNewRowState={dispatchNewRowState}
-        setStockSummaryState={setStockSummaryState}
         marqName={marqName}
       />
-      <ResetBtn marqName={marqName} appState={appState} />
-
-      {appState[marqName].isError === true ? <ErrorMsg /> : ""}
-    </div>
+      <ResetBtn
+        appOutputState={appOutputState}
+        dispatchAppOutput={dispatchAppOutput}
+        marqName={marqName}
+      />
+      {appOutputState[marqName].isError === true ? <ErrorMsg /> : ""}
+    </>
   );
 }
 
@@ -181,13 +153,3 @@ const StyledTextRow = styled.input`
     background-color: rgba(176, 224, 230, 0.75);
   }
 `;
-
-// ENTER FUNCTIONALITY:
-// do we even need to do this? won't the form submission in setCurrBtn trigger a rerendering?
-// for (const line in inputValidationObj) {
-//   // reset our validationObj
-//   if (Object.hasOwn(inputValidationObj, line)) {
-//     inputValidationObj[line].value = []; // reset to empty array
-//     inputValidationObj[line].size = 0; // reset to 0
-//   }
-// }

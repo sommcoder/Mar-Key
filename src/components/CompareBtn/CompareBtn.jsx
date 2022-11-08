@@ -11,6 +11,7 @@ export default function CompareBtn({
   dispatchNewRowState,
 }) {
   function compareMarquee(ev) {
+    // once comparison is complete, call dispatch for updating appOuput, inside the reducer, we call toggleModal() which takes appOuput state and amalgamated THOSE values which is what is ultimately displayed to the user in the modal window
     ev.preventDefault();
 
     console.log("ev setCurrMarquee:", ev);

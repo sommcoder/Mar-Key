@@ -1,37 +1,31 @@
 import React from "react";
-import NavBar from "./components/NavBar/NavBar";
-import DisplayBtn from "./components/DisplayBtn/DisplayBtn";
-import Marquee from "./components/Marquee/Marquee";
-import Keyboard from "./components/Keyboard/Keyboard";
-import ModalWindow from "./components/ModalWindow/ModalWindow";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import DisplayBtn from "./components/DisplayBtn/DisplayBtn.jsx";
+import Marquee from "./components/Marquee/Marquee.jsx";
+import Keyboard from "./components/Keyboard/Keyboard.jsx";
+import ModalWindow from "./components/ModalWindow/ModalWindow.jsx";
 ////////////////////////////////////////////////
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 ////////////////////////////////////////////////
 
 export default function App() {
   const appTitle = "Mar-Key";
-
-  // grand total output:
-  const initAppOutputState = []; // [{ ltr: quantity }, { ltr: quantity }, etc..]
-
-  // ALL MARQUEE STATES:
-  const [appState, dispatchAppState] = useState(initAppOutputState);
-
-  // action.type = (east, west, south)
-  // action.payload = [{ltr: quantity}, {ltr: quantity}]
-
-  // TOTAL STOCK: calculated by adding up the outputs of each of the marquees
-  const [stockSummaryState, setStockSummaryState] = useState();
+  // the amalgamated row values for each Marquee:
+  const appOutputObj = {
+    East: [], // [{ ltr: quantity }]
+    West: [], // [{ ltr: quantity }]
+    South: [], // [{ ltr: quantity }]
+  };
+  // this would then get drilled down to Modal Window which displays these amounts as separate AND fully amalgamated values!
+  const reducer = () => {};
+  const [appOutputState, dispatchAppOutput] = useReducer(reducer, appOutputObj);
 
   // MODAL POPUP STATE:
-  // the modal displays the tally of letters needed to the user:
   const [modalIsOpen, toggleModal] = useState(false);
 
-  // To render the marquee Component's width:
-  // we can add rem and covert to string with concatenation. Easier than the opposite!
-  const marqWidths = {
+  const marqSizes = {
     East: 42,
     West: 42,
     South: 84,
@@ -44,39 +38,34 @@ export default function App() {
     },
   };
 
-  const marqueeNamesArr = Object.keys(marqWidths);
-  console.log("marqueeNamesArr:", marqueeNamesArr);
+  const marKeysArr = Object.keys(appOutputObj);
+  console.log("marKeysArr:", marKeysArr);
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <StyledAppContainer>
         <NavBar title={appTitle} />
-        {marqueeNamesArr.map((el) => (
+        <ModalWindow
+          isOpen={modalIsOpen}
+          setIsOpen={toggleModal}
+          appOutputState={appOutputState}
+        />
+        {marKeysArr.map((el) => (
           <React.Fragment key={el}>
             <DisplayBtn
               marqName={el}
               key={`btn-${el}`}
-              appState={appState}
-              dispatchAppState={dispatchAppState}
-            />
-            <ModalWindow
-              isOpen={modalIsOpen}
-              setIsOpen={toggleModal}
-              appState={appState}
-              stockSummaryState={stockSummaryState}
+              appOutputState={appOutputState}
             />
             <StyledMarqueeContainer key={el}>
-              {marqWidths[el].visible === true ? (
-                <Marquee
-                  key={`marq-${el}`}
-                  dispatchAppState={dispatchAppState}
-                  setStockSummaryState={setStockSummaryState}
-                  appState={appState}
-                  marqName={el}
-                  marqWidths={marqWidths[el]}
-                />
-              ) : null}
+              <Marquee
+                key={`marq-${el}`}
+                appOutputState={appOutputState}
+                dispatchAppOutput={dispatchAppOutput}
+                marqName={el}
+                marqSize={marqSizes[el]}
+              />
             </StyledMarqueeContainer>
           </React.Fragment>
         ))}

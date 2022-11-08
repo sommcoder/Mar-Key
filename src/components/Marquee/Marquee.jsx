@@ -1,38 +1,16 @@
-import { useState, useReducer } from "react";
-import TextRowForm from "../TextRowForm/TextRowForm";
-import Block from "../Block/Block";
+import { useReducer } from "react";
+import TextRowForm from "../TextRowForm/TextRowForm.jsx";
+import Block from "../Block/Block.jsx";
 import styled from "styled-components";
 
 export default function Marquee({
-  appState,
+  appOutputState,
+  dispatchAppOutput,
   marqName,
-  marqWidths,
-  dispatchAppState,
-  setStockSummaryState,
+  marqSize,
 }) {
-  // Marquee is the immediate parent of BLOCK & TextRowForm so therefore the row state is managed here
-  /*
-   
-1) set row state
-2) set NEW row state
-3) upon NEW row state update, dispatch app state sends a payload of the amalgamated and sorted letters and their quantities to the app reducer
-4) app reducer will update App state
-
-  */
-  // array conents determine the block components that are rendered as children in the MarqueeRow components:
-  const initRowState = {
-    row0: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    row1: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-    row2: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
-  };
   ///////////////////////////////////////////////
-  // adjusting the booleans of genMarqState
-  const appReducer = (state, action) => {
-    // switch (action.type) {
-    //   case "visible": {
-    //   }
-    // }
-  };
+  const appReducer = (state, action) => {};
   // default marquee state:
   const initMarqState = {
     visible: true,
@@ -45,45 +23,62 @@ export default function Marquee({
     initMarqState
   );
   ////////////////////////////////////////////////////
-  // we don't need a switch statement since our code is the same, only thing that changes is ....
-
-  // but wait... do we EVEN need a useReducer now???
-  // same reducer function for BOTH useReducer Hooks
-  const reducer = (state, action) => {
-    let newState = { ...state, [action.type]: action.payload };
-    console.log("newState", newState);
-    return newState;
+  // array conents determine the block components that are rendered as children in the MarqueeRow components:
+  const initRowState = {
+    row0: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    row1: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
+    row2: [], // [{ ltr: quantity }, { ltr: quantity }, etc..]
   };
+
+  const reducer = (state, action) => {
+    console.log("action.type:", action.type);
+    console.log("action.payload:", action.payload);
+    let rowsArr = Object.keys(action.payload);
+    console.log("rowsArr:", rowsArr);
+    // input:
+    // {row0: {values: [""], sizes: [""]}}
+
+    // output:
+    // {row0: [["", number], ["", number] ...]}
+    if (action.type === "update") {
+      let newState = {};
+      // payload ROW LOOP:
+      for (let i = 0; i < rowsArr.length; i++) {
+        // if undefined, assign row key
+        if (!newState[rowsArr[i]]) newState = { [rowsArr[i]]: [] };
+        // values/sizes LOOP:
+        console.log("newState:", newState);
+        let row = action.payload[i];
+        for (let n = 0; n < row.values.length; n++) {
+          let value = row.values;
+          let size = row.sizes;
+          newState[i].push([value, size]);
+        }
+        console.log("newState[i]:", newState[i]);
+      }
+      console.log("newState", newState);
+      return newState;
+    }
+  };
+
+  //! Marquee is the immediate parent of Block & TextRowForm so therefore the rowState is managed here
 
   // the row state will be combined, sorted and added to the corresponding MarqueeState object using the App's useReducer hook
   const [rowState, dispatchRowState] = useReducer(reducer, initRowState);
   const [newRowState, dispatchNewRowState] = useReducer(reducer, initRowState);
+  ///////////////////////////////////////////
 
   const keysArr = Object.keys(initRowState);
 
-  // const [isDisabled, toggleDisabled] = useState(false);
-  // // should be moved to the Marquee component:
-  // // separate useState hooks for each:
-  // const [visibility, setVisibility] = useState(true);
-  // // when the marquee's input has at least one valid row entry:
-  // const [active, setActive] = useState(false);
-
-  const [stockConflictState, setStockConflict] = useState([]);
-  // empty array is good. If there any stock conflicts we will update this in our code and this will trigger the error message, the error message will be populated with the strings of inputs from this state array
-  //   ['a', 'f', 'w']
-  // dynamically get JUST the number:
-  const marqWidth = marqWidths + "rem";
+  // concat "rem"
+  const marqWidth = marqSize + "rem";
   console.log("marqWidth:", marqWidth);
-  // LEGEND:
 
-  //TODO: We will need to FIX this! since we've changed out stateObj and then we will need to fix the way that we are mapping the Block component as well
+  // !LEGEND:
   // row = row0, row1, row2
   // row[i] = the index of the letter
-  // rowState[row].sizes[i] = size
 
   console.log("rowState:", rowState);
-
-  console.log("stockConflictState:", stockConflictState);
 
   return (
     <StyledMarquee marqName={marqName}>
@@ -104,21 +99,21 @@ export default function Marquee({
         </StyledMarqueeRow>
       ))}
       <TextRowForm
+        //reference:
+        initRowState={initRowState}
         //state:
         rowState={rowState}
         newRowState={newRowState}
-        initRowState={initRowState}
-        stockConflictState={stockConflictState}
-        appState={appState}
+        marqState={marqState}
+        appOutputState={appOutputState}
         // state functions:
         dispatchRowState={dispatchRowState}
         dispatchNewRowState={dispatchNewRowState}
-        setStockSummaryState={setStockSummaryState}
-        setStockConflict={setStockConflict}
+        dispatchAppOutput={dispatchAppOutput}
         // other props:
         marqName={marqName}
         keysArr={keysArr}
-        marqWidth={marqWidth}
+        marqSize={marqSize}
       />
     </StyledMarquee>
   );

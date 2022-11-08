@@ -4,7 +4,7 @@ import {
   StyledTooltipBox,
   StyledArrow,
   StyledResetBtn,
-} from "../ResetBtn/ResetBtn";
+} from "../ResetBtn/ResetBtn.jsx";
 
 export default function SetCurrBtn({
   setStockConflict,
@@ -13,18 +13,22 @@ export default function SetCurrBtn({
   marqName,
   appState,
 }) {
-  let rowTargetId;
+  let rowTargetId; // which row(s) were updated
+  let conflictsArr = []; // populate with conflict inputs
+  console.log("rowTargetId:", rowTargetId);
   const updatedRowValuesObj = {};
-  let conflictsArr = []; // any input that does NOT have enough stock will be populated in this array
-
-  // this is a global object as we need to concern ourselves with the tally for ALL rows
   const inputTrackerObj = {}; // letterVar: {row: { tally: 0, stock: 0 },}
   // SET MARQUEE FUNCTION
   function populateStateObjects(el) {
+    console.log("el.value:", el.value);
     // !TEXTROW LOOP:
     for (let i = 0; i < keysArr.length; i++) {
       let targetValueStr = el[i].value.trim(); // user input string
       rowTargetId = el[i].dataset.rowid;
+
+      console.log("targetValueStr:", targetValueStr);
+      console.log("rowTargetId:", rowTargetId);
+
       let rowInputObj = { values: [], sizes: [] }; // assign to the right row in State
       if (!targetValueStr) return;
 
@@ -66,6 +70,7 @@ export default function SetCurrBtn({
     ev.preventDefault();
     console.log("ev setCurrMarquee:", ev);
     let targetFormEl = ev.target.form; // form Element
+    console.log("targetFormEl:", targetFormEl);
 
     populateStateObjects(targetFormEl);
     console.log("inputTrackerObj POST function:", inputTrackerObj);
@@ -73,21 +78,21 @@ export default function SetCurrBtn({
 
     // if we had any stock conflicts detected, update State with setStockConflict()
     // Triggers a rerender of the Marquee Component and displays the corresponding errMsg
-    if (conflictsArr.length > 0) {
-      setStockConflict((initConflictsArr) => ({
-        ...initConflictsArr,
-        ...conflictsArr,
-      }));
-    }
+    // if (conflictsArr.length > 0) {
+    //   setStockConflict((initConflictsArr) => ({
+    //     ...initConflictsArr,
+    //     ...conflictsArr,
+    //   }));
+    // }
+    console.log("rowTargetId b4 dispatch:", rowTargetId);
 
     // Marquee RowStateObj updates:
-    // needs to be at least ONE valid row:
-    dispatchRowState({ type: rowTargetId, payload: updatedRowValuesObj });
+    dispatchRowState({ type: "update", payload: updatedRowValuesObj });
 
     // condition MarqueeStateObj updates:
     // reference of appState prop for updating
     let updatedMarqueeStateObj = appState;
-    updatedMarqueeStateObj[marqName].isSet = true;
+    // updatedMarqueeStateObj[marqName].isSet = true;
 
     console.log("updatedMarqueeStateObj", updatedMarqueeStateObj);
     dispatchRowState((marqueeState) => ({
@@ -99,10 +104,7 @@ export default function SetCurrBtn({
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
 
     console.log("marqObj POST toggleMarquee():", appState);
-
-    // create a function that creates a popup
   }
-
   return (
     <StyledSetCurrBtn
       form="user-input-form"
