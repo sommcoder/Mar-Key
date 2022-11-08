@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import data from "../../data/blockData.json";
-import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
-import ResetBtn from "../ResetBtn/ResetBtn";
-import CompareBtn from "../CompareBtn/CompareBtn";
-import { useRef } from "react";
+import styled from 'styled-components';
+import data from '../../data/blockData.json';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
+import SetCurrBtn from '../SetCurrBtn/SetCurrBtn';
+import ResetBtn from '../ResetBtn/ResetBtn';
+import CompareBtn from '../CompareBtn/CompareBtn';
+import { useRef } from 'react';
 
 export default function TextRowForm({
   appOutputState,
@@ -15,74 +15,73 @@ export default function TextRowForm({
   marqName,
   marqSize,
 }) {
-  console.log("marqWidth:", marqSize);
+  console.log('marqWidth:', marqSize);
   // Input elemtns Refs:
   const inputRefsArr = useRef([]);
-  const addToRefsArr = (el) => {
+  const addToRefsArr = el => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
   // LIVE validation object:
   const inputValidationObj = {
-    row0: { value: [], size: 0 },
-    row1: { value: [], size: 0 },
-    row2: { value: [], size: 0 },
+    row0: { values: [], sizes: 0 },
+    row1: { values: [], sizes: 0 },
+    row2: { values: [], sizes: 0 },
   };
 
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    console.log("key:", key);
-    console.log("row:", row);
+    console.log('key:', key);
+    console.log('row:', row);
     // console.log("inputValidationObj START", inputValidationObj);
 
-    if (key === " ") ev.preventDefault();
-    if (key === "Enter") {
-      // cycle focus:
-      if (keysArr.indexOf(row) + 1 < keysArr.length)
-        inputRefsArr.current[keysArr.indexOf(row) + 1].focus();
-      else inputRefsArr.current[0].focus();
+    if (key === ' ') ev.preventDefault();
+    if (key === 'Enter') return; // form submits on Enter
+    if (key === 'Backspace' || key === 'Delete') {
+      console.log(
+        'inputValidationObj[row].sizes:',
+        inputValidationObj[row].sizes
+      );
+      if (inputValidationObj[row].sizes === 0) return;
+
+      // subtract the LAST letter in our validationObj
+      inputValidationObj[row].sizes -=
+        +data[inputValidationObj[row].values.at(-1)].size;
+      console.log(
+        'inputValidationObj[row].sizes:',
+        inputValidationObj[row].sizes
+      );
+
+      inputValidationObj[row].values.pop();
+
+      ev.target.value = inputValidationObj[row].values.join('');
       return;
     }
-
-    if (key === "Backspace" || key === "Delete") {
-      if (inputValidationObj[row].size)
-        // if (inputValidationObj[row].size <= 1) {
-        //   inputValidationObj[row].size = 0;
-        //   return;
-        // }
-        // subtract the LAST letter in our validationObj
-        inputValidationObj[row].size -=
-          +data[inputValidationObj[row].value.at(-1)].size;
-      inputValidationObj[row].value.pop();
-      ev.target.value = inputValidationObj[row].value.join("");
-      return;
-    }
-
-    if (!data[key]) return;
+    if (!data[key]) return; // invalid inout clause
     let currBlockSize = +data[key].size;
 
     // Max capacity check:
-    if (inputValidationObj[row].size + currBlockSize > marqSize) {
+    if (inputValidationObj[row].sizes + currBlockSize > marqSize) {
       inputRefsArr.current[keysArr.indexOf(row)].animate(
         [
           {
-            transform: "translateX(-0.33%)",
-            borderColor: "rgb(255, 0, 0)",
+            transform: 'translateX(-0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
           },
           {
-            transform: "translateX(0.33%)",
-            borderColor: "rgb(255, 0, 0)",
+            transform: 'translateX(0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
           },
         ],
         { duration: 150, iterations: 3 }
       );
       return;
     }
-    inputValidationObj[row].size += currBlockSize; // update size
-    inputValidationObj[row].value.push(key); // update input values
-    console.log("inputValidationObj END:", inputValidationObj);
-    ev.target.value = inputValidationObj[row].value.join("");
+    inputValidationObj[row].sizes += currBlockSize; // update size
+    inputValidationObj[row].values.push(key); // update input valuess
+    console.log('inputValidationObj END:', inputValidationObj);
+    ev.target.value = inputValidationObj[row].values.join('');
     return;
   }
 
@@ -94,7 +93,7 @@ export default function TextRowForm({
           margin-bottom: 0.5rem;
         `}
       >
-        {keysArr.map((row) => (
+        {keysArr.map(row => (
           <StyledTextRow
             key={`${marqName}-${row}`}
             readOnly
@@ -122,7 +121,7 @@ export default function TextRowForm({
         dispatchAppOutput={dispatchAppOutput}
         marqName={marqName}
       />
-      {appOutputState[marqName].isError === true ? <ErrorMsg /> : ""}
+      {appOutputState[marqName].isError === true ? <ErrorMsg /> : ''}
     </>
   );
 }
