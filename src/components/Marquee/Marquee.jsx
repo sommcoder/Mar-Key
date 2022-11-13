@@ -1,7 +1,7 @@
-import { useReducer } from 'react';
-import TextRowForm from '../TextRowForm/TextRowForm.jsx';
-import Block from '../Block/Block.jsx';
-import styled from 'styled-components';
+import { useReducer } from "react";
+import TextRowForm from "../TextRowForm/TextRowForm.jsx";
+import Block from "../Block/Block.jsx";
+import styled from "styled-components";
 
 export default function Marquee({
   appOutputState,
@@ -33,30 +33,34 @@ export default function Marquee({
   const keysArr = Object.keys(initRowState);
 
   const reducer = (state, action) => {
-    console.log('REDUCER CALLED');
-    console.log('action.payload:', action.payload);
+    console.log("REDUCER CALLED");
+    console.log("action.payload:", action.payload);
     let rowsArr = Object.keys(action.payload);
-    console.log('rowsArr:', rowsArr);
-    if (action.type === 'update') {
-      let newState = {};
+    console.log("rowsArr:", rowsArr);
+    let newState = {};
 
-      // payload ROW LOOP:
-      for (let i = 0; i < rowsArr.length; i++) {
-        if (!newState[rowsArr[i]]) newState = { [rowsArr[i]]: [] };
-        console.log('newState:', newState);
-        let oldRow = action.payload[rowsArr[i]];
+    switch (action.type) {
+      case "update": {
+        // payload ROW LOOP:
+        for (let i = 0; i < rowsArr.length; i++) {
+          if (!newState[rowsArr[i]]) newState = { [rowsArr[i]]: [] };
+          console.log("newState:", newState);
+          let oldRow = action.payload[rowsArr[i]];
 
-        // values/sizes LOOP:
-        for (let n = 0; n < oldRow.values.length; n++) {
-          let value = oldRow.values[n];
-          let size = oldRow.sizes[n];
-          console.log('value, size:', value, size);
-          newState[rowsArr[i]].push([value, size]);
+          // values/sizes LOOP:
+          for (let n = 0; n < oldRow.values.length; n++) {
+            let value = oldRow.values[n];
+            let size = oldRow.sizes[n];
+            console.log("value, size:", value, size);
+            newState[rowsArr[i]].push([value, size]);
+          }
         }
+        console.log("newState:", newState);
+        console.log("Updated State:", { ...state, ...newState });
+        return { ...state, ...newState };
       }
-      console.log('newState:', newState);
-      console.log('Updated State:', { ...state, ...newState });
-      return { ...state, ...newState };
+      default:
+        return state;
     }
   };
 
@@ -68,18 +72,18 @@ export default function Marquee({
   ///////////////////////////////////////////
 
   // concat "rem"
-  const marqWidth = marqSize + 'rem';
-  console.log('marqWidth:', marqWidth);
+  const marqWidth = marqSize + "rem";
+  console.log("marqWidth:", marqWidth);
 
   // !LEGEND:
   // row = row0, row1, row2
   // row[i] = the index of the letter
 
-  console.log('rowState Marquee:', rowState);
+  console.log("rowState Marquee:", rowState);
 
   return (
     <StyledMarquee marqName={marqName}>
-      {keysArr.map(row => (
+      {keysArr.map((row) => (
         <StyledMarqueeRow
           data-rowid={row}
           key={`${marqName}-${row}`}
@@ -139,7 +143,7 @@ const StyledMarquee = styled.div`
 
 const StyledMarqueeRow = styled.div`
   display: flex;
-  width: ${props => (props.marqWidth ? props.marqWidth : '350px')};
+  width: ${(props) => (props.marqWidth ? props.marqWidth : "350px")};
   flex-direction: row;
   justify-content: center;
   background-color: rgb(253, 243, 229);
