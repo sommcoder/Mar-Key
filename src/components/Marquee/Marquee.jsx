@@ -1,29 +1,16 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import TextRowForm from "../TextRowForm/TextRowForm.jsx";
 import Block from "../Block/Block.jsx";
 import styled from "styled-components";
+import SelectBtn from "../SelectBtn/SelectBtn.jsx";
 
 export default function Marquee({
-  appOutputState,
-  dispatchAppOutput,
+  appState,
+  dispAppState,
   marqName,
   marqSize,
 }) {
   const marqWidth = marqSize + "rem";
-  ///////////////////////////////////////////////
-  const appReducer = (state, action) => {};
-  // default marquee state:
-  const initMarqGeneralState = {
-    visible: true,
-    selected: false, // selected for submission
-    error: false, // prevents input till selected
-    set: false, // at least one row has submitted input
-  };
-
-  const [MarqGeneralState, dispatchMarqGeneralState] = useReducer(
-    appReducer,
-    initMarqGeneralState
-  );
   ////////////////////////////////////////////////////
   const initMarqRowState = {
     row0: [], // [["", number], ["", number] ...]}
@@ -86,6 +73,7 @@ export default function Marquee({
 
   return (
     <StyledMarquee marqName={marqName}>
+      <SelectBtn marqName={marqName} appState={appState} />
       {keysArr.map((row) => (
         <StyledMarqueeRow
           data-rowid={row}
@@ -108,12 +96,11 @@ export default function Marquee({
         //state:
         rowState={rowState}
         newRowState={newRowState}
-        MarqGeneralState={MarqGeneralState}
-        appOutputState={appOutputState}
+        appState={appState}
         // state functions:
         dispatchRowState={dispatchRowState}
         dispatchNewRowState={dispatchNewRowState}
-        dispatchAppOutput={dispatchAppOutput}
+        dispAppState={dispAppState}
         // other props:
         marqName={marqName}
         keysArr={keysArr}
@@ -158,7 +145,7 @@ const StyledMarqueeRow = styled.div`
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.12),
     0 4px 4px rgba(0, 0, 0, 0.16), 0 8px 8px rgba(0, 0, 0, 0.2);
   /* 0th child is technically the DisplayBtn component */
-  &:nth-child(1) {
+  &:nth-child(2) {
     border-top: 0.25rem grey solid;
   }
 `;

@@ -7,17 +7,6 @@ export default function ResetBtn({ setRow, marqName, appState, setMarquee }) {
     ev.preventDefault();
 
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
-
-    // setRow((rowValuesObj) => ({
-    //   ...rowValuesObj,
-    //   ...initRowState, // ????
-    // }));
-    let updatedMarqueeStateObj = appState;
-    updatedMarqueeStateObj[marqName].isSet = false;
-    setMarquee((marqueeState) => ({
-      ...marqueeState,
-      ...updatedMarqueeStateObj,
-    }));
   }
   return (
     <StyledResetBtn form="user-input-form" type="reset" onClick={resetRows}>
@@ -38,6 +27,7 @@ export const StyledTooltipBox = styled.span`
   border-radius: 4px;
   text-align: center;
   position: absolute;
+  font-size: 1.25rem;
   top: -20%; // allows space for tooltip arrow
   left: 50%;
   transform: translateX(-50%) translateY(-110%);

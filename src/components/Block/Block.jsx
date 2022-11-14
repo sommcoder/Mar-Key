@@ -2,9 +2,6 @@ import styled from "styled-components";
 
 export default function Block({ block, style }) {
   const blockWidth = style + "rem";
-
-  console.log("blockWidth:", blockWidth);
-
   return (
     <>
       <StyledBlock

@@ -1,6 +1,5 @@
 import React from "react";
 import NavBar from "./components/NavBar/NavBar.jsx";
-import DisplayBtn from "./components/DisplayBtn/DisplayBtn.jsx";
 import Marquee from "./components/Marquee/Marquee.jsx";
 import Keyboard from "./components/Keyboard/Keyboard.jsx";
 import ModalWindow from "./components/ModalWindow/ModalWindow.jsx";
@@ -12,15 +11,31 @@ import GlobalStyles from "./GlobalStyles";
 
 export default function App() {
   const appTitle = "Mar-Key";
-  // the amalgamated row values for each Marquee:
-  const appOutputObj = {
-    East: [], // [{ ltr: quantity }]
-    West: [], // [{ ltr: quantity }]
-    South: [], // [{ ltr: quantity }]
-  };
+
   // this would then get drilled down to Modal Window which displays these amounts as separate AND fully amalgamated values!
-  const reducer = () => {};
-  const [appOutputState, dispatchAppOutput] = useReducer(reducer, appOutputObj);
+
+  // if the key is NOT an empty array the marquee is therefore also SET
+  // Simply do a CHECk in the ModalWindow component to see which Marquee's have value
+
+  // [{ ltr: quantity }]
+  const InitAppState = {
+    East: { set: [], compare: [] },
+    West: { set: [], compare: [] },
+    South: { set: [], compare: [] },
+  };
+  const reducer = (state, action) => {
+    console.log("action.type:", action.type);
+    console.log("action.payload:", action.payload);
+    console.log("state:", state);
+    /*
+    types:
+- post (set)
+- patch (update)
+- reset (reset to [])
+    */
+  };
+
+  const [appState, dispAppState] = useReducer(reducer, InitAppState);
 
   // MODAL POPUP STATE:
   const [modalIsOpen, toggleModal] = useState(false);
@@ -38,7 +53,7 @@ export default function App() {
     },
   };
 
-  const marKeysArr = Object.keys(appOutputObj);
+  const marKeysArr = Object.keys(appState);
   console.log("marKeysArr:", marKeysArr);
 
   return (
@@ -49,25 +64,18 @@ export default function App() {
         <ModalWindow
           isOpen={modalIsOpen}
           setIsOpen={toggleModal}
-          appOutputState={appOutputState}
+          appState={appState}
         />
         {marKeysArr.map((el) => (
-          <React.Fragment key={el}>
-            <DisplayBtn
+          <StyledMarqueeContainer key={el}>
+            <Marquee
+              key={`marq-${el}`}
+              appState={appState}
+              dispAppState={dispAppState}
               marqName={el}
-              key={`btn-${el}`}
-              appOutputState={appOutputState}
+              marqSize={marqSizes[el]}
             />
-            <StyledMarqueeContainer key={el}>
-              <Marquee
-                key={`marq-${el}`}
-                appOutputState={appOutputState}
-                dispatchAppOutput={dispatchAppOutput}
-                marqName={el}
-                marqSize={marqSizes[el]}
-              />
-            </StyledMarqueeContainer>
-          </React.Fragment>
+          </StyledMarqueeContainer>
         ))}
         <Keyboard />
       </StyledAppContainer>

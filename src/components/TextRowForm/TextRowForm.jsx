@@ -7,8 +7,8 @@ import CompareBtn from "../CompareBtn/CompareBtn";
 import { useRef } from "react";
 
 export default function TextRowForm({
-  appOutputState,
-  dispatchAppOutput,
+  appState,
+  dispAppState,
   dispatchRowState,
   dispatchNewRowState,
   keysArr,
@@ -16,20 +16,17 @@ export default function TextRowForm({
   marqSize,
 }) {
   /*
-
   #component description:
   - Live input validation
+  - Checks Data.json for valid entries
   - applies error animation
-   
   */
-  console.log("marqWidth:", marqSize);
-  // Input elemtns Refs:
+
   const inputRefsArr = useRef([]);
   const addToRefsArr = (el) => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
-  // LIVE validation object:
   const inputValidationObj = {
     row0: { values: [], sizes: 0 },
     row1: { values: [], sizes: 0 },
@@ -39,33 +36,20 @@ export default function TextRowForm({
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    console.log("key:", key);
-    console.log("row:", row);
-    // console.log("inputValidationObj START", inputValidationObj);
-
     if (key === " ") ev.preventDefault();
-    if (key === "Enter") return; // form submits on Enter
+    if (key === "Enter") return;
     if (key === "Backspace" || key === "Delete") {
-      console.log(
-        "inputValidationObj[row].sizes:",
-        inputValidationObj[row].sizes
-      );
-      if (inputValidationObj[row].sizes === 0) return;
-
-      // subtract the LAST letter in our validationObj
+      if (inputValidationObj[row].sizes === 0) {
+        return;
+      }
+      // update validation Object:
       inputValidationObj[row].sizes -=
         +data[inputValidationObj[row].values.at(-1)].size;
-      console.log(
-        "inputValidationObj[row].sizes:",
-        inputValidationObj[row].sizes
-      );
-
       inputValidationObj[row].values.pop();
-
       ev.target.value = inputValidationObj[row].values.join("");
       return;
     }
-    if (!data[key]) return; // invalid inout clause
+    if (!data[key]) return;
     let currBlockSize = +data[key].size;
 
     // Max capacity check:
@@ -85,13 +69,12 @@ export default function TextRowForm({
       );
       return;
     }
-    inputValidationObj[row].sizes += currBlockSize; // update size
-    inputValidationObj[row].values.push(key); // update input valuess
-    console.log("inputValidationObj END:", inputValidationObj);
+    // append validation Object:
+    inputValidationObj[row].sizes += currBlockSize;
+    inputValidationObj[row].values.push(key);
     ev.target.value = inputValidationObj[row].values.join("");
     return;
   }
-
   return (
     <>
       <form
@@ -118,17 +101,17 @@ export default function TextRowForm({
         marqName={marqName}
       />
       <CompareBtn
-        appOutputState={appOutputState}
-        dispatchAppOutput={dispatchAppOutput}
+        appState={appState}
+        dispAppState={dispAppState}
         dispatchNewRowState={dispatchNewRowState}
         marqName={marqName}
       />
       <ResetBtn
-        appOutputState={appOutputState}
-        dispatchAppOutput={dispatchAppOutput}
+        appState={appState}
+        dispAppState={dispAppState}
         marqName={marqName}
       />
-      {appOutputState[marqName].isError === true ? <ErrorMsg /> : ""}
+      {appState[marqName].isError === true ? <ErrorMsg /> : ""}
     </>
   );
 }
