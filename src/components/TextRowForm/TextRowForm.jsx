@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import data from '../../data/blockData.json';
-import ErrorMsg from '../ErrorMsg/ErrorMsg';
-import SetCurrBtn from '../SetCurrBtn/SetCurrBtn';
-import ResetBtn from '../ResetBtn/ResetBtn';
-import CompareBtn from '../CompareBtn/CompareBtn';
-import { useRef } from 'react';
+import styled from "styled-components";
+import data from "../../data/blockData.json";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
+import ResetBtn from "../ResetBtn/ResetBtn";
+import CompareBtn from "../CompareBtn/CompareBtn";
+import { useRef } from "react";
 
 export default function TextRowForm({
   appOutputState,
@@ -15,10 +15,17 @@ export default function TextRowForm({
   marqName,
   marqSize,
 }) {
-  console.log('marqWidth:', marqSize);
+  /*
+
+  #component description:
+  - Live input validation
+  - applies error animation
+   
+  */
+  console.log("marqWidth:", marqSize);
   // Input elemtns Refs:
   const inputRefsArr = useRef([]);
-  const addToRefsArr = el => {
+  const addToRefsArr = (el) => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
@@ -32,15 +39,15 @@ export default function TextRowForm({
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    console.log('key:', key);
-    console.log('row:', row);
+    console.log("key:", key);
+    console.log("row:", row);
     // console.log("inputValidationObj START", inputValidationObj);
 
-    if (key === ' ') ev.preventDefault();
-    if (key === 'Enter') return; // form submits on Enter
-    if (key === 'Backspace' || key === 'Delete') {
+    if (key === " ") ev.preventDefault();
+    if (key === "Enter") return; // form submits on Enter
+    if (key === "Backspace" || key === "Delete") {
       console.log(
-        'inputValidationObj[row].sizes:',
+        "inputValidationObj[row].sizes:",
         inputValidationObj[row].sizes
       );
       if (inputValidationObj[row].sizes === 0) return;
@@ -49,13 +56,13 @@ export default function TextRowForm({
       inputValidationObj[row].sizes -=
         +data[inputValidationObj[row].values.at(-1)].size;
       console.log(
-        'inputValidationObj[row].sizes:',
+        "inputValidationObj[row].sizes:",
         inputValidationObj[row].sizes
       );
 
       inputValidationObj[row].values.pop();
 
-      ev.target.value = inputValidationObj[row].values.join('');
+      ev.target.value = inputValidationObj[row].values.join("");
       return;
     }
     if (!data[key]) return; // invalid inout clause
@@ -66,12 +73,12 @@ export default function TextRowForm({
       inputRefsArr.current[keysArr.indexOf(row)].animate(
         [
           {
-            transform: 'translateX(-0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(-0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
           {
-            transform: 'translateX(0.33%)',
-            borderColor: 'rgb(255, 0, 0)',
+            transform: "translateX(0.33%)",
+            borderColor: "rgb(255, 0, 0)",
           },
         ],
         { duration: 150, iterations: 3 }
@@ -80,8 +87,8 @@ export default function TextRowForm({
     }
     inputValidationObj[row].sizes += currBlockSize; // update size
     inputValidationObj[row].values.push(key); // update input valuess
-    console.log('inputValidationObj END:', inputValidationObj);
-    ev.target.value = inputValidationObj[row].values.join('');
+    console.log("inputValidationObj END:", inputValidationObj);
+    ev.target.value = inputValidationObj[row].values.join("");
     return;
   }
 
@@ -93,7 +100,7 @@ export default function TextRowForm({
           margin-bottom: 0.5rem;
         `}
       >
-        {keysArr.map(row => (
+        {keysArr.map((row) => (
           <StyledTextRow
             key={`${marqName}-${row}`}
             readOnly
@@ -121,7 +128,7 @@ export default function TextRowForm({
         dispatchAppOutput={dispatchAppOutput}
         marqName={marqName}
       />
-      {appOutputState[marqName].isError === true ? <ErrorMsg /> : ''}
+      {appOutputState[marqName].isError === true ? <ErrorMsg /> : ""}
     </>
   );
 }
