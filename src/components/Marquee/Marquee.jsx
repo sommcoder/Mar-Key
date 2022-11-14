@@ -9,31 +9,34 @@ export default function Marquee({
   marqName,
   marqSize,
 }) {
+  const marqWidth = marqSize + "rem";
   ///////////////////////////////////////////////
   const appReducer = (state, action) => {};
   // default marquee state:
-  const initMarqState = {
+  const initMarqGeneralState = {
     visible: true,
-    selected: false,
-    error: false,
+    selected: false, // selected for submission
+    error: false, // prevents input till selected
+    set: false, // at least one row has submitted input
   };
 
-  const [marqState, dispatchGenMarqState] = useReducer(
+  const [MarqGeneralState, dispatchMarqGeneralState] = useReducer(
     appReducer,
-    initMarqState
+    initMarqGeneralState
   );
   ////////////////////////////////////////////////////
-  // array conents determine the block components that are rendered as children in the MarqueeRow components:
-  const initRowState = {
+  const initMarqRowState = {
     row0: [], // [["", number], ["", number] ...]}
     row1: [], // [["", number], ["", number] ...]}
     row2: [], // [["", number], ["", number] ...]}
   };
 
-  const keysArr = Object.keys(initRowState);
+  const keysArr = Object.keys(initMarqRowState);
 
   const reducer = (state, action) => {
     console.log("REDUCER CALLED");
+    if (!action.payload) return state;
+    // ^^ is this a valid work around..?
     console.log("action.payload:", action.payload);
     let rowsArr = Object.keys(action.payload);
     console.log("rowsArr:", rowsArr);
@@ -43,22 +46,23 @@ export default function Marquee({
       case "update": {
         // payload ROW LOOP:
         for (let i = 0; i < rowsArr.length; i++) {
-          if (!newState[rowsArr[i]]) newState = { [rowsArr[i]]: [] };
-          console.log("newState:", newState);
+          // dynamically assign row to an empty array
+          newState[rowsArr[i]] = [];
           let oldRow = action.payload[rowsArr[i]];
+
+          console.log("newState:", newState);
+          console.log("oldRow:", oldRow);
 
           // values/sizes LOOP:
           for (let n = 0; n < oldRow.values.length; n++) {
             let value = oldRow.values[n];
             let size = oldRow.sizes[n];
-            console.log("value, size:", value, size);
             newState[rowsArr[i]].push([value, size]);
           }
         }
-        console.log("newState:", newState);
-        console.log("Updated State:", { ...state, ...newState });
         return { ...state, ...newState };
       }
+
       default:
         return state;
     }
@@ -67,13 +71,12 @@ export default function Marquee({
   //! Marquee is the immediate parent of Block & TextRowForm so therefore the rowState is managed here
 
   // the row state will be combined, sorted and added to the corresponding MarqueeState object using the App's useReducer hook
-  const [rowState, dispatchRowState] = useReducer(reducer, initRowState);
-  const [newRowState, dispatchNewRowState] = useReducer(reducer, initRowState);
+  const [rowState, dispatchRowState] = useReducer(reducer, initMarqRowState);
+  const [newRowState, dispatchNewRowState] = useReducer(
+    reducer,
+    initMarqRowState
+  );
   ///////////////////////////////////////////
-
-  // concat "rem"
-  const marqWidth = marqSize + "rem";
-  console.log("marqWidth:", marqWidth);
 
   // !LEGEND:
   // row = row0, row1, row2
@@ -90,22 +93,22 @@ export default function Marquee({
           rowState={rowState}
           marqWidth={marqWidth}
         >
-          {rowState[row].map((block, i) => (
+          {rowState[row].map((blockKey, i) => (
             <Block
               key={`${marqName}-${row}-block-${i}`}
-              block={block}
-              style={rowState[row].sizes[i]}
+              block={blockKey[0]}
+              style={blockKey[1]}
             />
           ))}
         </StyledMarqueeRow>
       ))}
       <TextRowForm
         //reference:
-        initRowState={initRowState}
+        initMarqRowState={initMarqRowState}
         //state:
         rowState={rowState}
         newRowState={newRowState}
-        marqState={marqState}
+        MarqGeneralState={MarqGeneralState}
         appOutputState={appOutputState}
         // state functions:
         dispatchRowState={dispatchRowState}
