@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   StyledResetBtn,
   StyledTooltipBox,
   StyledArrow,
-} from "../ResetBtn/ResetBtn";
+} from '../ResetBtn/ResetBtn';
 
 export default function CompareBtn({
   setStockSummaryState,
@@ -11,31 +11,17 @@ export default function CompareBtn({
   dispatchNewRowState,
 }) {
   function compareMarquee(ev) {
-    // once comparison is complete, call dispatch for updating appOuput, inside the reducer, we call toggleModal() which takes appOuput state and amalgamated THOSE values which is what is ultimately displayed to the user in the modal window
+    console.log('ev:', ev);
+
+    /*
+1) get a tally of the COUNT of each ltr: currMarquee
+2) get a tally of the COUNT of each ltr: newMarquee
+3) use dispAppState to update the Marquee
+4) this triggers the modal popup!
+4) display NEW marquee, use the dispatchRowState update as the NEW current marqRowState
+*/
+
     ev.preventDefault();
-
-    console.log("ev setCurrMarquee:", ev);
-    let targetFormEl = ev.target.form; // form Element
-
-    // FORM ROW INPUT LOOP:
-    for (let i = 0; i < keysArr.length; i++) {
-      let targetValueStr = targetFormEl[i].value.trim(); // user input string
-      let rowTargetId = targetFormEl[i].dataset.rowid;
-
-      // we will need to separate the Marquee update function from the SETMARQUEE function because compare will ALSO need to update the Marquee state. But obviously with additional functionality.
-
-      console.log("targetValueStr:", targetValueStr);
-
-      if (targetValueStr) {
-        let targetValueArr = [...targetValueStr];
-
-        console.log("rowTargetid:", rowTargetId);
-        console.log("targetValueArr pre loop:", targetValueArr);
-      }
-    }
-
-    // once we've compared the initial marquee to the new marquee we need to update the state of the
-    setStockSummaryState();
   }
   return (
     <StyledCompareBtn
