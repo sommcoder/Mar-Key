@@ -30,6 +30,7 @@ export default function SetCurrBtn({
       let targetValueStr = form[row].value.trim();
       let rowTargetId = form[row].dataset.rowid;
       let rowInputObj = { values: [], sizes: [] };
+      console.log('string:', string);
 
       // Row Input Loop:
       for (let ltr = 0; ltr < targetValueStr.length; ltr++) {
@@ -38,9 +39,12 @@ export default function SetCurrBtn({
         // add error msg here! "cannot find ltr!"
         rowInputObj.values.push(inputData.blockSymbol);
         rowInputObj.sizes[ltr] = inputData.size;
+        console.log('rowInputObj:', rowInputObj);
       }
       updatedRowValuesObj[rowTargetId] = rowInputObj;
     }
+
+    console.log('updatedRowValuesObj:', updatedRowValuesObj);
 
     // Marquee RowStateObj updates:
     dispatchRowState({ type: 'update', payload: updatedRowValuesObj });
