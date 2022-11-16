@@ -1,23 +1,19 @@
-import styled from "styled-components";
-import data from "../../data/blockData.json";
-import setCurrMarquee from "../../functions/setCurrMarquee";
+import styled from 'styled-components';
+import data from '../../data/blockData.json';
+import setCurrMarquee from '../../functions/setCurrMarquee';
 import {
   StyledTooltipBox,
   StyledArrow,
   StyledResetBtn,
-} from "../ResetBtn/ResetBtn.jsx";
+} from '../ResetBtn/ResetBtn.jsx';
 
 export default function SetCurrBtn({ dispatchRowState, keysArr }) {
-  /*
-   
-  look into creating a CUSTOM HOOK so that we can share this logic in THIS component but ALSO the CompareBtn component!!
-   
-  */
-
   function submitMarquee(ev) {
     const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
+
+    // dispatch:
     dispatchRowState({
-      type: "update",
+      type: 'update',
       payload: updatedRowValuesObj,
     });
   }
