@@ -1,25 +1,34 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import setCurrMarquee from "../../functions/setCurrMarquee";
+import data from "../../data/blockData.json";
 import {
   StyledResetBtn,
   StyledTooltipBox,
   StyledArrow,
-} from '../ResetBtn/ResetBtn';
+} from "../ResetBtn/ResetBtn";
 
-export default function CompareBtn({
-  setStockSummaryState,
-  keysArr,
-  dispatchNewRowState,
-}) {
+export default function CompareBtn({ keysArr, dispatchRowState }) {
   function compareMarquee(ev) {
-    console.log('ev:', ev);
+    console.log("ev:", ev);
 
+    const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
     /*
+    
 1) get a tally of the COUNT of each ltr: currMarquee
 2) get a tally of the COUNT of each ltr: newMarquee
 3) use dispAppState to update the Marquee
 4) this triggers the modal popup!
-4) display NEW marquee, use the dispatchRowState update as the NEW current marqRowState
+
+
+
+
+5) display NEW marquee, use the dispatchRowState update as the NEW current marqRowState
 */
+
+    dispatchRowState({
+      type: "update",
+      payload: updatedRowValuesObj,
+    });
 
     ev.preventDefault();
   }

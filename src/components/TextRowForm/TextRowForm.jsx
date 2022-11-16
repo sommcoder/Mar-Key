@@ -100,7 +100,7 @@ export default function TextRowForm({
       <CompareBtn
         appState={appState}
         dispAppState={dispAppState}
-        dispatchNewRowState={dispatchNewRowState}
+        dispatchRowState={dispatchRowState}
         marqName={marqName}
       />
       <ResetBtn
