@@ -1,17 +1,23 @@
-import styled from "styled-components";
-import setCurrMarquee from "../../functions/setCurrMarquee";
-import data from "../../data/blockData.json";
+import styled from 'styled-components';
+import setCurrMarquee from '../../functions/setCurrMarquee';
+import data from '../../data/blockData.json';
 import {
   StyledResetBtn,
   StyledTooltipBox,
   StyledArrow,
-} from "../ResetBtn/ResetBtn";
+} from '../ResetBtn/ResetBtn';
 
 export default function CompareBtn({ keysArr, dispatchRowState }) {
   function compareMarquee(ev) {
-    console.log("ev:", ev);
+    console.log('ev:', ev);
 
     const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
+    /*
+ 
+rethought our Marquee state. Going to access MarqState in CompareBtn and use that state to dispatch the reduce fn for AppState. CompareBtn will updates the setInput and the CompareInput, this will trigger a rendering of the Modal Component popup
+ 
+*/
+
     /*
     
 1) get a tally of the COUNT of each ltr: currMarquee
@@ -26,7 +32,7 @@ export default function CompareBtn({ keysArr, dispatchRowState }) {
 */
 
     dispatchRowState({
-      type: "update",
+      type: 'update',
       payload: updatedRowValuesObj,
     });
 
