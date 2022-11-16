@@ -10,7 +10,6 @@ export default function TextRowForm({
   appState,
   dispAppState,
   dispatchRowState,
-  dispatchNewRowState,
   keysArr,
   marqName,
   marqSize,

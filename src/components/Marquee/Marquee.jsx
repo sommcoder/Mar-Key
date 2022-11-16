@@ -1,8 +1,8 @@
-import { useReducer, useState } from 'react';
-import TextRowForm from '../TextRowForm/TextRowForm.jsx';
-import Block from '../Block/Block.jsx';
-import styled from 'styled-components';
-import SelectBtn from '../SelectBtn/SelectBtn.jsx';
+import { useReducer, useState } from "react";
+import TextRowForm from "../TextRowForm/TextRowForm.jsx";
+import Block from "../Block/Block.jsx";
+import styled from "styled-components";
+import SelectBtn from "../SelectBtn/SelectBtn.jsx";
 
 export default function Marquee({
   appState,
@@ -10,7 +10,7 @@ export default function Marquee({
   marqName,
   marqSize,
 }) {
-  const marqWidth = marqSize + 'rem';
+  const marqWidth = marqSize + "rem";
   ////////////////////////////////////////////////////
   const initMarqRowState = {
     row0: [], // [["", number], ["", number] ...]}
@@ -21,24 +21,24 @@ export default function Marquee({
   const keysArr = Object.keys(initMarqRowState);
 
   const reducer = (state, action) => {
-    console.log('REDUCER CALLED');
+    console.log("REDUCER CALLED");
     if (!action.payload) return state;
     // ^^ is this a valid work around..?
-    console.log('action.payload:', action.payload);
+    console.log("action.payload:", action.payload);
     let rowsArr = Object.keys(action.payload);
-    console.log('rowsArr:', rowsArr);
+    console.log("rowsArr:", rowsArr);
     let newState = {};
 
     switch (action.type) {
-      case 'update': {
+      case "update": {
         // payload ROW LOOP:
         for (let i = 0; i < rowsArr.length; i++) {
           // dynamically assign row to an empty array
           newState[rowsArr[i]] = [];
           let oldRow = action.payload[rowsArr[i]];
 
-          console.log('newState:', newState);
-          console.log('oldRow:', oldRow);
+          console.log("newState:", newState);
+          console.log("oldRow:", oldRow);
 
           // values/sizes LOOP:
           for (let n = 0; n < oldRow.values.length; n++) {
@@ -60,22 +60,22 @@ export default function Marquee({
   // the row state will be combined, sorted and added to the corresponding MarqueeState object using the App's useReducer hook
   const [rowState, dispatchRowState] = useReducer(reducer, initMarqRowState);
 
-  const [newRowState, dispatchNewRowState] = useReducer(
-    reducer,
-    initMarqRowState
-  );
+  // const [newRowState, dispatchNewRowState] = useReducer(
+  //   reducer,
+  //   initMarqRowState
+  // );
   ///////////////////////////////////////////
 
   // !LEGEND:
   // row = row0, row1, row2
   // row[i] = the index of the letter
 
-  console.log('rowState Marquee:', rowState);
+  console.log("rowState Marquee:", rowState);
 
   return (
     <StyledMarquee marqName={marqName}>
       <SelectBtn marqName={marqName} appState={appState} />
-      {keysArr.map(row => (
+      {keysArr.map((row) => (
         <StyledMarqueeRow
           data-rowid={row}
           key={`${marqName}-${row}`}
@@ -96,11 +96,9 @@ export default function Marquee({
         initMarqRowState={initMarqRowState}
         //state:
         rowState={rowState}
-        newRowState={newRowState}
         appState={appState}
         // state functions:
         dispatchRowState={dispatchRowState}
-        dispatchNewRowState={dispatchNewRowState}
         dispAppState={dispAppState}
         // other props:
         marqName={marqName}
@@ -134,7 +132,7 @@ const StyledMarquee = styled.div`
 
 const StyledMarqueeRow = styled.div`
   display: flex;
-  width: ${props => (props.marqWidth ? props.marqWidth : '350px')};
+  width: ${(props) => (props.marqWidth ? props.marqWidth : "350px")};
   flex-direction: row;
   justify-content: center;
   background-color: rgb(253, 243, 229);
