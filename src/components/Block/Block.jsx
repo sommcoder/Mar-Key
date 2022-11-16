@@ -27,6 +27,12 @@ const StyledBlock = styled.input`
   user-select: none;
   background-color: white;
   caret-color: transparent;
+
+  // prevents border layering:
+  &:not(:last-of-type) {
+    border-right: 0;
+  }
+  /* margin-left: 0.001rem; */
   cursor: default; // we want no inference that a user can interact with the marquee directly
   transition: ease-in-out;
   animation: fadeInAnimation ease-in-out 1s;

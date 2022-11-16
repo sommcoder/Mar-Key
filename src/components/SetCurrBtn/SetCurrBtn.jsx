@@ -1,62 +1,31 @@
-import styled from 'styled-components';
-import data from '../../data/blockData.json';
+import styled from "styled-components";
+import data from "../../data/blockData.json";
+import setCurrMarquee from "../../functions/setCurrMarquee";
 import {
   StyledTooltipBox,
   StyledArrow,
   StyledResetBtn,
-} from '../ResetBtn/ResetBtn.jsx';
+} from "../ResetBtn/ResetBtn.jsx";
 
-export default function SetCurrBtn({
-  setStockConflict,
-  dispatchRowState,
-  keysArr,
-  marqName,
-  appState,
-}) {
+export default function SetCurrBtn({ dispatchRowState, keysArr }) {
   /*
    
   look into creating a CUSTOM HOOK so that we can share this logic in THIS component but ALSO the CompareBtn component!!
    
   */
 
-  function setCurrMarquee(ev) {
-    ev.preventDefault();
-    const updatedRowValuesObj = {};
-    let form = ev.target.form; // form Element
-
-    // Form Row Loop:
-    for (let row = 0; row < keysArr.length; row++) {
-      if (!form[row].value) continue; // no value clause
-      let targetValueStr = form[row].value.trim();
-      let rowTargetId = form[row].dataset.rowid;
-      let rowInputObj = { values: [], sizes: [] };
-      console.log('string:', string);
-
-      // Row Input Loop:
-      for (let ltr = 0; ltr < targetValueStr.length; ltr++) {
-        let inputData = data[targetValueStr[ltr]]; // lookup!
-        if (!inputData) continue;
-        // add error msg here! "cannot find ltr!"
-        rowInputObj.values.push(inputData.blockSymbol);
-        rowInputObj.sizes[ltr] = inputData.size;
-        console.log('rowInputObj:', rowInputObj);
-      }
-      updatedRowValuesObj[rowTargetId] = rowInputObj;
-    }
-
-    console.log('updatedRowValuesObj:', updatedRowValuesObj);
-
-    // Marquee RowStateObj updates:
-    dispatchRowState({ type: 'update', payload: updatedRowValuesObj });
-
-    // reset textRow Components afterSubmit
-    for (let i = 0; i < keysArr.length; i++) form[i].value = '';
+  function submitMarquee(ev) {
+    const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
+    dispatchRowState({
+      type: "update",
+      payload: updatedRowValuesObj,
+    });
   }
   return (
     <StyledSetCurrBtn
       form="user-input-form"
       type="submit"
-      onClick={setCurrMarquee}
+      onClick={submitMarquee}
     >
       Set
       <StyledTooltipBox>
