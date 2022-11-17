@@ -1,7 +1,19 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { usePopper } from "react-popper";
 
 export default function ResetBtn({ setRow, marqName, appState, setMarquee }) {
-  //////////////////////////////////////////////
+  /////////////////////////////
+  // Popper.js library Hooks:
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const [arrowElement, setArrowElement] = useState(null);
+
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    modifiers: [{ name: "arrow", options: { element: arrowElement } }],
+  });
+  ////////////////////////////////
+
   // RESET FORM FUNCTION
   function resetRows(ev) {
     ev.preventDefault();
@@ -9,11 +21,20 @@ export default function ResetBtn({ setRow, marqName, appState, setMarquee }) {
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
   }
   return (
-    <StyledResetBtn form="user-input-form" type="reset" onClick={resetRows}>
+    <StyledResetBtn
+      ref={setReferenceElement}
+      form="user-input-form"
+      type="reset"
+      onClick={resetRows}
+    >
       Reset
-      <StyledTooltipBox>
+      <StyledTooltipBox
+        ref={setPopperElement}
+        style={styles.popper}
+        {...attributes.popper}
+      >
         Resets marquee
-        <StyledArrow />
+        <StyledArrow ref={setArrowElement} style={styles.arrow} />
       </StyledTooltipBox>
     </StyledResetBtn>
   );
