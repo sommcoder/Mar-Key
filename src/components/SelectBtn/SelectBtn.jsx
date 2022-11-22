@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import {
-  StyledResetBtn,
-  StyledTooltipBox,
-  StyledArrow,
-} from "../ResetBtn/ResetBtn";
+import { Button, Arrow, Tooltip } from "../../styles/Button.styled";
 
 export default function SelectBtn({ marqName }) {
   function toggleDisplay(ev) {
@@ -25,13 +21,17 @@ export default function SelectBtn({ marqName }) {
   );
 }
 
-const StyledSelectBtn = styled(StyledResetBtn)`
+const StyledTooltipBox = styled(Tooltip)``;
+const StyledArrow = styled(Arrow)``;
+const StyledSelectBtn = styled(Button)`
   display: block;
   position: relative;
   margin: 0 auto;
   width: 25rem;
   margin-bottom: 1rem;
-  &:focus {
-    border: 2px solid green;
+  &:hover ${StyledTooltipBox}, ${StyledArrow} {
+    display: block;
+    transition-delay: 1s;
+    z-index: 10;
   }
 `;

@@ -1,16 +1,16 @@
-import React from 'react';
-import NavBar from './components/NavBar/NavBar.jsx';
-import Marquee from './components/Marquee/Marquee.jsx';
-import Keyboard from './components/Keyboard/Keyboard.jsx';
-import ModalWindow from './components/ModalWindow/ModalWindow.jsx';
+import React from "react";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import Marquee from "./components/Marquee/Marquee.jsx";
+import Keyboard from "./components/Keyboard/Keyboard.jsx";
+import ModalWindow from "./components/ModalWindow/ModalWindow.jsx";
 ////////////////////////////////////////////////
-import { useState, useReducer } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import GlobalStyles from './GlobalStyles';
+import { useState, useReducer } from "react";
+import styled, { ThemeProvider } from "styled-components";
+import GlobalStyles from "./GlobalStyles";
 ////////////////////////////////////////////////
 
 export default function App() {
-  const appTitle = 'Mar-Key';
+  const appTitle = "Mar-Key";
 
   // this would then get drilled down to Modal Window which displays these amounts as separate AND fully amalgamated values!
 
@@ -24,9 +24,9 @@ export default function App() {
     South: { setInput: [], compareInput: [] },
   };
   const reducer = (state, action) => {
-    console.log('action.type:', action.type);
-    console.log('action.payload:', action.payload);
-    console.log('state:', state);
+    console.log("action.type:", action.type);
+    console.log("action.payload:", action.payload);
+    console.log("state:", state);
     /*
     types:
 - post (set)
@@ -49,12 +49,14 @@ export default function App() {
   // look into creating dark-mode functionality here
   const theme = {
     colors: {
-      button: 'powderblue',
+      button: "powderblue",
     },
+    dark: {},
+    light: {},
   };
 
   const marKeysArr = Object.keys(appState);
-  console.log('marKeysArr:', marKeysArr);
+  console.log("marKeysArr:", marKeysArr);
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,7 +68,7 @@ export default function App() {
           setIsOpen={toggleModal}
           appState={appState}
         />
-        {marKeysArr.map(el => (
+        {marKeysArr.map((el) => (
           <StyledMarqueeContainer key={el}>
             <Marquee
               key={`marq-${el}`}

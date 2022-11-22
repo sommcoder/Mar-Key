@@ -89,19 +89,10 @@ export default function Marquee({
         >
           {rowState[row].map((blockKey, i) => (
             <Block
-              // as={motion.input}
-              // initial={{
-              //   opacity: 0,
-              //   rotateX: 90,
-              // }}
-              // animate={{
-              //   opacity: 1,
-              //   rotateX: 0,
-              // }}
-              // transition={{ duration: 3.0, delay: i * 0.5 }}
               key={`${marqName}-${row}-block-${i}`}
               block={blockKey[0]}
               style={blockKey[1]}
+              delay={i + 1}
             />
           ))}
         </StyledMarqueeRow>
@@ -113,6 +104,7 @@ export default function Marquee({
         marqName={marqName}
         keysArr={keysArr}
         marqSize={marqSize}
+        rowState={rowState}
       />
     </StyledMarquee>
   );

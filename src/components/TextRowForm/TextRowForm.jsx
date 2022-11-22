@@ -9,6 +9,7 @@ import { useRef } from "react";
 export default function TextRowForm({
   appState,
   dispAppState,
+  rowState,
   dispatchRowState,
   keysArr,
   marqName,
@@ -92,6 +93,7 @@ export default function TextRowForm({
             data-rowid={row}
             type="text"
             name={row}
+            autocomplete="on"
             onKeyDown={validateEntry}
           />
         ))}
@@ -100,12 +102,15 @@ export default function TextRowForm({
       <CompareBtn
         appState={appState}
         dispAppState={dispAppState}
+        rowState={rowState}
         dispatchRowState={dispatchRowState}
         marqName={marqName}
       />
       <ResetBtn
         appState={appState}
         dispAppState={dispAppState}
+        rowState={rowState}
+        dispatchRowState={dispatchRowState}
         marqName={marqName}
       />
       {appState[marqName].isError === true ? <ErrorMsg /> : ""}

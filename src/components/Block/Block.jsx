@@ -1,11 +1,13 @@
 import styled, { keyframes } from "styled-components";
 
-export default function Block({ block, style }) {
+export default function Block({ block, style, delay }) {
   const blockWidth = style + "rem";
+  console.log("delay:", delay);
 
   return (
     <>
       <StyledBlock
+        delay={delay}
         readOnly
         maxLength="1"
         type="text"
@@ -44,7 +46,7 @@ const StyledBlock = styled.input`
   background-color: white;
   caret-color: transparent;
   animation: ${populateMarquee} 1s ease-in;
-  animation-delay: ${(style) => style * 10};
+  animation-delay: ${(delay) => delay * 100};
 
   // prevents border layering:
   &:not(:last-of-type) {

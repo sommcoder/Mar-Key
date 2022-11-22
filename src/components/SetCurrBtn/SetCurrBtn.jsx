@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import data from "../../data/blockData.json";
 import setCurrMarquee from "../../functions/setCurrMarquee";
-import {
-  StyledTooltipBox,
-  StyledArrow,
-  StyledResetBtn,
-} from "../ResetBtn/ResetBtn.jsx";
+import { Button, Arrow, Tooltip } from "../../styles/Button.styled";
 
 export default function SetCurrBtn({ dispatchRowState, keysArr }) {
   function submitMarquee(ev) {
@@ -31,30 +27,12 @@ export default function SetCurrBtn({ dispatchRowState, keysArr }) {
     </StyledSetCurrBtn>
   );
 }
-
-const StyledSetCurrBtn = styled(StyledResetBtn)`
-  color: black;
+const StyledTooltipBox = styled(Tooltip)``;
+const StyledArrow = styled(Arrow)``;
+const StyledSetCurrBtn = styled(Button)`
+  &:hover ${StyledTooltipBox}, ${StyledArrow} {
+    display: block;
+    transition-delay: 1s;
+    z-index: 10;
+  }
 `;
-
-// Are we gunna need this??? vvvvv
-/*
- 
-     // !POPULATE TRACKER STATE OBJECT:
-        if (ltr !== ' ') {
-          // if the inputTrackerObj doesn't ALREADY have a key of the incoming input name, create it!
-          if (!inputTrackerObj[ltr]) {
-            // set this unique input name to the value of the object below:
-            inputTrackerObj[ltr] = { tally: 1, stock: 0 };
-            // set the stock to the stock of that
-            inputTrackerObj[ltr].stock = inputData.stock;
-          } else inputTrackerObj[ltr].tally += 1;
-          if (
-            inputTrackerObj[ltr].tally > inputTrackerObj[ltr].stock &&
-            !conflictsArr.includes(ltr)
-          ) {
-            // pushes inputs with a stock conflict to array:
-            conflictsArr.push(ltr);
-          }
-        }
- 
-*/

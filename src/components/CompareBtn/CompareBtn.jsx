@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import setCurrMarquee from "../../functions/setCurrMarquee";
 import data from "../../data/blockData.json";
-import {
-  StyledResetBtn,
-  StyledTooltipBox,
-  StyledArrow,
-} from "../ResetBtn/ResetBtn";
+import { Button, Arrow, Tooltip } from "../../styles/Button.styled";
 
 export default function CompareBtn({ keysArr, dispatchRowState }) {
   function compareMarquee(ev) {
@@ -53,6 +49,12 @@ rethought our Marquee state. Going to access MarqState in CompareBtn and use tha
   );
 }
 
-const StyledCompareBtn = styled(StyledResetBtn)`
-  color: black;
+const StyledTooltipBox = styled(Tooltip)``;
+const StyledArrow = styled(Arrow)``;
+const StyledCompareBtn = styled(Button)`
+  &:hover ${StyledTooltipBox}, ${StyledArrow} {
+    display: block;
+    transition-delay: 1s;
+    z-index: 10;
+  }
 `;
