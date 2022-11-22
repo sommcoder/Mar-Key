@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import data from '../../data/blockData.json';
-import setCurrMarquee from '../../functions/setCurrMarquee';
+import styled from "styled-components";
+import data from "../../data/blockData.json";
+import setCurrMarquee from "../../functions/setCurrMarquee";
 import {
   StyledTooltipBox,
   StyledArrow,
   StyledResetBtn,
-} from '../ResetBtn/ResetBtn.jsx';
+} from "../ResetBtn/ResetBtn.jsx";
 
 export default function SetCurrBtn({ dispatchRowState, keysArr }) {
   function submitMarquee(ev) {
@@ -13,7 +13,7 @@ export default function SetCurrBtn({ dispatchRowState, keysArr }) {
 
     // dispatch:
     dispatchRowState({
-      type: 'update',
+      type: "update",
       payload: updatedRowValuesObj,
     });
   }

@@ -1,15 +1,15 @@
-import styled from 'styled-components';
-import setCurrMarquee from '../../functions/setCurrMarquee';
-import data from '../../data/blockData.json';
+import styled from "styled-components";
+import setCurrMarquee from "../../functions/setCurrMarquee";
+import data from "../../data/blockData.json";
 import {
   StyledResetBtn,
   StyledTooltipBox,
   StyledArrow,
-} from '../ResetBtn/ResetBtn';
+} from "../ResetBtn/ResetBtn";
 
 export default function CompareBtn({ keysArr, dispatchRowState }) {
   function compareMarquee(ev) {
-    console.log('ev:', ev);
+    console.log("ev:", ev);
 
     const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
     /*
@@ -32,7 +32,7 @@ rethought our Marquee state. Going to access MarqState in CompareBtn and use tha
 */
 
     dispatchRowState({
-      type: 'update',
+      type: "update",
       payload: updatedRowValuesObj,
     });
 

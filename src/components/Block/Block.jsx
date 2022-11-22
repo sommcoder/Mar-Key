@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export default function Block({ block, style }) {
   const blockWidth = style + "rem";
+
   return (
     <>
       <StyledBlock
@@ -15,6 +16,21 @@ export default function Block({ block, style }) {
   );
 }
 
+const populateMarquee = keyframes`
+    0% {
+      opacity: 0;
+      transform: RotateX(0deg);
+    }
+    50% {
+      opacity: 0.5;
+      transform: RotateX(90deg);
+    }
+    100% {
+      opacity: 1;
+      transform: RotateX(0deg);
+    }
+`;
+
 const StyledBlock = styled.input`
   font-size: 2.8rem;
   user-select: none;
@@ -27,30 +43,16 @@ const StyledBlock = styled.input`
   user-select: none;
   background-color: white;
   caret-color: transparent;
+  animation: ${populateMarquee} 1s ease-in;
+  animation-delay: ${(style) => style * 10};
 
   // prevents border layering:
   &:not(:last-of-type) {
     border-right: 0;
   }
-  /* margin-left: 0.001rem; */
-  cursor: default; // we want no inference that a user can interact with the marquee directly
-  transition: ease-in-out;
-  animation: fadeInAnimation ease-in-out 1s;
-  animation-iteration-count: 1;
+  cursor: default;
 
   &:focus {
     outline: none;
-  }
-
-  @keyframes fadeInAnimation {
-    0% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
   }
 `;
