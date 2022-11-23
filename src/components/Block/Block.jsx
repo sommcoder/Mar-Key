@@ -4,6 +4,8 @@ export default function Block({ block, style, delay }) {
   const blockWidth = style + "rem";
   console.log("delay:", delay);
 
+  console.log("delay function:", (delay) => (delay * 100).toString() + "ms");
+
   return (
     <>
       <StyledBlock
@@ -45,8 +47,8 @@ const StyledBlock = styled.input`
   user-select: none;
   background-color: white;
   caret-color: transparent;
-  animation: ${populateMarquee} 1s ease-in;
-  animation-delay: ${(delay) => delay * 100};
+  animation: 1s ease-in ${(delay) => (delay * 100).toString() + "ms"} 1
+    ${populateMarquee};
 
   // prevents border layering:
   &:not(:last-of-type) {
