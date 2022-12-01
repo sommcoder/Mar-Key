@@ -1,4 +1,5 @@
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import TextRowForm from '../TextRowForm/TextRowForm.jsx';
 import Block from '../Block/Block.jsx';
 import styled from 'styled-components';
@@ -10,6 +11,11 @@ export default function Marquee({
   marqName,
   marqSize,
 }) {
+  const inputRefsArr = useRef([]);
+
+  const addToRefsArr = el => {
+    if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
+  };
   /*
   #component description:
   - controls marquee state
@@ -88,12 +94,14 @@ export default function Marquee({
           marqWidth={marqWidth}
         >
           {rowState[row].map((blockKey, i) => (
-            <Block
-              key={`${marqName}-${row}-block-${i}`}
-              block={blockKey[0]}
-              style={blockKey[1]}
-              delay={i + 1}
-            />
+            <CSSTransition timeout={100 * (+row + 1)}>
+              <Block
+                key={`${marqName}-${row}-block-${i}`}
+                block={blockKey[0]}
+                style={blockKey[1]}
+                delay={i + 1}
+              />
+            </CSSTransition>
           ))}
         </StyledMarqueeRow>
       ))}
