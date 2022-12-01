@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import data from "../../data/blockData.json";
-import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
-import ResetBtn from "../ResetBtn/ResetBtn";
-import CompareBtn from "../CompareBtn/CompareBtn";
-import { useRef } from "react";
+import styled from 'styled-components';
+import data from '../../data/blockData.json';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
+import SetCurrBtn from '../SetCurrBtn/SetCurrBtn';
+import ResetBtn from '../ResetBtn/ResetBtn';
+import CompareBtn from '../CompareBtn/CompareBtn';
+import { useRef } from 'react';
 
 export default function TextRowForm({
   appState,
@@ -14,6 +14,7 @@ export default function TextRowForm({
   keysArr,
   marqName,
   marqSize,
+  formName,
 }) {
   /*
   #component description:
@@ -24,7 +25,7 @@ export default function TextRowForm({
 
   const inputRefsArr = useRef([]);
 
-  const addToRefsArr = (el) => {
+  const addToRefsArr = el => {
     if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
   };
 
@@ -37,9 +38,9 @@ export default function TextRowForm({
   function validateEntry(ev) {
     let key = ev.key;
     let row = ev.target.dataset.rowid;
-    if (key === " ") ev.preventDefault();
-    if (key === "Enter") return; // should submit form
-    if (key === "Backspace" || key === "Delete") {
+    if (key === ' ') ev.preventDefault();
+    if (key === 'Enter') return; // should submit form
+    if (key === 'Backspace' || key === 'Delete') {
       if (inputValidationObj[row].sizes === 0) {
         return;
       }
@@ -47,7 +48,7 @@ export default function TextRowForm({
       inputValidationObj[row].sizes -=
         +data[inputValidationObj[row].values.at(-1)].size;
       inputValidationObj[row].values.pop();
-      ev.target.value = inputValidationObj[row].values.join("");
+      ev.target.value = inputValidationObj[row].values.join('');
       return;
     }
     if (!data[key]) return;
@@ -59,12 +60,12 @@ export default function TextRowForm({
       inputRefsArr.current[keysArr.indexOf(row)].animate(
         [
           {
-            transform: "translateX(-0.33%)",
-            borderColor: "rgb(255, 0, 0)",
+            transform: 'translateX(-0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
           },
           {
-            transform: "translateX(0.33%)",
-            borderColor: "rgb(255, 0, 0)",
+            transform: 'translateX(0.33%)',
+            borderColor: 'rgb(255, 0, 0)',
           },
         ],
         { duration: 150, iterations: 3 }
@@ -74,18 +75,18 @@ export default function TextRowForm({
     // append validation Object:
     inputValidationObj[row].sizes += currBlockSize;
     inputValidationObj[row].values.push(key);
-    ev.target.value = inputValidationObj[row].values.join("");
+    ev.target.value = inputValidationObj[row].values.join('');
     return;
   }
   return (
     <>
       <form
-        id="user-input-form"
+        id={formName}
         css={`
           margin-bottom: 0.5rem;
         `}
       >
-        {keysArr.map((row) => (
+        {keysArr.map(row => (
           <StyledTextRow
             key={`${marqName}-${row}`}
             readOnly
@@ -98,8 +99,13 @@ export default function TextRowForm({
           />
         ))}
       </form>
-      <SetCurrBtn keysArr={keysArr} dispatchRowState={dispatchRowState} />
+      <SetCurrBtn
+        formName={formName}
+        keysArr={keysArr}
+        dispatchRowState={dispatchRowState}
+      />
       <CompareBtn
+        formName={formName}
         appState={appState}
         dispAppState={dispAppState}
         rowState={rowState}
@@ -107,13 +113,14 @@ export default function TextRowForm({
         marqName={marqName}
       />
       <ResetBtn
+        formName={formName}
         appState={appState}
         dispAppState={dispAppState}
         rowState={rowState}
         dispatchRowState={dispatchRowState}
         marqName={marqName}
       />
-      {appState[marqName].isError === true ? <ErrorMsg /> : ""}
+      {appState[marqName].isError === true ? <ErrorMsg /> : ''}
     </>
   );
 }

@@ -1,23 +1,21 @@
-import styled from "styled-components";
-import setCurrMarquee from "../../functions/setCurrMarquee";
-import { Button, Arrow, Tooltip } from "../../styles/Button.styled";
+import styled from 'styled-components';
+import setCurrMarquee from '../../functions/setCurrMarquee';
+import { Button, Arrow, Tooltip } from '../../styles/Button.styled';
 
-export default function SetCurrBtn({ dispatchRowState, keysArr }) {
+export default function SetCurrBtn({ dispatchRowState, keysArr, formName }) {
   function submitMarquee(ev) {
+    console.log('SetCurr ev:', ev);
+
     const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
 
     // dispatch:
     dispatchRowState({
-      type: "update",
+      type: 'update',
       payload: updatedRowValuesObj,
     });
   }
   return (
-    <StyledSetCurrBtn
-      form="user-input-form"
-      type="submit"
-      onClick={submitMarquee}
-    >
+    <StyledSetCurrBtn form={formName} type="submit" onClick={submitMarquee}>
       Set
       <StyledTooltipBox>
         Sets the current marquee
