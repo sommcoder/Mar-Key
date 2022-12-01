@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import data from "../../data/blockData.json";
 import setCurrMarquee from "../../functions/setCurrMarquee";
 import { Button, Arrow, Tooltip } from "../../styles/Button.styled";
 
 export default function SetCurrBtn({ dispatchRowState, keysArr }) {
   function submitMarquee(ev) {
-    const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
+    const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
 
     // dispatch:
     dispatchRowState({

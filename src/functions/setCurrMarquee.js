@@ -1,12 +1,15 @@
-export default function setCurrMarquee(ev, data, keysArr) {
+import data from "../data/blockData.json";
+
+export default function setCurrMarquee(ev, keysArr) {
   ev.preventDefault();
-  console.log("ev:", ev);
+  console.log("keysArr:", keysArr, "ev:", ev);
   const updatedRowValuesObj = {}; // to populate as payload
   let form = ev.target.form; // form Element
 
   console.log("form:", form);
   // Form Row Loop:
   for (let row = 0; row < keysArr.length; row++) {
+    console.log("form[row].value:", form[row].value);
     if (!form[row].value) {
       console.log("form[row].value:", form[row].value);
       continue;

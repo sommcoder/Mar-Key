@@ -98,6 +98,7 @@ export default function Marquee({
         </StyledMarqueeRow>
       ))}
       <TextRowForm
+        key={`${marqName}-form`}
         appState={appState}
         dispatchRowState={dispatchRowState}
         dispAppState={dispAppState}

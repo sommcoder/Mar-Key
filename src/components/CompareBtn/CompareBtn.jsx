@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import setCurrMarquee from "../../functions/setCurrMarquee";
-import data from "../../data/blockData.json";
 import { Button, Arrow, Tooltip } from "../../styles/Button.styled";
 
 export default function CompareBtn({ keysArr, dispatchRowState }) {
   function compareMarquee(ev) {
     console.log("ev:", ev);
 
-    const updatedRowValuesObj = setCurrMarquee(ev, data, keysArr);
+    const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
     /*
  
 rethought our Marquee state. Going to access MarqState in CompareBtn and use that state to dispatch the reduce fn for AppState. CompareBtn will updates the setInput and the CompareInput, this will trigger a rendering of the Modal Component popup
