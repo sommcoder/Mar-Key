@@ -26,7 +26,7 @@ else
     # Write component JSX file.
     Write-Output "import styled from 'styled-components';" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "" >> ./$ComponentName/$ComponentName.jsx
-    Write-Output "export default function $ComponentName(props) {" >> ./$ComponentName/$ComponentName.jsx
+    Write-Output "export default function $ComponentName() {" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "    return (" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "        <Styled$ComponentName>" >> ./$ComponentName/$ComponentName.jsx
     Write-Output "        </Styled$ComponentName>" >> ./$ComponentName/$ComponentName.jsx
