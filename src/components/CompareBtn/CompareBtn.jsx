@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import setCurrMarquee from '../../functions/setCurrMarquee';
-import { Button, Arrow, Tooltip } from '../../styles/Button.styled';
+import styled from "styled-components";
+import setCurrMarquee from "../../functions/setCurrMarquee";
+import { Button } from "../../styles/Button.styled";
 
 export default function CompareBtn({ keysArr, dispatchRowState, formName }) {
   function compareMarquee(ev) {
-    console.log('compare ev:', ev);
+    console.log("compare ev:", ev);
 
     const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
     /*
@@ -27,29 +27,22 @@ rethought our Marquee state. Going to access MarqState in CompareBtn and use tha
 */
 
     dispatchRowState({
-      type: 'update',
+      type: "update",
       payload: updatedRowValuesObj,
     });
 
     ev.preventDefault();
   }
   return (
-    <StyledCompareBtn form={formName} type="submit" onClick={compareMarquee}>
+    <StyledCompareBtn
+      form={formName}
+      type="submit"
+      onClick={compareMarquee}
+      title="Compares to set marquee"
+    >
       Compare
-      <StyledTooltipBox>
-        Compares to set marquee
-        <StyledArrow />
-      </StyledTooltipBox>
     </StyledCompareBtn>
   );
 }
 
-const StyledTooltipBox = styled(Tooltip)``;
-const StyledArrow = styled(Arrow)``;
-const StyledCompareBtn = styled(Button)`
-  &:hover ${StyledTooltipBox}, ${StyledArrow} {
-    display: block;
-    transition-delay: 1s;
-    z-index: 10;
-  }
-`;
+const StyledCompareBtn = styled(Button)``;
