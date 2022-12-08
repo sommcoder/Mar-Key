@@ -5,9 +5,6 @@ import { Button } from "../../styles/Button.styled";
 export default function SetCurrBtn({ dispatchRowState, keysArr, formName }) {
   function submitMarquee(ev) {
     console.log("ev:", ev);
-    console.log("ev:", ev);
-
-    if (ev === undefined) return;
 
     const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
 

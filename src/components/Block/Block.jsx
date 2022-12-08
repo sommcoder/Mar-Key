@@ -2,9 +2,6 @@ import styled, { keyframes } from "styled-components";
 
 export default function Block({ block, style, delay }) {
   const blockWidth = style + "rem";
-  console.log("delay:", delay);
-
-  console.log("delay function:", (delay) => (delay * 100).toString() + "ms");
 
   return (
     <>
@@ -22,15 +19,13 @@ export default function Block({ block, style, delay }) {
 
 const populateMarquee = keyframes`
     0% {
-      opacity: 0;
-      transform: RotateX(0deg);
+      transform: RotateX(10deg);
+      background-color: #f9ea93;
     }
     50% {
-      opacity: 0.5;
       transform: RotateX(90deg);
     }
     100% {
-      opacity: 1;
       transform: RotateX(0deg);
     }
 `;
@@ -45,9 +40,9 @@ const StyledBlock = styled.input`
   text-align: center;
   border: 0.1rem solid grey;
   user-select: none;
-  background-color: white;
+  background-color: white
   caret-color: transparent;
-  animation: 1s ease-in ${(delay) => (delay * 100).toString() + "ms"} 1
+  animation: 0.5s linear ${(props) => (props.delay * 90).toString() + "ms"} 1
     ${populateMarquee};
 
   // prevents border layering:

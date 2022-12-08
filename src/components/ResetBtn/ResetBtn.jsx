@@ -13,6 +13,8 @@ export default function ResetBtn({
   function resetRows(ev) {
     ev.preventDefault();
 
+    console.log("reset - ev:", ev);
+
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
   }
   return (

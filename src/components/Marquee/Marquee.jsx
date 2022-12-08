@@ -1,5 +1,4 @@
-import { useReducer, useRef } from "react";
-import { CSSTransition } from "react-transition-group";
+import { useReducer } from "react";
 import TextRowForm from "../TextRowForm/TextRowForm.jsx";
 import Block from "../Block/Block.jsx";
 import styled from "styled-components";
@@ -11,11 +10,6 @@ export default function Marquee({
   marqName,
   marqSize,
 }) {
-  const inputRefsArr = useRef([]);
-
-  const addToRefsArr = (el) => {
-    if (el && !inputRefsArr.current.includes(el)) inputRefsArr.current.push(el);
-  };
   /*
   #component description:
   - controls marquee state
@@ -25,7 +19,7 @@ export default function Marquee({
 
   // for mapping the Block components:
   const initMarqRowState = {
-    row0: [],
+    row0: [], // [ [value, size], [value, size], etc]
     row1: [],
     row2: [],
   };
@@ -94,14 +88,12 @@ export default function Marquee({
           marqWidth={marqWidth}
         >
           {rowState[row].map((blockKey, i) => (
-            <CSSTransition timeout={100 * (+row + 1)}>
-              <Block
-                key={`${marqName}-${row}-block-${i}`}
-                block={blockKey[0]}
-                style={blockKey[1]}
-                delay={i + 1}
-              />
-            </CSSTransition>
+            <Block
+              key={`${marqName}-${row}-block-${i}`}
+              block={blockKey[0]}
+              style={blockKey[1]}
+              delay={i + 1}
+            />
           ))}
         </StyledMarqueeRow>
       ))}
@@ -148,12 +140,12 @@ const StyledMarqueeRow = styled.div`
   background-color: rgb(253, 243, 229);
   height: 5rem;
   margin: 0 auto;
-  border-bottom: 0.25rem grey solid;
-  border-right: 0.25rem grey solid;
-  border-left: 0.25rem grey solid;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.12),
     0 4px 4px rgba(0, 0, 0, 0.16), 0 8px 8px rgba(0, 0, 0, 0.2);
-  /* 0th child is technically the DisplayBtn component */
+
+  border: 0.25rem grey solid;
+  border-top: none; // prevents border stacking
+  /* 0th child is the DisplayBtn component */
   &:nth-child(2) {
     border-top: 0.25rem grey solid;
   }
