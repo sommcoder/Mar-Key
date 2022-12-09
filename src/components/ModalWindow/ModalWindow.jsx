@@ -1,18 +1,19 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import ModalTable from "../ModalTable/ModalTable";
+import ModalCloseBtn from "../ModalCloseBtn/ModalCloseBtn";
+import ModalHeader from "../ModalHeader/ModalHeader";
 
-export default function ModalWindow({ isOpen, setIsOpen, stockSummaryState }) {
-  if (!isOpen) return null;
-
-  // THIS IS WHAT WE !NEED!
-  const sortedTallyObj = Object.keys(stockSummaryState)
-    .sort()
-    .reduce((acc, key) => {
-      acc[key] = stockSummaryState[key];
-
-      return acc;
-    }, {});
-
-  console.log("sortedTallyObj:", sortedTallyObj);
+export default function ModalWindow({ modalState, toggleModal, appState }) {
+  console.log("modalWindow Component modalState:", modalState);
+  const modalWindowWidth = 500;
+  // // THIS IS WHAT WE !NEED!
+  // const sortedTallyObj = Object.keys(stockSummaryState)
+  //   .sort()
+  //   .reduce((acc, key) => {
+  //     acc[key] = stockSummaryState[key];
+  //     return acc;
+  //   }, {});
+  // console.log("sortedTallyObj:", sortedTallyObj);
 
   /*
  
@@ -28,29 +29,59 @@ user needs to see:
 */
 
   return (
-    <StyledOverlay>
-      <StyledModalWindow>
-        <p>Here are the marquee tiles you need:</p>
-
-        <button onClick={setIsOpen}>Close</button>
+    <StyledOverlay modalState={modalState}>
+      <StyledModalWindow modalWindowWidth={modalWindowWidth}>
+        <ModalHeader />
+        <ModalTable modalWindowWidth={modalWindowWidth} appState={appState} />
+        <ModalCloseBtn toggleModal={toggleModal} />
       </StyledModalWindow>
     </StyledOverlay>
   );
 }
+
+const slideDown = keyframes`
+  0% {
+  transform: translateY(-100%);
+  }
+  100% {
+  transform: translateY(0%)
+  }
+`;
+
 const StyledOverlay = styled.div`
-  background-color: rgba(176, 224, 230, 0.25);
-  opacity: 0.5;
-  z-index: 11;
+  display: ${(props) => (props.modalState ? "block" : "none")};
+  background-color: rgba(176, 224, 230, 0.4);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  overflow-y: hidden;
+  animation-name: ${slideDown};
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledModalWindow = styled.div`
-  display: ${(props) => (props.isOpen ? "block" : "none")};
-  position: fixed;
+  display: block;
+  opacity: 1;
+  position: absolute;
   top: 50%;
   left: 50%;
-  max-width: 500px;
+  width: ${(props) => props.modalWindowWidth + "px"};
   height: 400px;
-  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 1);
+  transform: translate(-50%, -50%);
   border-radius: 10px;
-  z-index: 8;
+  z-index: 15;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.12),
+    0 4px 4px rgba(0, 0, 0, 0.16), 0 8px 8px rgba(0, 0, 0, 0.2);
+
+  overflow-y: hidden;
 `;

@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import TextRowForm from "../TextRowForm/TextRowForm.jsx";
 import Block from "../Block/Block.jsx";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import SelectBtn from "../SelectBtn/SelectBtn.jsx";
 
 export default function Marquee({
@@ -111,6 +111,15 @@ export default function Marquee({
   );
 }
 
+const fadeInAnimation = keyframes`
+     0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+`;
+
 const StyledMarquee = styled.div`
   padding-top: 1rem;
   margin: 0 auto 2rem auto;
@@ -118,18 +127,9 @@ const StyledMarquee = styled.div`
   max-width: 1000px;
   align-items: center;
   justify-content: center;
-  animation: fadeInAnimation ease-in-out 1s;
+  animation: ${fadeInAnimation} ease-in-out 0.75s;
   animation-iteration-count: 1;
   z-index: 1;
-
-  @keyframes fadeInAnimation {
-    start {
-      opacity: 0;
-    }
-    end {
-      opacity: 1;
-    }
-  }
 `;
 
 const StyledMarqueeRow = styled.div`

@@ -40,7 +40,7 @@ const StyledBlock = styled.input`
   text-align: center;
   border: 0.1rem solid grey;
   user-select: none;
-  background-color: white
+  background-color: white;
   caret-color: transparent;
   animation: 0.5s linear ${(props) => (props.delay * 90).toString() + "ms"} 1
     ${populateMarquee};
