@@ -24,15 +24,11 @@ export default function App() {
     South: { setInput: [], compareInput: [] },
   };
   const reducer = (state, action) => {
-    console.log("action.type:", action.type);
-    console.log("action.payload:", action.payload);
-    console.log("state:", state);
     /*
-    types:
-- post (set)
-- patch (update)
-- reset (reset to [])
-    */
+    
+   need to pass newState up to AppState with a dispatch, The App reducer function will create an all-day tally of the letters and their quantity which toggle ModalState and gets drilled down to the ModalTable where the ModalRow components get rendered
+    
+   */
   };
 
   const [appState, dispAppState] = useReducer(reducer, InitAppState);
