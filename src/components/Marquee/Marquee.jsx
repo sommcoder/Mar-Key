@@ -11,9 +11,9 @@ export default function Marquee({
   marqSize,
 }) {
   /*
-  #component description:
-  - controls marquee state
-  - renders the Block component based on user input
+  !component description:
+  - appState tracks LETTERS and QUANTITY
+  - marqState tracks INPUT and THEIR SIZE for rending the Block components dynamically
   */
   const marqWidth = marqSize + "rem";
 
@@ -55,8 +55,14 @@ export default function Marquee({
             newState[rowsArr[i]].push([value, size]);
 
             // update count
+            /*
+             
+            DISPATCH an appState update
+             
+            */
           }
         }
+        console.log("newState:", newState);
         return { ...state, ...newState };
       }
 
