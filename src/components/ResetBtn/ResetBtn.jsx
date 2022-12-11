@@ -2,10 +2,8 @@ import styled from "styled-components";
 import { Button } from "../../styles/Button.styled";
 
 export default function ResetBtn({
-  setRow,
-  marqName,
-  appState,
-  setMarquee,
+  initMarqRowState,
+  dispatchRowState,
   formName,
 }) {
   //////////////////////////////////////////////
@@ -15,7 +13,14 @@ export default function ResetBtn({
 
     console.log("reset - ev:", ev);
 
+    const updatedRowValuesObj = initMarqRowState;
+
     for (let i = 0; i < 3; i++) ev.target.form[i].value = "";
+
+    dispatchRowState({
+      type: "reset",
+      payload: updatedRowValuesObj,
+    });
   }
   return (
     <StyledResetBtn

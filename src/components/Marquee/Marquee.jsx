@@ -55,6 +55,11 @@ export default function Marquee({
             newState[rowsArr[i]].push([value, size]);
 
             // update count
+
+            //  dispatchAppState({
+            //    type: "reset",
+            //    payload: updatedRowValuesObj,
+            //  });
             /*
              
             DISPATCH an appState update
@@ -112,6 +117,7 @@ export default function Marquee({
         keysArr={keysArr}
         marqSize={marqSize}
         rowState={rowState}
+        initMarqRowState={initMarqRowState}
       />
     </StyledMarquee>
   );

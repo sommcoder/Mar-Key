@@ -10,7 +10,7 @@ export default function SetCurrBtn({ dispatchRowState, keysArr, formName }) {
 
     // dispatch:
     dispatchRowState({
-      type: "update",
+      type: "set",
       payload: updatedRowValuesObj,
     });
   }

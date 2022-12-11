@@ -2,11 +2,12 @@ import styled from "styled-components";
 import setCurrMarquee from "../../functions/setCurrMarquee";
 import { Button } from "../../styles/Button.styled";
 
-export default function CompareBtn({ keysArr, dispatchRowState, formName }) {
+export default function CompareBtn({ formName, keysArr, dispRowState }) {
   function compareMarquee(ev) {
     console.log("compare ev:", ev);
-
+    console.log("keysArr:", keysArr);
     const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
+
     /*
  
 rethought our Marquee state. Going to access MarqState in CompareBtn and use that state to dispatch the reduce fn for AppState. CompareBtn will updates the setInput and the CompareInput, this will trigger a rendering of the Modal Component popup
@@ -23,11 +24,25 @@ rethought our Marquee state. Going to access MarqState in CompareBtn and use tha
 
 
 
-5) display NEW marquee, use the dispatchRowState update as the NEW current marqRowState
+5) display NEW marquee, use the dispRowState update as the NEW current marqRowState
 */
+    dispRowState({
+      type: "set",
+      payload: updatedRowValuesObj,
+    });
 
-    dispatchRowState({
-      type: "update",
+    /*
+     
+    BOTH set and compare have some common funcionality, perhaps I can create ANOTHER separate function that is used on both updatedRowValuesObj to get the properly formatted rowState that is used to update the view by allowing the Block components to be iterated from the array.
+
+    This function should perhaps be performed INSIDE the button components and THEN passed to the Marquee component via the dispatch function where the rowReducer and update state and trigger an appState update as well 
+
+    After the end of "set" & "compare" we need to update appState by MarqName and setInput/compareInput respectively!
+   
+     
+    */
+    dispRowState({
+      type: "compare",
       payload: updatedRowValuesObj,
     });
 
