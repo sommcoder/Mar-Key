@@ -14,4 +14,8 @@ export default function ModalCloseBtn({ toggleModal }) {
 const StyledModalCloseBtn = styled(Button)`
   margin: 2rem auto 0rem auto;
   display: block;
+  position: relative;
+  bottom: 0%;
+  /* left: 50%; */
+  transform: translateX(-50%);
 `;

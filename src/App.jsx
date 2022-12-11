@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Marquee from "./components/Marquee/Marquee.jsx";
 import Keyboard from "./components/Keyboard/Keyboard.jsx";
-import ModalWindow from "./components/ModalWindow/ModalWindow.jsx";
+import Modal from "./components/Modal/Modal.jsx";
 /////////////////////////////////////////
 import { useState, useReducer } from "react";
 import styled, { ThemeProvider } from "styled-components";
@@ -59,7 +59,7 @@ export default function App() {
       <GlobalStyles />
       <StyledAppContainer>
         {toggleModal ? (
-          <ModalWindow
+          <Modal
             modalState={modalState}
             toggleModal={toggleModal}
             appState={appState}
