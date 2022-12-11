@@ -2,14 +2,14 @@ import styled from "styled-components";
 import setCurrMarquee from "../../functions/setCurrMarquee";
 import { Button } from "../../styles/Button.styled";
 
-export default function SetCurrBtn({ dispatchRowState, keysArr, formName }) {
+export default function SetCurrBtn({ dispRowState, keysArr, formName }) {
   function submitMarquee(ev) {
     console.log("ev:", ev);
 
     const updatedRowValuesObj = setCurrMarquee(ev, keysArr);
 
     // dispatch:
-    dispatchRowState({
+    dispRowState({
       type: "set",
       payload: updatedRowValuesObj,
     });

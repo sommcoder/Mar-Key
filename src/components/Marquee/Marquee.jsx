@@ -12,7 +12,7 @@ export default function Marquee({
 }) {
   /*
   !component description:
-  - appState tracks LETTERS and QUANTITY
+  - appState tracks LETTERS and QUANTITY for the modal Tally
   - marqState tracks INPUT and THEIR SIZE for rending the Block components dynamically
   */
   const marqWidth = marqSize + "rem";
@@ -36,7 +36,7 @@ export default function Marquee({
     let newState = {};
 
     switch (action.type) {
-      case "update": {
+      case "set": {
         // payload ROW LOOP:
         for (let i = 0; i < rowsArr.length; i++) {
           // dynamically assign row to an empty array
@@ -54,12 +54,12 @@ export default function Marquee({
             // update input
             newState[rowsArr[i]].push([value, size]);
 
-            // update count
+            // update appState (set)
 
-            //  dispatchAppState({
-            //    type: "reset",
-            //    payload: updatedRowValuesObj,
-            //  });
+            dispAppState({
+              type: "set",
+              payload: newState,
+            });
             /*
              
             DISPATCH an appState update
@@ -70,6 +70,9 @@ export default function Marquee({
         console.log("newState:", newState);
         return { ...state, ...newState };
       }
+      // case "compare": {
+
+      // }
 
       default:
         return state;
@@ -78,7 +81,7 @@ export default function Marquee({
 
   //! Marquee is the immediate parent of Block & TextRowForm so therefore the rowState is managed here
 
-  const [rowState, dispatchRowState] = useReducer(reducer, initMarqRowState);
+  const [rowState, dispRowState] = useReducer(reducer, initMarqRowState);
 
   ///////////////////////////////////////////
 
@@ -111,7 +114,7 @@ export default function Marquee({
       <TextRowForm
         formName={`${marqName}-form`}
         appState={appState}
-        dispatchRowState={dispatchRowState}
+        dispRowState={dispRowState}
         dispAppState={dispAppState}
         marqName={marqName}
         keysArr={keysArr}

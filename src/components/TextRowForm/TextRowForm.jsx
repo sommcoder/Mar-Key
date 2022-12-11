@@ -8,8 +8,7 @@ import { useRef } from "react";
 
 export default function TextRowForm({
   appState,
-  dispAppState,
-  dispatchRowState,
+  dispRowState,
   initMarqRowState,
   keysArr,
   marqName,
@@ -101,20 +100,18 @@ export default function TextRowForm({
       <SetCurrBtn
         formName={formName}
         keysArr={keysArr}
-        dispatchRowState={dispatchRowState}
+        dispRowState={dispRowState}
       />
       <CompareBtn
         formName={formName}
         keysArr={keysArr}
-        dispatchRowState={dispatchRowState}
+        dispRowState={dispRowState}
       />
       <ResetBtn
         formName={formName}
-        appState={appState}
-        dispAppState={dispAppState}
+        keysArr={keysArr}
+        dispRowState={dispRowState}
         initMarqRowState={initMarqRowState}
-        dispatchRowState={dispatchRowState}
-        marqName={marqName}
       />
       {appState[marqName].isError === true ? <ErrorMsg /> : ""}
     </>
