@@ -2,42 +2,42 @@ import data from "../data/blockData.json";
 
 export default function setCurrMarquee(ev, keysArr) {
   ev.preventDefault();
-  console.log("keysArr:", keysArr, "ev:", ev);
-  const updatedRowValuesObj = {}; // to populate as payload
-
+  const newMarqObj = {
+    view: {}, // {row0: [[ltr, size],[ltr, size]] }
+    output: {}, // {ltr: count, ltr: count}
+  };
   let form = ev.target.form; // form Element
 
-  console.log("form:", form);
-  // FORM Loop:
+  // ROW Loop:
   for (let row = 0; row < keysArr.length; row++) {
     console.log("form[row].value:", form[row].value);
-    if (!form[row].value) {
-      console.log("form[row].value:", form[row].value);
-      continue;
-    } // no value clause
-    let targetValueStr = form[row].value.trim(); // input
 
-    let rowTargetId = form[row].dataset.rowid; // name of row
-    let rowInputObj = { values: [], sizes: [] }; // rowObj
-    console.log("targetValueStr:", targetValueStr);
+    // no value clause
+    if (!form[row].value) {
+      console.log(`row: "${row}" had no value!`);
+      continue;
+    }
+    let inputStr = form[row].value.trim();
+    let rowName = form[row].dataset.rowid;
+    let rowArr = [];
+
     // INPUT Loop:
-    for (let ltr = 0; ltr < targetValueStr.length; ltr++) {
-      if (!data[targetValueStr[ltr]]) {
+    for (let ltr = 0; ltr < inputStr.length; ltr++) {
+      if (!data[inputStr[ltr]]) {
         console.log("error: cannot find letter in database");
         continue;
       }
-      let inputData = data[targetValueStr[ltr]];
-      rowInputObj.values.push(inputData.blockSymbol);
-      rowInputObj.sizes[ltr] = inputData.size;
-      console.log("rowInputObj:", rowInputObj);
+      // if we don't already have the ltr/key in our output object, add it
+      if (!newMarqObj.output[inputStr[ltr]])
+        newMarqObj.output[inputStr[ltr]] = 1;
+      else newMarqObj.output[inputStr[ltr]]++;
+
+      let inputData = data[inputStr[ltr]];
+      rowArr.push([inputData.blockSymbol, inputData.size]);
     }
-    updatedRowValuesObj[rowTargetId] = rowInputObj;
+    form[row].value = ""; // reset row El's value
+    newMarqObj.view[rowName] = rowArr;
+    console.log("newMarqObj.output:", newMarqObj.output);
   }
-
-  console.log("updatedRowValuesObj:", updatedRowValuesObj);
-
-  // reset textRow Components afterSubmit
-  for (let i = 0; i < keysArr.length; i++) form[i].value = "";
-
-  return updatedRowValuesObj;
+  return newMarqObj;
 }

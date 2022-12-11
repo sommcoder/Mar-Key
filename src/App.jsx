@@ -12,10 +12,9 @@ import GlobalStyles from "./GlobalStyles";
 export default function App() {
   const appTitle = "Mar-Key";
 
-  // this would then get drilled down to ModalTable which displays these amounts as separate AND fully amalgamated values!
-
-  // if the key is NOT an empty array the marquee is therefore also SET
-  // Simply do a CHECk in the ModalWindow component to see which Marquee's have value
+  // MODAL POPUP STATE:
+  const [modalState, toggleModal] = useState(true);
+  const [modalOutput, setModalOutput] = useState();
 
   // [{ ltr: quantity }]
   const InitAppState = {
@@ -24,6 +23,17 @@ export default function App() {
     South: { setInput: [], compareInput: [] },
   };
   const reducer = (state, action) => {
+    if (!action.payload) return state;
+    console.log("appREDUCER: action.payload:", action.payload);
+
+    // switch (action.type) {
+    //   case "set": {
+
+    //   }
+    //   default:
+    //     return state;
+    // }
+
     /*
     
    need to pass newState up to AppState with a dispatch, The App reducer function will create an all-day tally of the letters and their quantity which toggle ModalState and gets drilled down to the ModalTable where the ModalRow components get rendered
@@ -32,9 +42,6 @@ export default function App() {
   };
 
   const [appState, dispAppState] = useReducer(reducer, InitAppState);
-
-  // MODAL POPUP STATE:
-  const [modalState, toggleModal] = useState(true);
 
   const marqSizes = {
     East: 42,

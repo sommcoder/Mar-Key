@@ -27,55 +27,46 @@ export default function Marquee({
   const keysArr = Object.keys(initMarqRowState);
 
   const reducer = (state, action) => {
-    console.log("REDUCER CALLED");
     if (!action.payload) return state;
-    // ^^ is this a valid work around..?
-    console.log("action.payload:", action.payload);
-    let rowsArr = Object.keys(action.payload);
-    console.log("rowsArr:", rowsArr);
-    let newState = {};
+    console.log("rowREDUCER: action.payload:", action.payload);
 
     switch (action.type) {
       case "set": {
-        // payload ROW LOOP:
-        for (let i = 0; i < rowsArr.length; i++) {
-          // dynamically assign row to an empty array
-          newState[rowsArr[i]] = [];
-          let oldRow = action.payload[rowsArr[i]];
+        dispAppState({
+          type: "set",
+          payload: {
+            [marqName]: action.payload.output,
+          },
+        });
+        console.log("action.payload:", action.payload.view);
 
-          console.log("newState:", newState);
-          console.log("oldRow:", oldRow);
-
-          // values/sizes LOOP:
-          for (let n = 0; n < oldRow.values.length; n++) {
-            let value = oldRow.values[n];
-            let size = oldRow.sizes[n];
-
-            // update input
-            newState[rowsArr[i]].push([value, size]);
-
-            // update appState (set)
-
-            dispAppState({
-              type: "set",
-              payload: newState,
-            });
-            /*
-             
-            DISPATCH an appState update
-             
-            */
-          }
-        }
-        console.log("newState:", newState);
-        return { ...state, ...newState };
+        // updates the Marquee UI:
+        return { ...state, ...action.payload.view };
       }
-      // case "compare": {
-
-      // }
-
-      default:
+      case "compare": {
+        dispAppState({
+          type: "compare",
+          payload: {
+            [marqName]: action.payload.output,
+          },
+        });
+        console.log("action.payload:", action.payload.view);
+        // updates the Marquee UI:
+        return { ...state, ...action.payload.view };
+      }
+      case "reset": {
+        // full appState reset!
+        dispAppState({
+          type: "reset",
+          payload: action.payload.output,
+        });
+        console.log("action.payload:", action.payload.view);
+        // updates the Marquee UI:
+        return { ...state, ...action.payload.view };
+      }
+      default: {
         return state;
+      }
     }
   };
 
