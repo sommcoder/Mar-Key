@@ -14,25 +14,39 @@ export default function App() {
 
   // MODAL POPUP STATE:
   const [modalState, toggleModal] = useState(true);
-  const [modalOutput, setModalOutput] = useState();
 
   // [{ ltr: quantity }]
   const InitAppState = {
-    East: { setInput: [], compareInput: [] },
-    West: { setInput: [], compareInput: [] },
-    South: { setInput: [], compareInput: [] },
+    East: {}, // { ltr: #, ltr: #, etc }
+    West: {},
+    South: {},
   };
+  // inside the modal component we will also provide an ALL day count inclusive of ALL of the marquee's that had inputs set and new inputs compared
+
   const reducer = (state, action) => {
     if (!action.payload) return state;
     console.log("appREDUCER: action.payload:", action.payload);
 
-    // switch (action.type) {
-    //   case "set": {
+    let marqName = Object.keys(action.payload).join();
 
-    //   }
-    //   default:
-    //     return state;
-    // }
+    console.log("marqName:", marqName);
+
+    /*
+ 
+something fucky is happening here, probably just a silly naming conflict but the marquees arent rendering properly likely due to the fact that we aren't populating the state objects correctly!!!
+ 
+*/
+
+    switch (action.type) {
+      case "set": {
+        return { ...state, ...action.payload };
+      }
+      // case "compare": {
+      //   return { ...state, ...action.payload.count };
+      // }
+      default:
+        return state;
+    }
 
     /*
     
@@ -60,6 +74,7 @@ export default function App() {
 
   const marKeysArr = Object.keys(appState);
   console.log("marKeysArr:", marKeysArr);
+  console.log("APP - appState:", appState);
 
   return (
     <ThemeProvider theme={theme}>

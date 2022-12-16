@@ -12,58 +12,68 @@ export default function Marquee({
 }) {
   /*
   !component description:
-  - appState tracks LETTERS and QUANTITY for the modal Tally
+  - appState tracks LETTERS and QUANTITY for the modal output
   - marqState tracks INPUT and THEIR SIZE for rending the Block components dynamically
   */
   const marqWidth = marqSize + "rem";
 
   // for mapping the Block components:
   const initMarqRowState = {
-    row0: [], // [ [value, size], [value, size], etc]
-    row1: [],
-    row2: [],
+    view: {
+      row0: [], // [ [value, size], [value, size], etc]
+      row1: [],
+      row2: [],
+    },
+    output: {}, // { ltr: #, ltr: # }
   };
 
-  const keysArr = Object.keys(initMarqRowState);
+  // input is what we render as Block components
+  // output is an OBJECT of each ltr and the count of its appearance
+
+  const keysArr = Object.keys(initMarqRowState.view);
+  console.log("keysArr:", keysArr);
 
   const reducer = (state, action) => {
     if (!action.payload) return state;
     console.log("rowREDUCER: action.payload:", action.payload);
 
+    console.log("action.payload.view:", action.payload.view);
+    console.log("action.payload.output:", action.payload.output);
+
     switch (action.type) {
       case "set": {
+        // ONLY the output goes to the AppState
         dispAppState({
           type: "set",
           payload: {
             [marqName]: action.payload.output,
           },
         });
-        console.log("action.payload:", action.payload.view);
 
         // updates the Marquee UI:
-        return { ...state, ...action.payload.view };
+        return { ...state, ...action.payload };
       }
-      case "compare": {
-        dispAppState({
-          type: "compare",
-          payload: {
-            [marqName]: action.payload.output,
-          },
-        });
-        console.log("action.payload:", action.payload.view);
-        // updates the Marquee UI:
-        return { ...state, ...action.payload.view };
-      }
-      case "reset": {
-        // full appState reset!
-        dispAppState({
-          type: "reset",
-          payload: action.payload.output,
-        });
-        console.log("action.payload:", action.payload.view);
-        // updates the Marquee UI:
-        return { ...state, ...action.payload.view };
-      }
+      // case "compare": {
+      //   dispAppState({
+      //     type: "compare",
+      //     payload: {
+      //       [marqName]: action.payload.output,
+      //     },
+      //   });
+      //   console.log("action.payload:", action.payload.view);
+      //   // updates the Marquee UI:
+      //   return { ...state, ...action.payload.view };
+      // }
+      // case "reset": {
+      //   // full appState reset!
+      //   dispAppState({
+      //     type: "reset",
+      //     payload: action.payload.output,
+      //   });
+      //   console.log("action.payload:", action.payload.view);
+      //   // updates the Marquee UI:
+      //   return { ...state, ...action.payload.view };
+      // }
       default: {
         return state;
       }
@@ -79,22 +89,18 @@ export default function Marquee({
   // !LEGEND:
   // row = row0, row1, row2
   // row[i] = the index of the letter
+  console.log("rowState.view Marquee:", rowState.view);
 
-  console.log("rowState Marquee:", rowState);
-
+  // rows are mapped from keysArr
+  // blocks are mapped from rowState.view[row]
   return (
     <StyledMarquee marqName={marqName}>
-      <SelectBtn marqName={marqName} appState={appState} />
+      <SelectBtn marqName={marqName} />
       {keysArr.map((row) => (
-        <StyledMarqueeRow
-          data-rowid={row}
-          key={`${marqName}-${row}`}
-          rowState={rowState}
-          marqWidth={marqWidth}
-        >
-          {rowState[row].map((blockKey, i) => (
+        <StyledMarqueeRow marqWidth={marqWidth} key={`${marqName}-${row}`}>
+          {rowState.view[row].map((blockKey, i) => (
             <Block
-              key={`${marqName}-${row}-block-${i}`}
+              key={`${marqName}-${row}-${i}`}
               block={blockKey[0]}
               style={blockKey[1]}
               delay={i + 1}
