@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import setCurrMarquee from "../../functions/setCurrMarquee";
-import { Button } from "../../styles/Button.styled";
+import setCurrMarquee from "../../../functions/setCurrMarquee";
+import { Button } from "../../../styles/Button.styled";
 
 export default function CompareBtn({ formName, keysArr, dispRowState }) {
   function compareMarquee(ev) {
