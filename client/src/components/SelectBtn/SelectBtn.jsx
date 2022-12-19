@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../../../styles/Button.styled";
+import { Button } from "../../styles/Button.styled";
 
 export default function SelectBtn({ marqName }) {
   function toggleDisplay(ev) {

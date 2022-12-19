@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import data from "../../../data/blockData.json";
+import data from "../../data/blockData.json";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
 import SetCurrBtn from "../SetCurrBtn/SetCurrBtn";
 import ResetBtn from "../ResetBtn/ResetBtn";

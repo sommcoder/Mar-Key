@@ -1,17 +1,15 @@
 {
-  "name": "mar-key",
+  "name": "mar-key-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@popperjs/core": "^2.11.6",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "express": "^4.18.1",
-    "framer-motion": "^7.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
@@ -40,7 +38,9 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
+  "proxy": "http://localhost:5000",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
