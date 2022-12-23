@@ -43,12 +43,12 @@ export default function Marquee({
     switch (action.type) {
       case "set": {
         // ONLY the output goes to the AppState
-        dispAppState({
-          type: "set",
-          payload: {
-            [marqName]: action.payload.output,
-          },
-        });
+        // dispAppState({
+        //   type: "set",
+        //   payload: {
+        //     [marqName]: action.payload.output,
+        //   },
+        // });
 
         // updates the Marquee UI:
         return { ...state, ...action.payload };
