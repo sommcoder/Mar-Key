@@ -13,7 +13,7 @@ export default function App() {
   const appTitle = "Mar-Key";
 
   // MODAL POPUP STATE:
-  const [modalState, toggleModal] = useState(true);
+  const [modalState, toggleModal] = useState(false);
 
   // [{ ltr: quantity }]
   const InitAppState = {

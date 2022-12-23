@@ -1,25 +1,18 @@
 const express = require("express");
 const app = express();
 const PORT = 5000; // server is listening on PORT 5000
+const pg = require("pg");
 
-// I want the client to request a letter from the resource
+/*
+ 
+Our PostgreSQL DB will store:
+- letters, their size, their quantity in storage
+- this gets passed to the client and the client can then manipulate this data
+- they can also do a PUT request to update the quantities, should we add or lose marquee blocks
 
-// I then want the server to accept the request, access the letter, read the .json file and send back the data associated with that letter to the client
 
-// every path!
-app.get("/", (req, res) => {
-  console.log("file Sent");
-  res.send("hello world!");
-});
-
-let optionsObj = {
-  root: "data",
-};
-
-// block path!
-app.get("/block", (req, res) => {
-  res.sendFile("/blockData.json", optionsObj);
-});
+ 
+*/
 
 // server is listening...
 app.listen(PORT, () => console.log(`listening on PORT: ${PORT}`));
