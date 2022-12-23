@@ -1,3 +1,4 @@
 client/node_modules
 server/node_modules
 server/db-scratchpad.sql
+node_modules
